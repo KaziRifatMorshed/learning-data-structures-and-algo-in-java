@@ -21,7 +21,7 @@ class BubbleSort {
         Bubble_Sort(arr);
 //        for (int i : arr){ // ????? vul kothay ?
         for (int i = 0; i < arr.length; i++) {
-            System.out.print(STR."\{arr[i]},");
+            System.out.print(STR."\{arr[i]}, ");
         }
     }
 } // DONE
