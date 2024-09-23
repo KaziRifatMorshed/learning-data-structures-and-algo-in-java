@@ -288,6 +288,58 @@ class Stack_Array {
         return true;
     } // DONE  // Hurrah !!!
 
+    static int evaluatePostfixExpression(String equation) {
+        Stack_Array stack_of_num = new Stack_Array();
+        for (int i = 0; equation.charAt(i) != '\0'; i++) {
+            char ch = equation.charAt(i);
+            if (48 <= (int) ch && (int) ch <= 57) { /*Digits*/
+                stack_of_num.push(new Data(ch));
+                continue;
+            }
+            int value = 0;
+            if (ch == '+') {
+                value = (stack_of_num.pop().getData() - '0') + (stack_of_num.pop().getData() - '0');
+            } else if (ch == '-') {
+                value = (stack_of_num.pop().getData() - '0') - (stack_of_num.pop().getData() - '0');
+            } else if (ch == '*') {
+                value = (stack_of_num.pop().getData() - '0') * (stack_of_num.pop().getData() - '0');
+            } else if (ch == '/') {
+                value = (stack_of_num.pop().getData() - '0') / (stack_of_num.pop().getData() - '0');
+            }
+            stack_of_num.push(new Data((char) (value + '0')));
+
+        }
+
+        return stack_of_num.pop().getData();
+    } // incomplete
+
+    static boolean infixToPostfix(String equation) {
+        Stack_Array stack_of_sign = new Stack_Array();
+        Stack_Array stack_postfix = new Stack_Array();
+
+        for (int i = 0; i < equation.length(); i++) {
+            char ch = equation.charAt(i);
+
+            if (ch == '[' || ch == '{' || ch == '(') { /*opening, pushing*/
+                stack_of_sign.push(new Data(ch));
+                continue;
+
+            } else if (ch == ']' || ch == '}' || ch == ')') {
+                char top_ch = stack_of_sign.getTop().getData();
+                if ((top_ch == '[' && ch == ']') || (top_ch == '{' && ch == '}') || (top_ch == '(' && ch == ')')) {
+                    stack_of_sign.pop();
+                } else {
+                    System.out.println("Invalid Equation");
+                    return false;
+                }
+            }
+
+        }
+        System.out.println("Valid Equation");
+        return true;
+    } // incomplete
+
+
     public static void main(String[] args) {
         Stack_Array list1 = new Stack_Array();
         Stack_Array list2 = new Stack_Array(50);
@@ -298,8 +350,10 @@ class Stack_Array {
 //            list2.push(arr2[i]);
 //        }
 //        String s = "[(A + B) - {C - D}] - [F - G]";
-        String s = "[(A +} B) - {C - D}] - [F - G]";
-        boolean b = checkEquationValidity(s);
+//        String s = "[(A +} B) - {C - D}] - [F - G]";
+//        boolean b = checkEquationValidity(s);
+        String s = "562+*74/-";
+        int b = evaluatePostfixExpression(s);
         System.out.println(b);
 
     }
