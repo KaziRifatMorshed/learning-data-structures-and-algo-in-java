@@ -77,7 +77,7 @@ class Learning_two_dimension_array {
         int sum = 0;
         for (int i = 0; i < this.two_dimension_array.length; i++) {
             for (int j = 0; j < this.two_dimension_array[0].length; j++) {
-                if (i == j || (this.two_dimension_array.length - 1) == (i + j)) {
+                if (i == j || (this.two_dimension_array.length - 1) == (i + j)) { // (this.two_dimension_array.length - 1) == (i + j)
                     sum += this.two_dimension_array[i][j];
                 }
             }
@@ -96,6 +96,18 @@ class Learning_two_dimension_array {
         }
         return sum;
     } // done
+
+    static int calculate_sum_of_corner_elements_avoid_duplicate(int[][] matrix) {
+        int num_rows = matrix.length, num_of_col = matrix[0].length, sum = 0;
+        for (int i = 0; i < num_rows; i++) {
+            for (int j = 0; j < num_of_col; j++) {
+                if (i == 0 || j == 0 || i == num_rows - 1 || j == num_of_col - 1) {
+                    sum += matrix[i][j];
+                }
+            }
+        }
+        return sum;
+    }
 
 
     public static void main(String[] args) {

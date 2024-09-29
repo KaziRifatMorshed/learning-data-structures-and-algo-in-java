@@ -67,7 +67,7 @@ class ScoreBoard {
         for (; i < numEntry - 1; i++) { // j < numEntries - 1
             board[i] = board[i + 1];
         }
-        board[numEntry - 1] = null;
+        board[numEntry - 1] = null; // remember
         numEntry--;
         return to_bre_returned;
     }
