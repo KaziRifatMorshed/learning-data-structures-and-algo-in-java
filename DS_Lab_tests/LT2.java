@@ -175,7 +175,7 @@ class SinglyLinkedList {
     // ================================================================
 
     NODE search(int integer_data) {
-        for (NODE p = head; p.next != null; p = p.getNext()) {
+        for (NODE p = head; p != null; p = p.getNext()) {
             if (p.getDataObj().getData() == integer_data) {
                 return p;
             }
@@ -199,11 +199,11 @@ class SinglyLinkedList {
         if (!isEmpty() && !list2.isEmpty()) {
 
             for (NODE e1 = this.head;
-                 e1.next != null;
+                 e1 != null;
                  e1 = e1.getNext()) {
 
                 for (NODE e2 = list2.head;
-                     e2.next != null;
+                     e2 != null;
                      e2 = e2.getNext()) {
 
                     if (e1 == e2) { // same node, same pointer or same location
@@ -218,29 +218,6 @@ class SinglyLinkedList {
         return null;
     }
 
-    int merging_Point(SinglyLinkedList list2) {
-        if (!this.isEmpty() && !list2.isEmpty()) {
-
-            for (NODE e1 = this.head;
-                 e1.next != null;
-                 e1 = e1.getNext()) {
-
-                for (NODE e2 = list2.head;
-                     e2.next != null;
-                     e2 = e2.getNext()) {
-
-                    if (e1 == e2) { // same node, same pointer or same location
-                        System.out.println(STR."Merging element: \{e1.getDataObj()}");
-                        return e1.getDataObj().getData(); // returning integer data
-                    }
-
-                }
-            }
-        }
-        System.out.println("List1 and List2 did not merge");
-        return -1; // if not found, it will return -1
-    }
-
     // ================================================================
 
     public static void main(String[] args) {
@@ -249,7 +226,7 @@ class SinglyLinkedList {
 
         int[] arr1 = {10, 20, 30, 40};
         int[] arr2 = {50, 60, 70};
-        int mergingPoint = 30;
+        int mergingPoint = 40;
 
         for (int i = 0; i < arr1.length; i++) {
             list1.addLast(new DATA(arr1[i]));
