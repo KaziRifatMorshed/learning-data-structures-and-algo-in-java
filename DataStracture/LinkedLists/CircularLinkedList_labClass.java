@@ -2,7 +2,7 @@ package DataStracture.LinkedLists;
 
 import java.util.prefs.NodeChangeEvent;
 
-class CircularLinkedList_labClass {
+class CircularLinkedList_labClass implements Cloneable {
     private static class data_CLL {
         private int data;
 
@@ -161,34 +161,57 @@ class CircularLinkedList_labClass {
         }
     } // should word
 
-    Node_CLL Clone_CLL() {
+    void print_list_ten_elements() {
+        if (!isEmpty()) {
+            int i = 1;
+            for (Node_CLL t = tail.getNext(); ;
+                 t = t.getNext(), i++) {
+
+                System.out.print(t);
+                if (i == 12) {
+                    return;
+                }
+            }
+        } else {
+            System.out.println("List is empty");
+        }
+    } // done
+
+    CircularLinkedList_labClass Clone_CLL() throws CloneNotSupportedException {
+
+        CircularLinkedList_labClass other = (CircularLinkedList_labClass) super.clone();
         if (!isEmpty()) {
             return null;
         } else {
-            Node_CLL new_tail = new Node_CLL(tail.getData(), null);
-            Node_CLL current_main = tail.getNext();
-            Node_CLL current_new = new_tail;
 
-            for (; current_main != tail;
+            // Re-initialize the new list so it starts as an empty list
+            other.tail = null;
+
+            for (Node_CLL current_main = tail.getNext(); ;
                  current_main = current_main.getNext()) {
 
-                Node_CLL new_node = new Node_CLL(current_main.getData(), null);
-                current_new.setNext(new_node);
-                current_new = new_node;
+                other.addLast(current_main.getData());
+                if (current_main == tail) {
+                    break;
+                }
             }
 
-            current_new.setNext(new_tail); //  current_new.setNext(new_tail.getNext());
-
-            return new_tail;
+            return other;
         }
-    } // working
+    } // should work // but not working
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CloneNotSupportedException {
         CircularLinkedList_labClass list = new CircularLinkedList_labClass();
         for (int i = 1; i < 6; i++) {
 //            list.addFirst(new data_CLL(i));
             list.addLast(new data_CLL(i));
         }
         list.printList();
+        System.out.println();
+        list.print_list_ten_elements();
+
+        CircularLinkedList_labClass list2 = list.Clone_CLL();
+        list2.print_list_ten_elements();
+
     }
 }
