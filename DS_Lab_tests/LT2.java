@@ -27,16 +27,16 @@ class SinglyLinkedList {
         }
     }
 
-    private static class Node_SLL {
+    private static class NODE {
         private DATA data;
-        private Node_SLL next;
+        private NODE next;
 
-        public Node_SLL(DATA data, Node_SLL next) {
+        public NODE(DATA data, NODE next) {
             this.data = data;
             this.next = next;
         }
 
-        public Node_SLL(DATA data) {
+        public NODE(DATA data) {
             this.data = data;
         }
 
@@ -48,11 +48,11 @@ class SinglyLinkedList {
             this.data = data;
         }
 
-        public Node_SLL getNext() {
+        public NODE getNext() {
             return next;
         }
 
-        public void setNext(Node_SLL next) {
+        public void setNext(NODE next) {
             this.next = next;
         }
 
@@ -62,7 +62,7 @@ class SinglyLinkedList {
         }
     }
 
-    private Node_SLL head;
+    private NODE head;
     private int size;
 
     SinglyLinkedList() {
@@ -81,28 +81,28 @@ class SinglyLinkedList {
 
     void addFirst(DATA d) {
         if (head == null) { // nothing in the list
-            head = new Node_SLL(d, null);
+            head = new NODE(d, null);
         } else {
-            Node_SLL new_node = new Node_SLL(d, head);
+            NODE new_node = new NODE(d, head);
             head = new_node;
         }
         size++;
     }
 
-    Node_SLL getLast() {
+    NODE getLast() {
         if (head == null) {
             return null;
         }
-        Node_SLL current = head;
+        NODE current = head;
         while (current.next != null) {
             current = current.next;
         }
         return current;
     } // completed
 
-    Node_SLL removeFirst() {
+    NODE removeFirst() {
         if (!isEmpty()) {
-            Node_SLL temp = head;
+            NODE temp = head;
             if (size == 1) {
                 head = null;
             } else {
@@ -115,9 +115,9 @@ class SinglyLinkedList {
         return null;
     }
 
-    Node_SLL removeLast() {
+    NODE removeLast() {
         if (!isEmpty()) {
-            Node_SLL current = head, previous = head;
+            NODE current = head, previous = head;
             while (current.next != null) {
                 previous = current;
                 current = current.next;
@@ -131,11 +131,11 @@ class SinglyLinkedList {
 
 
     void addLast(DATA d) {
-        Node_SLL new_node = new Node_SLL(d, null);
+        NODE new_node = new NODE(d, null);
         if (head == null) {
             head = new_node;
         } else {
-            Node_SLL last_node = getLast();
+            NODE last_node = getLast();
             last_node.next = new_node;
         }
         size++;
@@ -145,7 +145,7 @@ class SinglyLinkedList {
         if (head == null) {
             return;
         }
-        Node_SLL temp = head;
+        NODE temp = head;
         while (temp != null) {
             System.out.print(temp);
             temp = temp.next;
@@ -154,26 +154,17 @@ class SinglyLinkedList {
     } // completed
 
     void concatSinglyLinkedList(SinglyLinkedList new_head) {
-        Node_SLL tail = getLast();
+        NODE tail = getLast();
         if (tail.next == null) {
             tail.setNext(new_head.head); // new_head.head
         }
     }
 
-    Node_SLL search(int integer_data) {
-        for (Node_SLL p = head; p.next != null; p = p.getNext()) {
-            if (p.getDataObj().getData() == integer_data) {
-                return p;
-            }
-        }
-        return null;
-    } // done
-
-    Node_SLL search_return_previous(int integer_data) {
+    NODE search_return_previous(int integer_data) {
         if (head.next == null) {
             return null;  // ----------------------------------------------- seems vulnerable
         }
-        for (Node_SLL p = head; p.next != null; p = p.getNext()) {
+        for (NODE p = head; p.next != null; p = p.getNext()) {
             if (p.next.getDataObj().getData() == integer_data) {
                 return p;
             }
@@ -183,12 +174,21 @@ class SinglyLinkedList {
 
     // ================================================================
 
+    NODE search(int integer_data) {
+        for (NODE p = head; p.next != null; p = p.getNext()) {
+            if (p.getDataObj().getData() == integer_data) {
+                return p;
+            }
+        }
+        return null;
+    } // done
+
     void merge(int key, SinglyLinkedList list2) {
         // search key node in list1
-        Node_SLL target_in_list1 = search(key);
+        NODE target_in_list1 = search(key);
 
         // store list2's last node pointer
-        Node_SLL last_node_of_list2 = list2.getLast();
+        NODE last_node_of_list2 = list2.getLast();
 
         // merge list2 to the key node of list1
         last_node_of_list2.setNext(target_in_list1);
@@ -198,11 +198,11 @@ class SinglyLinkedList {
         // will return ELEMENT (here element itself is an object of DATA class
         if (!isEmpty() && !list2.isEmpty()) {
 
-            for (Node_SLL e1 = this.head;
+            for (NODE e1 = this.head;
                  e1.next != null;
                  e1 = e1.getNext()) {
 
-                for (Node_SLL e2 = list2.head;
+                for (NODE e2 = list2.head;
                      e2.next != null;
                      e2 = e2.getNext()) {
 
@@ -213,10 +213,32 @@ class SinglyLinkedList {
 
                 }
             }
-
         }
         System.out.println("List1 and List2 did not merge");
         return null;
+    }
+
+    int merging_Point(SinglyLinkedList list2) {
+        if (!this.isEmpty() && !list2.isEmpty()) {
+
+            for (NODE e1 = this.head;
+                 e1.next != null;
+                 e1 = e1.getNext()) {
+
+                for (NODE e2 = list2.head;
+                     e2.next != null;
+                     e2 = e2.getNext()) {
+
+                    if (e1 == e2) { // same node, same pointer or same location
+                        System.out.println(STR."Merging element: \{e1.getDataObj()}");
+                        return e1.getDataObj().getData(); // returning integer data
+                    }
+
+                }
+            }
+        }
+        System.out.println("List1 and List2 did not merge");
+        return -1; // if not found, it will return -1
     }
 
     // ================================================================
@@ -249,7 +271,6 @@ class SinglyLinkedList {
         list2.printList();
 
         list1.mergingPoint(list2);
-
 
     }
 }
