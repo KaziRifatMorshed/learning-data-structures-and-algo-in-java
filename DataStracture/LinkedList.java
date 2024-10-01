@@ -70,8 +70,10 @@ class Node {
         }
         Node q = REVERSE_a_Linked_List(p.next); // ???
         (p.next).next = p; // পরবর্তী নোডের এর নেক্সট এ নিজেকে রাখবে
+//      =(q).next = p;
         (p.next) = null; // পরবর্তী এর নেক্সটে নিজেকে রেখে নিজের ভবিষ্যতকে নাল করে দিবে
-        return q; // return of new head
+//      =(q) = null;
+        return q; // at last, return of new head
     }
 
     static Node SortedMergeLinkedList(Node A, Node B) {
@@ -95,7 +97,7 @@ class Node {
         }
     } // WORKING
 
-    static Node Sort_Singly_Linked_List(Node head) {
+    static Node Sort_Singly_Linked_List(Node head) { // incomplete
 /*
 //                    { // changing value only // EASY
 //                        int temp = p.value;
@@ -168,7 +170,9 @@ class Node {
 
     static Node Search_Previous(Node n, int key) {
         Node prev = n;
-        for (; n != null; prev = n, n = n.next) {
+        for (; n != null;
+             prev = n, n = n.next) { // prev = n, n = n.next
+
             if (n.value == key) {
                 return prev;
             }
