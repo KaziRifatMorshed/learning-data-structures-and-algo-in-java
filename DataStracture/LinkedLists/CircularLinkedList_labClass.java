@@ -1,5 +1,7 @@
 package DataStracture.LinkedLists;
 
+import java.util.prefs.NodeChangeEvent;
+
 class CircularLinkedList_labClass {
     private static class data_CLL {
         private int data;
@@ -58,8 +60,13 @@ class CircularLinkedList_labClass {
     }
 
     private data_CLL data;
-    private Node_CLL tail = null;
+    private Node_CLL tail;
     private int size;
+
+    CircularLinkedList_labClass() {
+        tail = null;
+        size = 0;
+    }
 
     int getSize() {
         return size;
@@ -69,14 +76,14 @@ class CircularLinkedList_labClass {
         return size == 0;
     }
 
-    data_CLL getFirst() {
+    data_CLL getFirstData() {
         if (!isEmpty()) {
             return tail.getNext().getData();
         }
         return null;
     } // completed
 
-    data_CLL getLast() {
+    data_CLL getLastData() {
         if (!isEmpty()) {
             return tail.getData();
         }
@@ -91,10 +98,20 @@ class CircularLinkedList_labClass {
             Node_CLL new_node = new Node_CLL(d, tail.getNext());
             tail.setNext(new_node);
         }
+        size++;
     } // completed
 
-    void addLast() {
-    }
+    void addLast(data_CLL d) {
+        if (isEmpty()) {
+            tail = new Node_CLL(d, null);
+            tail.setNext(tail);
+        } else {
+            Node_CLL new_node = new Node_CLL(d, tail.getNext());
+            tail.setNext(new_node);
+            tail = new_node;
+        }
+        size++; // --------------------- size barai nai bole totally kam kortesilo na isEmpty te terminate houar jonno
+    } // should work
 
     data_CLL removeFirst() {
         data_CLL temp = null;
@@ -127,9 +144,51 @@ class CircularLinkedList_labClass {
         if (!isEmpty()) {
             tail = tail.next;
         }
-    }
+    } // DONE
+
+    void printList() {
+        if (!isEmpty()) {
+            for (Node_CLL t = tail.getNext(); ;
+                 t = t.getNext()) {
+
+                System.out.print(t);
+                if (t == tail) {
+                    break;
+                }
+            }
+        } else {
+            System.out.println("List is empty");
+        }
+    } // should word
+
+    Node_CLL Clone_CLL() {
+        if (!isEmpty()) {
+            return null;
+        } else {
+            Node_CLL new_tail = new Node_CLL(tail.getData(), null);
+            Node_CLL current_main = tail.getNext();
+            Node_CLL current_new = new_tail;
+
+            for (; current_main != tail;
+                 current_main = current_main.getNext()) {
+
+                Node_CLL new_node = new Node_CLL(current_main.getData(), null);
+                current_new.setNext(new_node);
+                current_new = new_node;
+            }
+
+            current_new.setNext(new_tail); //  current_new.setNext(new_tail.getNext());
+
+            return new_tail;
+        }
+    } // working
 
     public static void main(String[] args) {
-
+        CircularLinkedList_labClass list = new CircularLinkedList_labClass();
+        for (int i = 1; i < 6; i++) {
+//            list.addFirst(new data_CLL(i));
+            list.addLast(new data_CLL(i));
+        }
+        list.printList();
     }
 }
