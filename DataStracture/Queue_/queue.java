@@ -1,7 +1,5 @@
 package DataStracture.Queue_;
 
-import java.lang.classfile.components.ClassPrinter;
-
 class Queue_Array<T> {
     static class DATA<T> {
         private T data;
