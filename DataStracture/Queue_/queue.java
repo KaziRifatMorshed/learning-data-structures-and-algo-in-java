@@ -52,10 +52,11 @@ class Queue_Array<T> {
             /*first check; then change end_index; then assign element*/
             if (end_idx == (capacity - 1)) {
                 end_idx = 0;
-            } else {
-                end_idx++;
             }
-            queue[end_idx] = (DATA<T>) e;
+            // else {
+            //     end_idx++; // ------------------------------ UNNECESSARY, eta lage na
+            // }
+            queue[end_idx++] = (DATA<T>) e; // --------------------- end_idx++ korte vule giyechilam
         }
         current_size++;
     }
@@ -67,22 +68,31 @@ class Queue_Array<T> {
         } else {
             /*first receive and store; then check where is next index*/
             DATA<T> to_be_returned = queue[start_idx];
-            queue[start_idx] = null;
+            queue[start_idx++] = null; // ------------------------------ start_idx++ korte vule gesilam
             if (start_idx == (capacity - 1)) {
                 start_idx = 0;
-            } else {
-                start_idx++;
             }
+//            else {
+//                start_idx++; // -------------------------------------- eta lage na
+//            }
             current_size--;
             return to_be_returned;
         }
     }
 
     DATA<T> getFirst() {
-
+        if(isEmpty()){
+            return null;
+        } else {
+            return queue[start_idx];
+        }
     }
 
     DATA<T> getLast() {
-
+        if(isEmpty()){
+            return null;
+        } else {
+            return queue[end_idx];
+        }
     }
 }
