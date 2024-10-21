@@ -1,0 +1,28 @@
+import java.util.Stack;
+class Solution {
+    public boolean isValid(String equation) {
+        Stack<Character> stack_of_braces = new Stack<Character>();
+        for (int i = 0; i < equation.length(); i++) {
+            char ch = equation.charAt(i);
+            if (ch == '[' || ch == '{' || ch == '(') { /*opening, pushing*/
+                stack_of_braces.push(ch);
+                continue;
+            } else if (ch == ']' || ch == '}' || ch == ')') {
+                char top_ch = stack_of_braces.peek();
+                if ((top_ch == '[' && ch == ']') || (top_ch == '{' && ch == '}') || (top_ch == '(' && ch == ')')) {
+                    stack_of_braces.pop();
+                } else {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+}
+
+//total_testcases:
+//total_correct:
+//input_formatted:
+//expected_output:
+//code_output:
+//last_testcase:"["

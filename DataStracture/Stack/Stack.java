@@ -1,5 +1,8 @@
 package DataStracture.Stack;
 
+import java.util.Stack;
+import java.util.jar.JarEntry;
+
 class Stack_SLL {
     private static class Data {
         private int data;
@@ -276,6 +279,9 @@ class Stack_Array {
                 continue;
             } else if (ch == ']' || ch == '}' || ch == ')') {
                 char top_ch = stack_of_braces.getTop().getData();
+                if (stack_of_braces.isEmpty()){
+                    return false; // ----------------------- I forgot this :(
+                }
                 if ((top_ch == '[' && ch == ']') || (top_ch == '{' && ch == '}') || (top_ch == '(' && ch == ')')) {
                     stack_of_braces.pop();
                 } else {
@@ -287,6 +293,61 @@ class Stack_Array {
         System.out.println("Valid Equation");
         return true;
     } // DONE  // Hurrah !!!
+
+    static boolean checkEquationValidity_BOOK(String equation) {
+        final String opBraces = "({[";
+        final String closeBraces = ")}]";
+
+        java.util.Stack<Character> buffer = new Stack<Character>();
+
+        for (char c : equation.toCharArray()) {
+            if (opBraces.indexOf(c) != -1) {
+                buffer.push(c);
+            } else if (closeBraces.indexOf(c) != -1) {
+                if (buffer.isEmpty()) {
+                    return false;
+                }
+                if (opBraces.indexOf(buffer.pop()) != closeBraces.indexOf(c)) {
+                    return false;
+                }
+            }
+        }
+        return buffer.isEmpty(); // ------------------------------------------- CAREFUL
+    }
+
+    static boolean check_HTML_Validity_BOOK(String html) {
+        final char op = '<';
+        final char close = '>';
+
+        java.util.Stack<String> buffer = new Stack<String>();
+
+        for (int j = html.indexOf(op);
+             j != -1; /*termination condition*/
+             j = html.indexOf(op, j + 1)) {
+
+            int k = html.indexOf(close, j + 1);
+            if (k == -1) {
+                return false;
+            }
+
+            String tag = html.substring(j + 1, k);
+
+//            if (!tag.charAt(0) == '/'){ // opening tag
+            if (!tag.startsWith("/")) { // opening tag
+                buffer.push(tag);
+
+            } else { // closing tag
+
+                if (buffer.isEmpty()) {
+                    return false;
+                }
+                if (!buffer.pop().equals(tag)) {
+                    return false;
+                }
+            }
+        }
+        return buffer.isEmpty(); // ------------------------------------------- CAREFUL
+    }
 
     static int evaluatePostfixExpression(String equation) {
         Stack_Array stack_of_num = new Stack_Array();
