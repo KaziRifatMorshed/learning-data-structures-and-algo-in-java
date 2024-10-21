@@ -6,25 +6,25 @@
  <li>An integer <code>x</code>. </li>
 </ul>
 
-    <ul>
-    	<li>Record a new score of <code>x</code>.</li>
-    </ul>
-    </li>
-    <li><code>&#39;+&#39;</code>.
-    <ul>
-    	<li>Record a new score that is the sum of the previous two scores.</li>
-    </ul>
-    </li>
-    <li><code>&#39;D&#39;</code>.
-    <ul>
-    	<li>Record a new score that is the double of the previous score.</li>
-    </ul>
-    </li>
-    <li><code>&#39;C&#39;</code>.
-    <ul>
-    	<li>Invalidate the previous score, removing it from the record.</li>
-    </ul>
-    </li>
+<ul>
+    <li>Record a new score of <code>x</code>.</li>
+</ul>
+</li>
+<li><code>&#39;+&#39;</code>.
+<ul>
+    <li>Record a new score that is the sum of the previous two scores.</li>
+</ul>
+</li>
+<li><code>&#39;D&#39;</code>.
+<ul>
+    <li>Record a new score that is the double of the previous score.</li>
+</ul>
+</li>
+<li><code>&#39;C&#39;</code>.
+<ul>
+    <li>Invalidate the previous score, removing it from the record.</li>
+</ul>
+</li>
 
 
 <p>Return <em>the sum of all the scores on the record after applying all the operations</em>.</p>
