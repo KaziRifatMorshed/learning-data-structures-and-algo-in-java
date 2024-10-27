@@ -24,6 +24,6 @@ public class BinarySearchRecursive { // RECURSIVE BinarySearch
         int[] arr =
                 {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 15, 20, 50, 40, 80, 99,
                         101};
-        System.out.println(STR."number 20 is in position: \{BinarySearch(arr, 0, arr.length, 20)}"); // arr.length
+        System.out.println("number 20 is in position: " + BinarySearch(arr, 0, arr.length, 20)); // arr.length
     }
 }

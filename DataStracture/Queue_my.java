@@ -25,7 +25,7 @@ class Queue_my { // inefficient
         } else {
             queue_array[occupied_count] = new_data;
             occupied_count++;
-            System.out.println(STR."Added \{new_data} to queue");
+            System.out.println("Added " + new_data + " to queue");
         }
     }
 
@@ -39,15 +39,15 @@ class Queue_my { // inefficient
                 queue_array[i] = queue_array[i + 1];
             }
             occupied_count--; // UPDATE
-            System.out.println(STR."Removed \{value_to_return} from queue");
+            System.out.println("Removed " + value_to_return + " from queue");
             return value_to_return;
         }
     }
 
     private void print_whole_queue() {
-        System.out.print(STR."Printing Whole Queue : [ ");
+        System.out.print("Printing Whole Queue : [ ");
         for (int i = 0; i < occupied_count; i++) {
-            System.out.print(STR."\{queue_array[i]} ");
+            System.out.print(queue_array[i] + " ");
         }
         System.out.println("]");
     }

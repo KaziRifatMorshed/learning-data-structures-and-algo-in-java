@@ -21,7 +21,7 @@ class Stack_SLL {
 
         @Override
         public String toString() {
-            return STR."\{this.data}";
+            return String.valueOf(this.data);
         }
     } // copied from SLL
 
@@ -56,7 +56,7 @@ class Stack_SLL {
 
         @Override
         public String toString() {
-            return STR."\{data} ";
+            return data + " ";
         }
     } // copied from SLL
 
@@ -91,7 +91,7 @@ class Stack_SLL {
             }
             prev.setNext(null);
 
-            System.out.println(STR."data \{temp.getDataObj().getData()} has been popped out");
+            System.out.println("data " + temp.getDataObj().getData() + " has been popped out");
             return temp;
         }
         return null;
@@ -117,7 +117,7 @@ class Stack_SLL {
             last_node.next = new_node;
         }
         size++;
-        System.out.println(STR."data \{d.getData()} has been pushed to stack");
+        System.out.println("data " + d.getData() + " has been pushed to stack");
     } // completed
 
     boolean printStack() {
@@ -184,7 +184,7 @@ class Stack_Array {
 
         @Override
         public String toString() {
-            return STR."\{this.data} ";
+            return this.data + " ";
         }
     } // copied from SLL
 
@@ -222,11 +222,11 @@ class Stack_Array {
 
     void push(Data d) { // add last
         if (top_idx >= getCapacity()) {
-            System.out.println(STR."Stack Overflow !!! int \{d} failed to add");
+            System.out.println("Stack Overflow !!! int " + d + " failed to add");
         } else {
             top_idx++;
             stack[top_idx] = d;
-            System.out.println(STR."INSERTION: data \{d} has been pushed to stack");
+            System.out.println("INSERTION: data " + d + " has been pushed to stack");
         }
     } //
 
@@ -238,7 +238,7 @@ class Stack_Array {
             Data return_value = stack[top_idx];
             stack[top_idx] = null;
             top_idx--;
-            System.out.println(STR."DELETION: data \{return_value} has been popped");
+            System.out.println("DELETION: data " + return_value + " has been popped");
             return return_value;
         }
     }
@@ -263,7 +263,7 @@ class Stack_Array {
         } else {
             System.out.print("PRINTING: ( ");
             for (int i = 0; i <= top_idx; i++) {
-                System.out.print(STR."\{stack[i]}");
+                System.out.print(stack[i]);
             }
             System.out.println(")");
         }

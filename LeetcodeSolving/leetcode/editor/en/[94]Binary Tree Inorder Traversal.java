@@ -59,6 +59,9 @@ Follow up: Recursive solution is trivial, could you do it iteratively?
 */
 
 //leetcode submit region begin(Prohibit modification and deletion)
+
+import java.util.List;
+
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -74,9 +77,9 @@ Follow up: Recursive solution is trivial, could you do it iteratively?
  *     }
  * }
  */
-class Solution {
-    public List<Integer> inorderTraversal(TreeNode root) {
-        return null;
-    }
-}
+//class Solution {
+//    public List<Integer> inorderTraversal(TreeNode root) {
+//        return null;
+//    }
+//}
 //leetcode submit region end(Prohibit modification and deletion)
