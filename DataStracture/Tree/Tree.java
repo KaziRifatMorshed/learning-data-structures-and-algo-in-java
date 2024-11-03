@@ -1,5 +1,9 @@
 package DataStracture.Tree;
 
+import com.sun.source.tree.Tree;
+
+import javax.annotation.processing.SupportedSourceVersion;
+
 class Node<E> {
     E element;
     Node<E> parent, left, right;
@@ -55,4 +59,134 @@ class Node<E> {
 
 class LinkedBinaryTree<E> {
     Node<E> root;
+    int size = 0;
+
+    private Node<E> createNode(E data, Node parent, Node left, Node right) {
+        size++; // ----------------------------------------------------------------- farhan sir mistakenly skipped this
+        return new Node<E>(data, parent, left, right);
+    }
+
+    public Node<E> getRoot() {
+        return root;
+    }
+
+    public void setRoot(Node<E> root) {
+        this.root = root;
+    }
+
+    int getSize() {
+        return size;
+    }
+
+    boolean isEmpty() {
+        return size == 0;
+    }
+
+
+    public boolean isInternal(Node<E> node) {
+        return (node.getRight() != null) && (node.getRight() != null);
+    }
+
+    int numberOfChild(Node<E> node) {
+        if (node.getRight() == null && node.getLeft() == null) {
+            return 0;
+        } else if ((node.getLeft() == null && node.getRight() != null) || (node.getLeft() != null && node.getRight() == null)) {
+            return 1;
+        } else {
+            return 2;
+        }
+    }
+
+    Node<E> addRoot(E element) {
+        this.root = createNode(element, null, null, null);
+        this.size = 1;
+        return root;
+    }
+
+    Node<E> addLeft(Node<E> parent, E element) {
+        if (parent.getLeft() != null) {
+            System.out.println("Left is not empty.");
+            return null;
+        }
+        Node<E> child = new Node<E>(element, parent, null, null);  // ------------------------- 2nd parameter hisebe parent add korte vule jassilam
+        parent.setLeft(child);
+        return child;
+    }
+
+    Node<E> addRight(Node<E> parent, E element) {
+        if (parent.getRight() != null) {
+            System.out.println("Right is not empty");
+            return null;
+        }
+        Node<E> child = new Node<E>(element, parent, null, null);
+        parent.setRight(child);
+        return child;
+    }
+
+    //
+//    void set(Node<E> parent, E newElement) {
+//        parent.setElement(newElement);
+//    }
+    Node<E> set(Node<E> position, E newElement) {
+        position.setElement(newElement);
+        return position;
+    }
+
+    Node<E> updateNode(Node<E> position, E element) {
+        return set(position, element);
+    }
+
+    void resetTree() {
+        this.root = null;
+        this.size = 0;
+    }
+
+    // CAREFUL
+    boolean attach(Node<E> parent, LinkedBinaryTree<E> tree1, LinkedBinaryTree<E> tree2) {
+        if (isInternal(parent)) {
+            return false;
+        }
+
+        size += tree1.getSize() + tree2.getSize();
+
+        tree1.getRoot().setParent(parent);
+        parent.setLeft(tree1.getRoot());
+        tree1.resetTree();
+
+        tree2.getRoot().setParent(parent);
+        parent.setRight(tree2.getRoot());
+        tree2.resetTree();
+
+        return true;
+    }
+
+    Node<E> removeNode(Node<E> position) {
+
+
+//        return position; // ------------------------------------ Why amra position remove korbo na ?
+    }
+
+    void preOrderTraversal(Node<E> currentNode) {
+        if (currentNode != null) { // remember base case
+            System.out.println(currentNode.element + " ");
+            preOrderTraversal(currentNode.getLeft());
+            preOrderTraversal(currentNode.getRight());
+        }
+    }
+
+    void inOrderTraversal(Node<E> currentNode) {
+        if (currentNode != null) {
+            inOrderTraversal(currentNode.getLeft());
+            System.out.println(currentNode.element + " ");
+            inOrderTraversal(currentNode.getRight());
+        }
+    }
+
+    void postOrderTraversal(Node<E> currentNode) {
+        if (currentNode != null) {
+            postOrderTraversal(currentNode.getLeft());
+            postOrderTraversal(currentNode.getRight());
+            System.out.println(currentNode.element + " ");
+        }
+    }
 }
