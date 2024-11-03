@@ -50,7 +50,7 @@ class DoublyLinkedList {
             for (dNode p = head.next; p != null; p = p.next) { // linear search
                 if (p.next == null) { // লাস্টে কি না
                     new_node = new dNode(new_node_data, p, null);
-                    System.out.println(STR."new node data will be \{new_node_data} and it has become \{new_node.data}");
+                    System.out.println("new node data will be " + new_node_data + " and it has become " + new_node.data);
                     p.next = new_node;
                     return head;
                 }
@@ -95,7 +95,7 @@ class DoublyLinkedList {
         dNode p = head;
         System.out.print("Printing All Nodes once: ");
         while (p != null) {
-            System.out.print(STR."\{p.getData()} ");
+            System.out.print(p.getData() + " ");
             p = p.next;
         }
         System.out.println();
@@ -111,7 +111,7 @@ class DoublyLinkedList {
              * মিথ্যা হয়ে যাওয়ায় লুপের ভিতরে ঢুকে (মানে প্রিন্ট না করেই) লুপ থেকে বের হয়ে যেত
              * আর p = p.prev; এর জন্য লাস্ট নোড এ বসে তার আগের নোড কে ক্যাপচার করত
              * */
-            System.out.print(STR."\{p.getData()} ");
+            System.out.print(p.getData() + " ");
             if (p.next == null) { // use if for break inside the loop
                 p = p.prev;
                 break;
@@ -120,7 +120,7 @@ class DoublyLinkedList {
 
 
         while (p != null) {
-            System.out.print(STR."\{p.getData()} ");
+            System.out.print(p.getData() + " ");
             p = p.prev;
         }
         System.out.println();
@@ -135,7 +135,7 @@ class DoublyLinkedList {
 //        PrintAllNodesBoomerang(head);
 
         int k = 0;
-        System.out.println(STR."Deleting k = \{k} into the linked list...");
+        System.out.println("Deleting k = " + k + " into the linked list...");
         head = Delete_Node(head, k);
         PrintAllNodesBoomerang(head);
         PrintAllNodesOnce(head);

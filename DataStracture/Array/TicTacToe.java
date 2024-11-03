@@ -28,7 +28,7 @@ public class TicTacToe {
             throw new IllegalArgumentException("Invalid Board Position");
         }
         if (board[i][j] != EMPTY) {
-            throw new IllegalArgumentException(STR."Board position (\{i},\{j}) is already taken! (index started from zero)");
+            throw new IllegalArgumentException("Board position (" + i + "," + j + ") is already taken! (index started from zero)");
         }
         board[i][j] = current_player;
         switchPlayer();
@@ -103,6 +103,6 @@ public class TicTacToe {
         System.out.println(game);
 
         String[] outcome = {"O wins", "Tie", "X wins"};
-        System.out.println(STR."Result: \{outcome[1 + game.winner()]}");
+        System.out.println("Result: " + outcome[1 + game.winner()]);
     }
 } // DONE

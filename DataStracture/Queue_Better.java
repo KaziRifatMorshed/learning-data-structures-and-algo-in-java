@@ -34,7 +34,7 @@ class Queue {
             }
             Queue_array[end_idx] = new_data;
             occupied_count++;
-            System.out.println(STR."Added \{new_data} to Queue");
+            System.out.println("Added " + new_data + " to Queue");
         }
     }
 
@@ -47,16 +47,16 @@ class Queue {
                 start_idx = 0;
             }
             occupied_count--; // UPDATE
-            System.out.println(STR."Removed \{value_to_return} from Queue");
+            System.out.println("Removed " + value_to_return + " from Queue");
             return value_to_return;
         }
     }
 
     private void print_whole_Queue() {
 //        System.out.println(STR."Start IDX = \{start_idx}");
-        System.out.print(STR."Printing Whole Queue : [ ");
+        System.out.print("Printing Whole Queue : [ ");
         for (int i = start_idx, c = 0; c < occupied_count; i = (i + 1) % capacity, c++) { // i = (i + 1) % capacity GOOD IDEA
-            System.out.print(STR."\{Queue_array[i]} ");
+            System.out.print(Queue_array[i] + " ");
         }
         System.out.println("]");
     }

@@ -23,7 +23,7 @@ class SinglyLinkedList {
 
         @Override
         public String toString() {
-            return STR."\{this.data}";
+            return this.data + "";
         }
     }
 
@@ -58,7 +58,7 @@ class SinglyLinkedList {
 
         @Override
         public String toString() {
-            return STR."\{data} ";
+            return data + " ";
         }
     }
 
@@ -207,7 +207,7 @@ class SinglyLinkedList {
                      e2 = e2.getNext()) {
 
                     if (e1 == e2) { // same node, same pointer or same location
-                        System.out.println(STR."Merging element: \{e1.getDataObj()}");
+                        System.out.println("Merging element: " + e1.getDataObj());
                         return e1.getDataObj();
                     }
 

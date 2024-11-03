@@ -48,7 +48,7 @@ class test {
 // ====================================================================================
         System.out.print("Printing Stack from TOP to BOTTOM: ");
         for (int t = top - 1; t >= 0; t--) { // REMINDER:  int t = top - 1
-            System.out.print(STR."\{my_Stack[t].data} ");
+            System.out.print(my_Stack[t].data + " ");
         }
 
     } // WORKING PERFECTLY

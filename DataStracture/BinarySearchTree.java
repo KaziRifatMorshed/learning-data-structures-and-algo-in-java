@@ -46,7 +46,7 @@ class bstNode {
     }
 
     void PreOrder_Traversal() {
-        System.out.println(STR." \{this.data} ");
+        System.out.println(" " + this.data + " ");
         if (this.left != null) this.left.PreOrder_Traversal();
         if (this.right != null) this.right.PreOrder_Traversal();
     }
@@ -54,7 +54,7 @@ class bstNode {
     void PostOrder_Traversal() {
         if (this.left != null) this.left.PostOrder_Traversal();
         if (this.right != null) this.right.PostOrder_Traversal();
-        System.out.println(STR." \{this.data} ");
+        System.out.println(" " + this.data + " ");
     }
 }
 
@@ -124,7 +124,7 @@ class BinarySearchTree {
             return new bstNode(d); // not return null;
         }
         if (node.data == d) {
-            System.out.println(STR."\{d}Already Exists !");
+            System.out.println(d + "Already Exists !");
             return node;
         }
         if (d < node.data) {
@@ -174,7 +174,7 @@ class BinarySearchTree {
             return;
         }
         if (p.left == null && p.right == null) {
-            System.out.print(STR."\{p.data} ");
+            System.out.print(p.data + " ");
             return;
         }
 
@@ -193,7 +193,7 @@ class BinarySearchTree {
 
     static void inOrder_traverse(bstNode n) {
         if (n.left != null) inOrder_traverse(n.left);
-        System.out.println(STR." \{n.data} ");
+        System.out.println(" " + n.data + " ");
         if (n.right != null) inOrder_traverse(n.right);
     }
 
@@ -201,7 +201,7 @@ class BinarySearchTree {
     private static bstNode search_bst(bstNode n, int key) {
         if (n != null) {
             if (n.data == key) {
-                System.out.println(STR."Data \{key} has been FOUND !");
+                System.out.println("Data " + key + " has been FOUND !");
                 return n;
             }
             if (key < n.data) {

@@ -31,7 +31,7 @@ class GameEntry {
 
     @Override
     public String toString() {
-        return STR."Name: \{this.name},\tScored \{this.score}";
+        return "Name: " + this.name + ",\tScored " + this.score;
     }
 }
 
@@ -91,7 +91,7 @@ class ScoreBoard {
 
     GameEntry remove(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index > board.length) {
-            throw new IndexOutOfBoundsException(STR."Invalid Index \{index} has been inputted");
+            throw new IndexOutOfBoundsException("Invalid Index " + index + " has been inputted");
         }
         GameEntry to_bre_returned = board[index];
         int i = index;
@@ -104,17 +104,17 @@ class ScoreBoard {
     }
 
     void Hall_of_fame() {
-        System.out.println(STR."Scoreboard (\{numEntry}): ");
+        System.out.println("Scoreboard (" + numEntry + "): ");
         for (int i = 0; i < numEntry; i++) {
-            System.out.println(STR."\{i + 1}. \{this.board[i]}");
+            System.out.println(i + 1 + ". " + this.board[i]);
         }
         System.out.println();
     }
 
     static void Hall_of_fame(ScoreBoard b) {
-        System.out.println(STR."Scoreboard (\{b.numEntry}): ");
+        System.out.println("Scoreboard (" + b.numEntry + "): ");
         for (int i = 0; i < b.numEntry; i++) {
-            System.out.println(STR."\{i + 1}. \{b.board[i]}");
+            System.out.println(i + 1 + ". " + b.board[i]);
         }
         System.out.println();
     }

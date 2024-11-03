@@ -114,7 +114,7 @@ class Learning_two_dimension_array {
         Learning_two_dimension_array array = new Learning_two_dimension_array(3, 3);
         array.use_sample_array();
         array.print_arr();
-        System.out.println(STR."Sum of diagonal element is = \{array.calculate_sum_of_diagonal_elements()}");
+        System.out.println("Sum of diagonal element is = " + array.calculate_sum_of_diagonal_elements());
     }
 }
 

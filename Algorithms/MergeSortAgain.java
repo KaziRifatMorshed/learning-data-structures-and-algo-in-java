@@ -10,9 +10,9 @@ public class MergeSortAgain {
 //        int[] data = new int[]{-5, 20, 3, 9, 4, -4, 7, 2, 0, 45, 5, 8, 14, 5, 8, 4, 52};
         System.out.println("Merge Sort AGAIN");
         int[] data = new int[]{-5, 20, 3, 0, 9, 4, -4, 999};
-        System.out.println(STR."Given = \{Arrays.toString(data)}");
+        System.out.println("Given = " + Arrays.toString(data));
         mergeSort(data, 0, data.length - 1);
-        System.out.println(STR."After = \{Arrays.toString(data)}");
+        System.out.println("After = " + Arrays.toString(data));
     }
 
     public static void mergeSort(int[] data, int start, int end) {

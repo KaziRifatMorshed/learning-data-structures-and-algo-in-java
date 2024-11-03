@@ -15,7 +15,7 @@ public class Best_Three_Result {
                 }
             }
             float avg = (float) (sum - min) / 3;
-            System.out.println(STR."Student no :\{row_stu}, avg marks : \{avg}");
+            System.out.println("Student no :" + row_stu + ", avg marks : " + avg);
         }
     }
 } // DONE

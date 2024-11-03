@@ -14,7 +14,7 @@ class Node {
 
     @Override
     public String toString() {
-        return STR."Node{value=\{value}, next=\{next}\{'}'}";
+        return "Node{value=" + value + ", next=" + next + '}';
     }
 
 //    public Node(int v, Node n) { // THIS IS A BAD IDEA COZ WE DON.T KNOW WHO WILL BE NEXT in future
@@ -39,7 +39,7 @@ class Node {
 //        while (p.next != null) { // p.next হবে না । কারণ লুপের লাস্টে ইঙ্ক্রিমেন্ট করে নেক্সট কে ভ্যারিএবলে নিয়ে নেওয়ার আমাকে লুপ-স্টার্টিং কন্ডিশন চেকিং এ p.next চেক করা লাগবে না, p নাল কি না চেক করলেই হবে ।
         System.out.print("Printing Whole Linked List: ");
         while (p != null) {
-            System.out.print(STR."\{p.value} ");
+            System.out.print(p.value + " ");
             p = p.next;
         }
         System.out.println();

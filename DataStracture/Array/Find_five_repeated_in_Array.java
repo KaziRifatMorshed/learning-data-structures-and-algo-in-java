@@ -17,7 +17,7 @@ public class Find_five_repeated_in_Array {
             for (int j = i + 1; j < data.length; j++) {
                 if (data[i] == data[j]) { // repetition found
                     repeated_elements[repeated_elements_count++] = data[j];
-                    System.out.println(STR."Repetition found for \{data[j]}");
+                    System.out.println("Repetition found for " + data[j]);
                 }
             }
         }

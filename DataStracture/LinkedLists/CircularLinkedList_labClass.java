@@ -20,7 +20,7 @@ class CircularLinkedList_labClass implements Cloneable {
 
         @Override
         public String toString() {
-            return STR."\{this.data}";
+            return this.data + "";
         }
     }
 
@@ -55,7 +55,7 @@ class CircularLinkedList_labClass implements Cloneable {
 
         @Override
         public String toString() {
-            return STR."\{data} ";
+            return data + " ";
         }
     }
 

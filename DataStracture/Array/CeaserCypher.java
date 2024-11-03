@@ -51,10 +51,10 @@ public class CeaserCypher {
         Scanner scanner = new Scanner(System.in);
         String user_input = scanner.nextLine();
 
-        System.out.println(STR."Encoder: \{new String(ceaserCypher.getEncoder())}"); // new String()
-        System.out.println(STR."Decoder: \{new String(ceaserCypher.getDecoder())}");
-        System.out.println(STR."Original user inputted msg : \{user_input}");
-        System.out.println(STR."After encryption, the msg is : \{ceaserCypher.encode(user_input.toUpperCase())}");
+        System.out.println("Encoder: " + new String(ceaserCypher.getEncoder())); // new String()
+        System.out.println("Decoder: " + new String(ceaserCypher.getDecoder()));
+        System.out.println("Original user inputted msg : " + user_input);
+        System.out.println("After encryption, the msg is : " + ceaserCypher.encode(user_input.toUpperCase()));
     }
 } // DONE
 

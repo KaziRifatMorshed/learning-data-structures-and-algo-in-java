@@ -32,7 +32,7 @@ class CircularLinkedList<E> { // remember to <E>
 
         @Override
         public String toString() {
-            return STR."node data = \{element}";
+            return "node data = " + element;
         }
 
     }

@@ -18,7 +18,7 @@ class SinglyLinkedList {
 
         @Override
         public String toString() {
-            return STR."\{this.data}";
+            return this.data + "";
         }
     }
 
@@ -53,7 +53,7 @@ class SinglyLinkedList {
 
         @Override
         public String toString() {
-            return STR."\{data} ";
+            return data + " ";
         }
     }
 

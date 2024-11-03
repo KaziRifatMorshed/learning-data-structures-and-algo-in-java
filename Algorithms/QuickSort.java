@@ -6,9 +6,9 @@ public class QuickSort {
     public static void main(String[] args) {
 //        int[] data = new int[]{-5, 20, 3, 9, 4, -4, 7, 2, 0, 45, 5, 8, 14, 5, 8, 4, 52};
         int[] data = new int[]{-5, 20, 0, -999, 3, 9, 4, -4};
-        System.out.println(STR."Before = \{Arrays.toString(data)}");
+        System.out.println("Before = " + Arrays.toString(data));
         quickSort(data, 0, data.length - 1); // remember, passing INDEX
-        System.out.println(STR."After = \{Arrays.toString(data)}");
+        System.out.println("After = " + Arrays.toString(data));
     }
 
     private static void quickSort(int[] data, int low, int high) {

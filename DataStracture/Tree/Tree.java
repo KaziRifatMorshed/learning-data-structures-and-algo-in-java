@@ -104,7 +104,7 @@ class LinkedBinaryTree<E> {
     }
 
     Node<E> addLeft(Node<E> parent, E element) {
-        if (parent.getLeft() != null) {
+        if (parent != null && parent.getLeft() != null) {
             System.out.println("Left is not empty.");
             return null;
         }
@@ -114,7 +114,7 @@ class LinkedBinaryTree<E> {
     }
 
     Node<E> addRight(Node<E> parent, E element) {
-        if (parent.getRight() != null) {
+        if (parent != null && parent.getRight() != null) {
             System.out.println("Right is not empty");
             return null;
         }
@@ -160,15 +160,46 @@ class LinkedBinaryTree<E> {
         return true;
     }
 
-    Node<E> removeNode(Node<E> position) {
 
+    // may feel difficult
+    Node<E> removeNode(Node<E> target) {
 
-//        return position; // ------------------------------------ Why amra position remove korbo na ?
+        if (numberOfChild(target) == 2) { // যদি দুইটা চাইল্ড থাকে তাহলে রিমুভ করব না , কিন্তু কেন
+            return null;
+        }
+
+        Node<E> child = (target.getLeft() != null) ? target.getLeft() : target.getRight();
+
+        if (child != null) {
+            child.setParent(target.getParent()); //
+        }
+        if (target == root) {
+            root = child;
+            // আমি ডিলেট করার জন্য যে নোড পাস করেছি সেটা যদি রুট হয়ে
+            // রুটের দুটা চাইল্ড থাকলে ডিলেট করতে পারব না , যেটা আগেই চেক করে এসেছি
+            //
+        } else {
+            Node<E> targetParent = target.getParent();
+            if (target == targetParent.getLeft()) {
+                targetParent.setLeft(child);
+            } else if (target == targetParent.getRight()) {
+                targetParent.setRight(child);
+            }
+        }
+
+        size--;
+        target.setElement(null);
+        target.setParent(null);
+        target.setLeft(null);
+        target.setRight(null);
+
+        //        return position; // ------------------------------------ Why amra position remove korbo na ?
+        return child;
     }
 
     void preOrderTraversal(Node<E> currentNode) {
         if (currentNode != null) { // remember base case
-            System.out.println(currentNode.element + " ");
+            System.out.print(currentNode.element + " ");
             preOrderTraversal(currentNode.getLeft());
             preOrderTraversal(currentNode.getRight());
         }
@@ -177,7 +208,7 @@ class LinkedBinaryTree<E> {
     void inOrderTraversal(Node<E> currentNode) {
         if (currentNode != null) {
             inOrderTraversal(currentNode.getLeft());
-            System.out.println(currentNode.element + " ");
+            System.out.print(currentNode.element + " ");
             inOrderTraversal(currentNode.getRight());
         }
     }
@@ -186,7 +217,28 @@ class LinkedBinaryTree<E> {
         if (currentNode != null) {
             postOrderTraversal(currentNode.getLeft());
             postOrderTraversal(currentNode.getRight());
-            System.out.println(currentNode.element + " ");
+            System.out.print(currentNode.element + " ");
         }
+    }
+}
+
+class TestLinkedBinaryTree {
+    public static void main(String[] args) {
+        LinkedBinaryTree<Integer> tree1 = new LinkedBinaryTree<>();
+
+        Node<Integer> rootNode = tree1.addRoot(1); // --------------------------------- root node ke ekta variable er vitore rakhtesi
+        Node<Integer> currentNode = tree1.addLeft(rootNode, 2);
+        currentNode = tree1.addLeft(currentNode, 4);
+        currentNode = tree1.addRight(currentNode.getParent(), 5);
+        currentNode = tree1.addRight(rootNode, 3);
+        currentNode = tree1.addLeft(currentNode, 6);
+        currentNode = tree1.addRight(currentNode.getParent(), 7);
+
+        tree1.preOrderTraversal(rootNode);
+        System.out.println();
+        tree1.inOrderTraversal(rootNode);
+        System.out.println();
+        tree1.postOrderTraversal(rootNode);
+
     }
 }

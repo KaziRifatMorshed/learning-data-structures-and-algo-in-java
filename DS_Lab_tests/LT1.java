@@ -31,7 +31,7 @@ class gameEntry {
 
     @Override
     public String toString() {
-        return STR."\{name} \{score}";
+        return name + " " + score;
     }
 }
 
@@ -60,7 +60,7 @@ class ScoreBoard {
 
     gameEntry remove(int index) throws IndexOutOfBoundsException {
         if (index < 0 || index > board.length) {
-            throw new IndexOutOfBoundsException(STR."Invalid Index \{index} has been inputted");
+            throw new IndexOutOfBoundsException("Invalid Index " + index + " has been inputted");
         }
         gameEntry to_bre_returned = board[index];
         int i = index;

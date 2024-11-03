@@ -16,7 +16,7 @@ class Stack_LinkedList {
 
     @Override
     public String toString() {
-        return STR."\{data} ";
+        return data + " ";
     }
 
     Stack_LinkedList Push_to_stack(Stack_LinkedList t, int new_data) {
