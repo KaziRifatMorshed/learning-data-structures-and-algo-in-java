@@ -1,8 +1,9 @@
 package DataStracture.Tree;
 
-import com.sun.source.tree.Tree;
 
-import javax.annotation.processing.SupportedSourceVersion;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 class Node<E> {
     E element;
@@ -108,7 +109,7 @@ class LinkedBinaryTree<E> {
             System.out.println("Left is not empty.");
             return null;
         }
-        Node<E> child = new Node<E>(element, parent, null, null);  // ------------------------- 2nd parameter hisebe parent add korte vule jassilam
+        Node<E> child = new Node<E>(element, parent, null, null);  // ------------------------- 2nd parameter hisebe parent add korte vule jassilamPosition
         parent.setLeft(child);
         return child;
     }
@@ -222,11 +223,107 @@ class LinkedBinaryTree<E> {
     }
 }
 
+//class DrawingTree<E> extends LinkedBinaryTree<E> {
+//    public static <E> int layout(Node<E> T, Position<E> p, int d, int x) {
+//        if (T.getLeft(p)){
+//
+//        }
+//        return x;
+//    }
+//}
+
+class BTreePrinter {
+    // this class is copied from https://stackoverflow.com/a/4973083/15236351
+    private static <T extends Comparable<?>> void printNodeInternal(List<Node<T>> nodes, int level, int maxLevel) {
+        if (nodes.isEmpty() || BTreePrinter.isAllElementsNull(nodes))
+            return;
+
+        int floor = maxLevel - level;
+        int endgeLines = (int) Math.pow(2, (Math.max(floor - 1, 0)));
+        int firstSpaces = (int) Math.pow(2, (floor)) - 1;
+        int betweenSpaces = (int) Math.pow(2, (floor + 1)) - 1;
+
+        BTreePrinter.printWhitespaces(firstSpaces);
+
+        List<Node<T>> newNodes = new ArrayList<>();
+        for (Node<T> node : nodes) {
+            if (node != null) {
+                System.out.print(node.element);
+                newNodes.add(node.left);
+                newNodes.add(node.right);
+            } else {
+                newNodes.add(null);
+                newNodes.add(null);
+                System.out.print(" ");
+            }
+
+            BTreePrinter.printWhitespaces(betweenSpaces);
+        }
+        System.out.println("");
+
+        for (int i = 1; i <= endgeLines; i++) {
+            for (int j = 0; j < nodes.size(); j++) {
+                BTreePrinter.printWhitespaces(firstSpaces - i);
+                if (nodes.get(j) == null) {
+                    BTreePrinter.printWhitespaces(endgeLines + endgeLines + i + 1);
+                    continue;
+                }
+
+                if (nodes.get(j).left != null)
+                    System.out.print("/");
+                else
+                    BTreePrinter.printWhitespaces(1);
+
+                BTreePrinter.printWhitespaces(i + i - 1);
+
+                if (nodes.get(j).right != null)
+                    System.out.print("\\");
+                else
+                    BTreePrinter.printWhitespaces(1);
+
+                BTreePrinter.printWhitespaces(endgeLines + endgeLines - i);
+            }
+
+            System.out.println("");
+        }
+
+        printNodeInternal(newNodes, level + 1, maxLevel);
+    }
+
+    public static <T extends Comparable<?>> void printNode(Node<T> root) {
+        int maxLevel = BTreePrinter.maxLevel(root);
+
+        printNodeInternal(Collections.singletonList(root), 1, maxLevel);
+    }
+
+    private static void printWhitespaces(int count) {
+        for (int i = 0; i < count; i++)
+            System.out.print(" ");
+    }
+
+    private static <T extends Comparable<?>> int maxLevel(Node<T> node) {
+        if (node == null)
+            return 0;
+
+        return Math.max(BTreePrinter.maxLevel(node.left), BTreePrinter.maxLevel(node.right)) + 1;
+    }
+
+    private static <T> boolean isAllElementsNull(List<T> list) {
+        for (Object object : list) {
+            if (object != null)
+                return false;
+        }
+
+        return true;
+    }
+
+}
+
 class TestLinkedBinaryTree {
     public static void main(String[] args) {
         LinkedBinaryTree<Integer> tree1 = new LinkedBinaryTree<>();
 
-        Node<Integer> rootNode = tree1.addRoot(1); // --------------------------------- root node ke ekta variable er vitore rakhtesi
+        Node<Integer> rootNode = tree1.addRoot(1); // ------------ root node ke ekta variable er vitore rakhtesi
         Node<Integer> currentNode = tree1.addLeft(rootNode, 2);
         currentNode = tree1.addLeft(currentNode, 4);
         currentNode = tree1.addRight(currentNode.getParent(), 5);
@@ -239,6 +336,8 @@ class TestLinkedBinaryTree {
         tree1.inOrderTraversal(rootNode);
         System.out.println();
         tree1.postOrderTraversal(rootNode);
+        System.out.println();
 
+        BTreePrinter.printNode(rootNode);
     }
 }
