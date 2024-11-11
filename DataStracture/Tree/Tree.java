@@ -68,7 +68,7 @@ class LinkedBinaryTree<E> {
     }
 
     public Node<E> getRoot() {
-        return root;
+        return this.root;
     }
 
     public void setRoot(Node<E> root) {
@@ -221,6 +221,121 @@ class LinkedBinaryTree<E> {
             System.out.print(currentNode.element + " ");
         }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /*
+    8.5
+    Describe an algorithm, relying only on the BinaryTree operations, that counts the
+    number of leaves in a binary tree that are the left child of their respective parent.
+    */
+    int countLeftLeaves(Node<E> n) {
+        if (n == null) {
+            return 0;
+        } else {
+            int count = 0;
+//            if ((n.getLeft() != null && n.getRight() == null) && // ------------- "&& n.getRight() == null)" হবে না
+            if ((n.getLeft() != null) && (n.getLeft().getLeft() == null && n.getLeft().getRight() == null)) {
+                count++;
+            }
+            return count + countLeftLeaves(n.getLeft()) + countLeftLeaves(n.getRight());
+        }
+    } // DONE
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /*
+        Two ordered trees T` and T`` are said to be isomorphic if one of the following
+        holds:
+        • Both T` and T`` are empty.
+        • Both T` and T`` consist of a single node
+        • The th roots of T` and T`` have the same number th k ≥ 1 of subtrees, and the
+        i-th such subtree of T` is isomorphic to the i-th such subtree of T`` for i = 1, ... , k.
+        Design an algorithm that tests whether two given ordered trees are isomorphic.
+        What is the running time of your algorithm?
+    * */
+    boolean isIsomorphic(Node<E> m, Node<E> n) {
+        if (m == null && n == null) { // base case
+            return true;
+        }
+        if ((m != null && n == null) || (m == null && n != null)) { // base case
+//        if (m == null || n == null) { // base case
+            return false;
+        }
+        if (!m.getElement().equals(n.getElement())) {
+            return false;
+        }
+        return isIsomorphic(m.getLeft(), n.getLeft()) && isIsomorphic(m.getRight(), n.getRight());
+    } // WORKING but NOT SURE ABOUT EDGE CASE
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/*
+    C-8.27
+    Describe an efficient algorithm for converting a fully balanced string of paren-theses
+    into an equivalent tree. The tree associated with such a string is defined
+    recursively. The outermost pair of balanced parentheses is associated with the
+    root and each substring inside this pair, defined by the substring between two
+    balanced parentheses, is associated with a subtree of this root.
+* */ // HARD
+
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /*C-8.28
+    The path length of a tree T is the sum of the depths of all positions in T . Describe
+    a linear-time method for computing the path length of a tree T .
+    */
+    int calculatePathLength() {
+        return _calculatePathLength(root, 0);
+    }
+
+    private int _calculatePathLength(Node<E> n, int d) {
+        if (n == null) {
+            return 0;
+        }
+        return d + _calculatePathLength(n.getLeft(), d + 1) + _calculatePathLength(n.getRight(), d + 1);
+    } // SHOULD WORK
+
+    int calculateInternalPathLength() {
+        return _calculateInternalPathLength(this.getRoot(), 0);
+    }
+
+    private int _calculateInternalPathLength(Node<E> n, int d) {
+        if (n == null) {
+            return 0;
+        }
+        int pathLength = 0;
+        if (isInternal(n)) {
+            pathLength += d;
+        }
+        return d + _calculateInternalPathLength(n.getLeft(), d + 1) + _calculateInternalPathLength(n.getRight(), d + 1);
+    } // Should Work
+
+    /*
+    Count number of nodes in a subtree
+    */
+    int countNodes(Node<E> n) {
+        if (n == null) {
+            return 0;
+        }
+        return 1 + countNodes(n.getLeft()) + countNodes(n.getRight());
+    }
+
+    /*
+    * C-8.36 Add support in LinkedBinaryTree for a method, pruneSubtree(p), that removes
+    the entire subtree rooted at position p, making sure to maintain an accurate count
+    of the size of the tree. What is the running time of your implementation?
+    * */
+    void pruneSubtree(Node<E> p) {
+        if (p != null) {
+            pruneSubtree(p.getLeft());
+            pruneSubtree(p.getRight());
+            p.setLeft(null);
+            p.setRight(null);
+        }
+    }
+
 }
 
 //class DrawingTree<E> extends LinkedBinaryTree<E> {
@@ -235,8 +350,7 @@ class LinkedBinaryTree<E> {
 class BTreePrinter {
     // this class is copied from https://stackoverflow.com/a/4973083/15236351
     private static <T extends Comparable<?>> void printNodeInternal(List<Node<T>> nodes, int level, int maxLevel) {
-        if (nodes.isEmpty() || BTreePrinter.isAllElementsNull(nodes))
-            return;
+        if (nodes.isEmpty() || BTreePrinter.isAllElementsNull(nodes)) return;
 
         int floor = maxLevel - level;
         int endgeLines = (int) Math.pow(2, (Math.max(floor - 1, 0)));
@@ -269,17 +383,13 @@ class BTreePrinter {
                     continue;
                 }
 
-                if (nodes.get(j).left != null)
-                    System.out.print("/");
-                else
-                    BTreePrinter.printWhitespaces(1);
+                if (nodes.get(j).left != null) System.out.print("/");
+                else BTreePrinter.printWhitespaces(1);
 
                 BTreePrinter.printWhitespaces(i + i - 1);
 
-                if (nodes.get(j).right != null)
-                    System.out.print("\\");
-                else
-                    BTreePrinter.printWhitespaces(1);
+                if (nodes.get(j).right != null) System.out.print("\\");
+                else BTreePrinter.printWhitespaces(1);
 
                 BTreePrinter.printWhitespaces(endgeLines + endgeLines - i);
             }
@@ -302,16 +412,14 @@ class BTreePrinter {
     }
 
     private static <T extends Comparable<?>> int maxLevel(Node<T> node) {
-        if (node == null)
-            return 0;
+        if (node == null) return 0;
 
         return Math.max(BTreePrinter.maxLevel(node.left), BTreePrinter.maxLevel(node.right)) + 1;
     }
 
     private static <T> boolean isAllElementsNull(List<T> list) {
         for (Object object : list) {
-            if (object != null)
-                return false;
+            if (object != null) return false;
         }
 
         return true;
@@ -319,25 +427,45 @@ class BTreePrinter {
 
 }
 
+
 class TestLinkedBinaryTree {
     public static void main(String[] args) {
-        LinkedBinaryTree<Integer> tree1 = new LinkedBinaryTree<>();
 
-        Node<Integer> rootNode = tree1.addRoot(1); // ------------ root node ke ekta variable er vitore rakhtesi
-        Node<Integer> currentNode = tree1.addLeft(rootNode, 2);
+        LinkedBinaryTree<Integer> tree1 = new LinkedBinaryTree<>();
+        Node<Integer> rootNode1 = tree1.addRoot(1); // ------------ root node ke ekta variable er vitore rakhtesi
+        Node<Integer> currentNode = tree1.addLeft(rootNode1, 2);
         currentNode = tree1.addLeft(currentNode, 4);
         currentNode = tree1.addRight(currentNode.getParent(), 5);
-        currentNode = tree1.addRight(rootNode, 3);
+        currentNode = tree1.addRight(rootNode1, 3);
         currentNode = tree1.addLeft(currentNode, 6);
         currentNode = tree1.addRight(currentNode.getParent(), 7);
 
-        tree1.preOrderTraversal(rootNode);
-        System.out.println();
-        tree1.inOrderTraversal(rootNode);
-        System.out.println();
-        tree1.postOrderTraversal(rootNode);
-        System.out.println();
+        LinkedBinaryTree<Integer> tree2 = new LinkedBinaryTree<>();
+        Node<Integer> rootNode2 = tree2.addRoot(1); // ------------ root node ke ekta variable er vitore rakhtesi
+        Node<Integer> currentNode2 = tree2.addLeft(rootNode2, 2);
+        currentNode2 = tree2.addLeft(currentNode2, 4);
+        currentNode2 = tree2.addRight(currentNode2.getParent(), 5);
+        currentNode2 = tree2.addRight(rootNode2, 3);
+        currentNode2 = tree2.addLeft(currentNode2, 6);
+        currentNode2 = tree2.addRight(currentNode2.getParent(), 7);
 
-        BTreePrinter.printNode(rootNode);
+//        tree1.preOrderTraversal(rootNode1);
+//        System.out.println();
+//        tree1.inOrderTraversal(rootNode1);
+//        System.out.println();
+//        tree1.postOrderTraversal(rootNode1);
+//        System.out.println();
+//        tree1.preOrderTraversal(rootNode2);
+//        System.out.println();
+//        tree1.inOrderTraversal(rootNode2);
+//        System.out.println();
+//        tree1.postOrderTraversal(rootNode2);
+//        System.out.println();
+
+        BTreePrinter.printNode(tree1.getRoot());
+        BTreePrinter.printNode(tree2.getRoot());
+//        System.out.println(tree1.countLeftLeaves(tree1.getRoot()));
+        System.out.println(tree1.isIsomorphic(tree1.getRoot(), tree2.getRoot()));
+        System.out.println(tree1.countNodes(tree1.getRoot()));
     }
 }
