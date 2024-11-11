@@ -312,15 +312,15 @@ class LinkedBinaryTree<E> {
         return d + _calculateInternalPathLength(n.getLeft(), d + 1) + _calculateInternalPathLength(n.getRight(), d + 1);
     } // Should Work
 
+
     /*
     Count number of nodes in a subtree
     */
     int countNodes(Node<E> n) {
-        if (n == null) {
-            return 0;
-        }
+        if (n == null) return 0;
         return 1 + countNodes(n.getLeft()) + countNodes(n.getRight());
     }
+
 
     /*
     * C-8.36 Add support in LinkedBinaryTree for a method, pruneSubtree(p), that removes
@@ -328,11 +328,28 @@ class LinkedBinaryTree<E> {
     of the size of the tree. What is the running time of your implementation?
     * */
     void pruneSubtree(Node<E> p) {
+        size -= countNodes(p);
+        Node<E> parent = p.getParent();
+        if (parent != null) {
+            if (parent.getLeft() == p) {
+                parent.setLeft(null);
+            } else if (parent.getRight() == p) {
+                parent.setRight(null);
+            }
+        } else { // root node does not have any parent
+            // If p is the root, set the root to null to prune the whole tree
+            this.setRoot(null);
+        }
+        _pruneSubtree(p);
+    }
+
+    void _pruneSubtree(Node<E> p) {
         if (p != null) {
-            pruneSubtree(p.getLeft());
-            pruneSubtree(p.getRight());
+            _pruneSubtree(p.getLeft());
+            _pruneSubtree(p.getRight());
             p.setLeft(null);
             p.setRight(null);
+            p.setParent(null);
         }
     }
 

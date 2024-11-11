@@ -1,21 +1,20 @@
 package DataStracture.Stack;
 
 import java.util.Stack;
-import java.util.jar.JarEntry;
 
-class Stack_SLL {
-    private static class Data {
-        private int data;
+class Stack_SLL<E> {
+    private static class Data<E> {
+        private E data;
 
-        public Data(int data) {
+        public Data(E data) {
             this.data = data;
         }
 
-        public int getData() {
+        public E getData() {
             return data;
         }
 
-        public void setData(int data) {
+        public void setData(E data) {
             this.data = data;
         }
 
@@ -25,16 +24,16 @@ class Stack_SLL {
         }
     } // copied from SLL
 
-    private static class Node_Stack {
-        private Data data;
-        private Node_Stack next;
+    private static class Node_Stack<E> {
+        private Data<E> data;
+        private Node_Stack<E> next;
 
-        public Node_Stack(Data data, Node_Stack next) {
+        public Node_Stack(Data<E> data, Node_Stack<E> next) {
             this.data = data;
             this.next = next;
         }
 
-        public Node_Stack(Data data) {
+        public Node_Stack(Data<E> data) {
             this.data = data;
         }
 
@@ -76,14 +75,14 @@ class Stack_SLL {
         return size;
     }
 
-    Node_Stack pop() { // copied from SLL
+    Node_Stack<E> pop() { // copied from SLL
         if (isEmpty()) {
             System.out.println("Stack is empty");
         } else if (getSize() == 1) {
             head = null;
             size = 0;
         } else {
-            Node_Stack temp = head, prev = head;
+            Node_Stack<E> temp = head, prev = head;
 
 //            for (; temp != null; temp = temp.getNext()) {
             for (; temp.getNext() != null; temp = temp.getNext()) {
@@ -97,11 +96,11 @@ class Stack_SLL {
         return null;
     }
 
-    Node_Stack getLast() { // copied from SLL
+    Node_Stack<E> getLast() { // copied from SLL
         if (head == null) {
             return null; // ------------------------------------------------ I missed this
         }
-        Node_Stack current = head;
+        Node_Stack<E> current = head;
         while (current.next != null) {
             current = current.next;
         }
@@ -125,7 +124,7 @@ class Stack_SLL {
             return false;
         } else {
             System.out.print("Printing stack : ( ");
-            for (Node_Stack i = head; i != null; i = i.getNext()) {
+            for (Node_Stack<E> i = head; i != null; i = i.getNext()) {
                 System.out.print(i);
             }
             System.out.println(")");
@@ -134,11 +133,11 @@ class Stack_SLL {
     } // works
 
     public static void main(String[] args) {
-        Stack_SLL list2 = new Stack_SLL();
+        Stack_SLL<Integer> list2 = new Stack_SLL<>();
         int[] arr2 = {1, 2, 3, 4, 5};
 
         for (int i = 0; i < arr2.length; i++) {
-            list2.push(new Data(arr2[i]));
+            list2.push(new Data<>(arr2[i]));
         }
 
         list2.printStack();
@@ -279,7 +278,7 @@ class Stack_Array {
                 continue;
             } else if (ch == ']' || ch == '}' || ch == ')') {
                 char top_ch = stack_of_braces.getTop().getData();
-                if (stack_of_braces.isEmpty()){
+                if (stack_of_braces.isEmpty()) {
                     return false; // ----------------------- I forgot this :(
                 }
                 if ((top_ch == '[' && ch == ']') || (top_ch == '{' && ch == '}') || (top_ch == '(' && ch == ')')) {
