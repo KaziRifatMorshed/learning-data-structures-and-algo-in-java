@@ -247,7 +247,6 @@ class Stack_Array {
             return null;
         } else {
             Data return_value = stack[top_idx];
-            stack[top_idx] = null;
             return return_value;
         }
     }
