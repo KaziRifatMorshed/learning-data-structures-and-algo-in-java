@@ -314,8 +314,8 @@ class LinkedBinaryTree<E> {
         }
         while (!stack.isEmpty()) {
             Node<E> top = stack.getTop();
-            if ((int) top.getElement() == 0) {
-                System.out.println(top + " ");
+            if ((int) top.getElement() != 0) {
+                System.out.print(top + " ");
             }
             visited.add(top);
 
@@ -340,6 +340,7 @@ class test {
         LinkedBinaryTree<Integer> tree1 = new LinkedBinaryTree<>();
         tree1.createTree(arr1);
 //        BTreePrinter.printNode(tree1.getRoot());
+        tree1.eulerTourTraversal(0);
     }
 }
 
