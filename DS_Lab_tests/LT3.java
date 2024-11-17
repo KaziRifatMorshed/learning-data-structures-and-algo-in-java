@@ -202,10 +202,7 @@ class LinkedBinaryTree<E> {
         return parent; // returning parent, not child
     }
 
-    //
-//    void set(Node<E> parent, E newElement) {
-//        parent.setElement(newElement);
-//    }
+
     Node<E> set(Node<E> position, E newElement) {
         position.setElement(newElement);
         return position;
@@ -282,13 +279,15 @@ class LinkedBinaryTree<E> {
         int arrLen = arr.length;
         Node<E> rootNode = this.addRoot(arr[0]);
         Node<E> temp = this.getRoot();
+//        Integer[] arr1 = {1, 5, 0, 4, 0, 0, 0, 2, 3};
 
+//        for (int i = 0; i <= Math.sqrt(arrLen); i = i * 2 + 1) {
         for (int i = 0; i <= Math.sqrt(arrLen); i = i * 2 + 1) {
             temp = this.addLeft(temp, arr[(i * 2) + 1]);// returning parent, not child
             temp = this.addRight(temp, arr[(i * 2) + 2]);// returning parent, not child
             temp = temp.getLeft();
         }
-    }
+    } // tree creation error
 
     void eulerTourTraversal(int index) {
         Node<E> temp = this.getRoot();
@@ -314,6 +313,9 @@ class LinkedBinaryTree<E> {
         }
         while (!stack.isEmpty()) {
             Node<E> top = stack.getTop();
+            if ((int) top.getElement() == 0) {
+                stack.pop(); // this one line solved the issue of multiple printing
+            }
             if ((int) top.getElement() != 0) {
                 System.out.print(top + " ");
             }
@@ -328,7 +330,7 @@ class LinkedBinaryTree<E> {
             }
         }
 
-    }
+    } // working file
 }
 
 
@@ -339,8 +341,8 @@ class test {
         Integer[] arr1 = {1, 5, 0, 4, 0, 0, 0, 2, 3};
         LinkedBinaryTree<Integer> tree1 = new LinkedBinaryTree<>();
         tree1.createTree(arr1);
-//        BTreePrinter.printNode(tree1.getRoot());
-        tree1.eulerTourTraversal(0);
+        BTreePrinter.printNode(tree1.getRoot());
+        tree1.eulerTourTraversal(1);
     }
 }
 
