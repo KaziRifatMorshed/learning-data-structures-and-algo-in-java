@@ -4,6 +4,7 @@ package DataStructure.Tree;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Stack;
 
 class Node<E> {
     E element;
@@ -353,16 +354,86 @@ class LinkedBinaryTree<E> {
         }
     }
 
+    ///////////////////////////////////////////////////////////////////////////////////////
+
+    // Array Based Tree to Linked Tree
+
+    void createTreeRecursive_Main(E[] arr) {
+        int arrLen = arr.length;
+        Node<E> rootNode = this.addRoot(arr[0]);
+        createTreeRecursive(rootNode, arr, 0);
+    } // PROTOTYPE
+
+    void createTreeRecursive(Node<E> node, E[] arr, int arr_idx) {
+
+        // if (!(arr_idx <= Math.sqrt(arr.length))) { // ---------------- think simple
+        if ((arr_idx > arr.length) || node == null) {
+            return;
+        }
+
+        int leftIdx = (arr_idx * 2) + 1;
+        if (leftIdx < arr.length) {
+            Node<E> leftChild = this.addLeft(node, arr[leftIdx]);
+            createTreeRecursive(leftChild, arr, leftIdx);
+        }
+
+        int rightIdx = (arr_idx * 2) + 2;
+        if (rightIdx < arr.length) {
+            Node<E> rightChild = this.addRight(node, arr[rightIdx]);
+            createTreeRecursive(rightChild, arr, rightIdx);
+        }
+
+    } // WORKING
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+
+    //    Euler Tour Traversal
+
+    void eulerTourTraversal(int index) {
+        Node<E> temp = this.getRoot();
+
+        // team will reach desired index
+        for (int i = 1; i <= index; i++) {
+            if (temp.getLeft() != null) {
+                temp = temp.getLeft();
+            } else if (temp.getRight() != null) {
+                temp = temp.getRight();
+            } else {
+                temp = temp.getParent();
+            }
+        }
+
+        Stack<Node<E>> stack = new Stack<>();
+        ArrayList<Node<E>> visited = new ArrayList<>();
+
+        Node<E> p = temp;
+
+        if (p != null) {
+            stack.push(p);
+        }
+        while (!stack.isEmpty()) {
+            Node<E> top = stack.peek();
+            if ((int) top.getElement() == 0) {
+                stack.pop(); // this one line solved the issue of multiple printing
+            }
+            if ((int) top.getElement() != 0) {
+                System.out.print(top + " ");
+            }
+            visited.add(top);
+
+            if (top.getLeft() != null && !visited.contains(top.getLeft())) {
+                stack.push(top.getLeft());
+            } else if (top.getRight() != null && !visited.contains(top.getRight())) {
+                stack.push(top.getRight());
+            } else {
+                stack.pop();
+            }
+        }
+
+    } // working file
+
 }
 
-//class DrawingTree<E> extends LinkedBinaryTree<E> {
-//    public static <E> int layout(Node<E> T, Position<E> p, int d, int x) {
-//        if (T.getLeft(p)){
-//
-//        }
-//        return x;
-//    }
-//}
 
 class BTreePrinter {
     // this class is copied from https://stackoverflow.com/a/4973083/15236351

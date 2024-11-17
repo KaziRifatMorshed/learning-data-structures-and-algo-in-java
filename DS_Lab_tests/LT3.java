@@ -189,7 +189,8 @@ class LinkedBinaryTree<E> {
         }
         Node<E> child = new Node<E>(element, parent, null, null);  // ------------------------- 2nd parameter hisebe parent add korte vule jassilamPosition
         parent.setLeft(child);
-        return parent; // returning parent, not child
+//        return parent; // returning parent, not child
+        return child; // returning child
     }
 
     Node<E> addRight(Node<E> parent, E element) {
@@ -199,7 +200,8 @@ class LinkedBinaryTree<E> {
         }
         Node<E> child = new Node<E>(element, parent, null, null);
         parent.setRight(child);
-        return parent; // returning parent, not child
+//        return parent; // returning parent, not child
+        return child; // returning child
     }
 
 
@@ -275,19 +277,47 @@ class LinkedBinaryTree<E> {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    void createTree(E[] arr) {
+//    void createTree(E[] arr) {
+//        // DEPRECATED
+//        int arrLen = arr.length;
+//        Node<E> rootNode = this.addRoot(arr[0]);
+//        Node<E> temp = this.getRoot();
+////        Integer[] arr1 = {1, 5, 0, 4, 0, 0, 0, 2, 3};
+//
+////        for (int i = 0; i <= Math.sqrt(arrLen); i = i * 2 + 1) {
+//        for (int i = 0; i <= Math.sqrt(arrLen); i = i * 2 + 1) {
+//            temp = this.addLeft(temp, arr[(i * 2) + 1]);// returning parent, not child
+//            temp = this.addRight(temp, arr[(i * 2) + 2]);// returning parent, not child
+//            temp = temp.getLeft();
+//        }
+//    } // tree creation error
+
+    void createTreeRecursive_Main(E[] arr) {
         int arrLen = arr.length;
         Node<E> rootNode = this.addRoot(arr[0]);
-        Node<E> temp = this.getRoot();
-//        Integer[] arr1 = {1, 5, 0, 4, 0, 0, 0, 2, 3};
+        createTreeRecursive(rootNode, arr, 0);
+    } // PROTOTYPE
 
-//        for (int i = 0; i <= Math.sqrt(arrLen); i = i * 2 + 1) {
-        for (int i = 0; i <= Math.sqrt(arrLen); i = i * 2 + 1) {
-            temp = this.addLeft(temp, arr[(i * 2) + 1]);// returning parent, not child
-            temp = this.addRight(temp, arr[(i * 2) + 2]);// returning parent, not child
-            temp = temp.getLeft();
+    void createTreeRecursive(Node<E> node, E[] arr, int arr_idx) {
+
+        // if (!(arr_idx <= Math.sqrt(arr.length))) { // ---------------- think simple
+        if ((arr_idx > arr.length) || node == null) {
+            return;
         }
-    } // tree creation error
+
+        int leftIdx = (arr_idx * 2) + 1;
+        if (leftIdx < arr.length) {
+            Node<E> leftChild = this.addLeft(node, arr[leftIdx]);
+            createTreeRecursive(leftChild, arr, leftIdx);
+        }
+
+        int rightIdx = (arr_idx * 2) + 2;
+        if (rightIdx < arr.length) {
+            Node<E> rightChild = this.addRight(node, arr[rightIdx]);
+            createTreeRecursive(rightChild, arr, rightIdx);
+        }
+
+    } // WORKING
 
     void eulerTourTraversal(int index) {
         Node<E> temp = this.getRoot();
@@ -340,7 +370,8 @@ class test {
     public static void main(String[] args) {
         Integer[] arr1 = {1, 5, 0, 4, 0, 0, 0, 2, 3};
         LinkedBinaryTree<Integer> tree1 = new LinkedBinaryTree<>();
-        tree1.createTree(arr1);
+//        tree1.createTree(arr1);
+        tree1.createTreeRecursive_Main(arr1);
         BTreePrinter.printNode(tree1.getRoot());
         tree1.eulerTourTraversal(1);
     }
