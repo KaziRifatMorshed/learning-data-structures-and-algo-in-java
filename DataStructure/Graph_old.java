@@ -4,7 +4,7 @@ class gNode {
     public int value;
 }
 
-class Graph {
+class graph {
 
 //    static boolean Depth_First_Search(gNode node, Set<gNode> visited, int goal) {
 //        if (node == null) {
