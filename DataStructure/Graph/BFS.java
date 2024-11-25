@@ -52,34 +52,6 @@ class BFS {
         }
     }
 
-/*
-    public static void traverseUsingBFS(int[][] G, int startNode) {
-        int n = G[0].length; // num rows // ultimately node count
-        boolean[] visited = new boolean[n];
-        ArrayQueue queue = new ArrayQueue();
-
-
-        queue.enqueue(startNode);
-        visited[startNode] = true; // start node ke visited kroe dilam
-
-        while (!queue.isEmpty()) {
-            int currentVertex = queue.dequeue(); // visited node is removed
-            System.out.print(currentVertex + " ");
-
-            for (int w = 0; w < n; w++) {
-                if (G[currentVertex][w] > 0 // w er sathe kar kar somporrko ache
-                        && !visited[w] // w visited ki na
-                ) {
-                    queue.enqueue(w);
-                    visited[w] = true;
-                }
-            }
-        }
-
-    }
-
-*/
-
     public static void traverseUsingBFS(int[][] G, int startingNode) {
         // Necessary for operation
         int node_count = G.length;
@@ -107,7 +79,7 @@ class BFS {
             }
         }
 
-    }
+    } // WORKS
 
     public static void main(String[] args) {
         int[][] G =

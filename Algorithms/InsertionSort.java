@@ -5,9 +5,9 @@ import java.util.Arrays;
 public class InsertionSort {
     public static void main(String[] args) {
 //        int[] data = new int[]{-5, 20, 3, 9, 4, -4, 7, 2, 0, 45, 5, 8, 14, 5, 8, 4, 52};
-        int[] data = new int[]{-5, 20, 0, -999, 3, 9, 4, -4};
+        int[] data = new int[]{-5, 20, 0, Integer.MAX_VALUE, -999, 3, 9, Integer.MIN_VALUE, 4, -4};
         System.out.println("Before = " + Arrays.toString(data));
-        insertionSort(data);
+        insertionSort2(data);
         System.out.println("After = " + Arrays.toString(data));
     }
 
@@ -15,7 +15,6 @@ public class InsertionSort {
         int temp = arr[a];
         arr[a] = arr[b];
         arr[b] = temp;
-
     }
 
     private static void insertionSort(int[] data) { // Goodrich book
@@ -31,14 +30,11 @@ public class InsertionSort {
         }
     } // Done
 
-    private static void insertionSort2(int[] data) {
-        for (int i = 0; i <= data.length; i++) { // i <= data.length
-            if (data.length == 1) {
-                break;
-            }
+    private static void insertionSort2(int[] data) { // feels better
+        for (int i = 01; i <= data.length; i++) { //-------------- i <= data.length
             for (int j = i - 1; j > 0; j--) {
-                if (data[j] < data[j - 1]) {
-                    swap(data, j, j - 1); // ??????? swap korle je Bubbe Sort hoye jay !!!!!!!!!!
+                if (data[j - 1] > data[j]) {
+                    swap(data, j, j - 1); // https://youtu.be/Q1JdRUh1_98?si=U_GtpSOpPs__Sizu
                 }
             }
         }

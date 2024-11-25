@@ -13,7 +13,7 @@ public class MergeSort {
     }
 
     public static void mergeSort(int[] data, int start, int end) {
-        if (start < end) { // start < end
+        if (start < end) { // ------------------------------- start < end
 //            int mid = (start + end) / 2;
             int mid = start + (end - start) / 2;
             mergeSort(data, start, mid);
@@ -40,7 +40,7 @@ public class MergeSort {
             temp[k++] = data[j++];
         }
         for (i = start; i <= end; i++) {
-            data[i] = temp[i - start];
+            data[i] = temp[i - start]; // override portion of data with sorted temp array
         }
     }
 

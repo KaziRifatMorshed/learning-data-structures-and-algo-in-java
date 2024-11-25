@@ -111,7 +111,7 @@ class DFS {
                 }
             }
         }
-    }
+    } // WORKS
 
     public static void main(String[] args) {
         int[][] G = {

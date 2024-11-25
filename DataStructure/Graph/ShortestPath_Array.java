@@ -42,7 +42,7 @@ class ShortestPath_Array {
                 }
             }
         }
-    }
+    } // WORKS
 
     public static void main(String[] args) {
         int[][] cost_matrix = {{0, infinite, infinite, infinite, infinite, infinite, infinite, infinite},
@@ -63,4 +63,4 @@ class ShortestPath_Array {
             System.out.println("Shortest Distance from " + i + " to " + target + " : " + distance_array[i] + " ");
         }
     }
-}
+} // DONE
