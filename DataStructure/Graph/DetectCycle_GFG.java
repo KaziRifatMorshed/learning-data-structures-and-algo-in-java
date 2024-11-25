@@ -78,11 +78,12 @@ class GfG {
 class CycleDetection_CP {
     public static void main(String[] args) {
         int[][] graph = {
-                {0, 1, 0, 0, 1},
-                {1, 0, 1, 0, 0},
-                {0, 1, 0, 1, 0},
-                {0, 0, 1, 0, 1},
-                {1, 0, 0, 1, 0}
+                //{0, 1, 2, 3, 4},
+                {0, 1, 0, 0, 1}, //0
+                {1, 0, 1, 0, 0}, //1
+                {0, 1, 0, 1, 0}, //2
+                {0, 0, 1, 0, 1}, //3
+                {1, 0, 0, 1, 0}  //4
         };
 
         boolean hasCycle = hasCycle(graph);
@@ -92,7 +93,7 @@ class CycleDetection_CP {
     public static boolean hasCycle(int[][] graph) {
         int numVertices = graph.length;
         boolean[] visited = new boolean[numVertices];
-        boolean[] recStack = new boolean[numVertices];
+        boolean[] recStack = new boolean[numVertices]; // to keep track from where i have started recursion in per DFS
 
         for (int i = 0; i < numVertices; i++) {
             if (detectCycleDFS(graph, i, visited, recStack)) {
@@ -103,22 +104,17 @@ class CycleDetection_CP {
     }
 
     private static boolean detectCycleDFS(int[][] graph, int v, boolean[] visited, boolean[] recStack) {
-        if (recStack[v]) {
-            return true;
-        }
-        if (visited[v]) {
-            return false;
-        }
+        if (recStack[v]) return true;
+        if (visited[v]) return false; // ???
 
-        visited[v] = true;
-        recStack[v] = true;
+        visited[v] = true;  /* assign */
+        recStack[v] = true; /* assign */
 
         for (int i = 0; i < graph.length; i++) {
-            if (graph[v][i] != 0 && detectCycleDFS(graph, i, visited, recStack)) {
+            if (graph[v][i] > 0 && detectCycleDFS(graph, i, visited, recStack)) {
                 return true;
             }
         }
-
         recStack[v] = false;
         return false;
     }
