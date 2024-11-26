@@ -59,14 +59,12 @@ class X {
         } else {
             int temp = index;
             temp++;
-
             do {
                 if (temp == index) break; // ---------- check again
                 temp++;
                 if (temp >= hash_table.length) temp = 0;
 
             } while (hash_table[temp] != null);
-
             return temp;
         }
     } // done for now
@@ -96,7 +94,7 @@ class LT4 {
 
         x.post(105, "Skipped the gym today.");
         x.post(105, "Just saw a cat staring a puddle.");
-        x.post(115, "Big wins start with a small step.");
+        x.post(115, "Big wins start with a small steps.");
 
         x.getNewsFeed(105);
         System.out.println();
