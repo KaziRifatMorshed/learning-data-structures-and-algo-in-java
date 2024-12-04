@@ -1,3 +1,5 @@
+package LeetcodeSolving.leetcode.editor.en;
+
 import java.util.Stack;
 
 /**
@@ -57,7 +59,7 @@ import java.util.Stack;
  */
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class ValidParenthesis {
     public boolean isValid(String equation) {
         Stack<Character> stack_of_braces = new Stack<Character>();
         for (int i = 0; i < equation.length(); i++) {

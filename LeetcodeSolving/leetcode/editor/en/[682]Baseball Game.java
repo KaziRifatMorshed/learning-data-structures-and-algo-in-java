@@ -99,7 +99,7 @@ on the record.
 */
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class BaseballGame {
     public int calPoints(String[] operations) {
         return 0;
     }
