@@ -88,7 +88,7 @@ class sumNumbers {
         }
 
         return number(treeNode.left, num) + number(treeNode.right, num);
-    }
+    } // DONE
 
     public int sumNumbers(TreeNode root) {
         double result = number(root, 0) / 2;
