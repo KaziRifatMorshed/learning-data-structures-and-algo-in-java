@@ -62,7 +62,7 @@ class ListNode {
 }
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class reverseList {
 
 
     private ListNode reverseListRecursive(ListNode head) {
@@ -98,8 +98,8 @@ class Solution {
     } // INCOMPLETE
 
     public ListNode reverseList(ListNode head) {
-//        return reverseListRecursive(head);
-        return reverseListIterative(head);
+        return reverseListRecursive(head);
+//        return reverseListIterative(head);
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
