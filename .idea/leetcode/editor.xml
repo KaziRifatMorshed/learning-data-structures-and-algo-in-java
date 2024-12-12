@@ -3,116 +3,6 @@
   <component name="LeetcodeEditor">
     <option name="projectConfig">
       <map>
-        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[100]Same Tree.java">
-          <value>
-            <LeetcodeEditor>
-              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[100]Same Tree.md" />
-              <option name="frontendQuestionId" value="leetcode.com100" />
-              <option name="host" value="leetcode.com" />
-              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[100]Same Tree.java" />
-              <option name="titleSlug" value="same-tree" />
-            </LeetcodeEditor>
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[1195]Fizz Buzz Multithreaded.java">
-          <value>
-            <LeetcodeEditor>
-              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[1195]Fizz Buzz Multithreaded.md" />
-              <option name="frontendQuestionId" value="leetcode.com1195" />
-              <option name="host" value="leetcode.com" />
-              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[1195]Fizz Buzz Multithreaded.java" />
-              <option name="titleSlug" value="fizz-buzz-multithreaded" />
-            </LeetcodeEditor>
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[129]Sum Root to Leaf Numbers.java">
-          <value>
-            <LeetcodeEditor>
-              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[129]Sum Root to Leaf Numbers.md" />
-              <option name="frontendQuestionId" value="leetcode.com129" />
-              <option name="host" value="leetcode.com" />
-              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[129]Sum Root to Leaf Numbers.java" />
-              <option name="titleSlug" value="sum-root-to-leaf-numbers" />
-            </LeetcodeEditor>
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[1486]XOR Operation in an Array.java">
-          <value>
-            <LeetcodeEditor>
-              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[1486]XOR Operation in an Array.md" />
-              <option name="frontendQuestionId" value="leetcode.com1486" />
-              <option name="host" value="leetcode.com" />
-              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[1486]XOR Operation in an Array.java" />
-              <option name="titleSlug" value="xor-operation-in-an-array" />
-            </LeetcodeEditor>
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[149]Max Points on a Line.java">
-          <value>
-            <LeetcodeEditor>
-              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[149]Max Points on a Line.md" />
-              <option name="frontendQuestionId" value="leetcode.com149" />
-              <option name="host" value="leetcode.com" />
-              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[149]Max Points on a Line.java" />
-              <option name="titleSlug" value="max-points-on-a-line" />
-            </LeetcodeEditor>
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[1669]Merge In Between Linked Lists.java">
-          <value>
-            <LeetcodeEditor>
-              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[1669]Merge In Between Linked Lists.md" />
-              <option name="frontendQuestionId" value="leetcode.com1669" />
-              <option name="host" value="leetcode.com" />
-              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[1669]Merge In Between Linked Lists.java" />
-              <option name="titleSlug" value="merge-in-between-linked-lists" />
-            </LeetcodeEditor>
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[1832]Check if the Sentence Is Pangram.java">
-          <value>
-            <LeetcodeEditor>
-              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[1832]Check if the Sentence Is Pangram.md" />
-              <option name="frontendQuestionId" value="leetcode.com1832" />
-              <option name="host" value="leetcode.com" />
-              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[1832]Check if the Sentence Is Pangram.java" />
-              <option name="titleSlug" value="check-if-the-sentence-is-pangram" />
-            </LeetcodeEditor>
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[1929]Concatenation of Array.java">
-          <value>
-            <LeetcodeEditor>
-              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[1929]Concatenation of Array.md" />
-              <option name="frontendQuestionId" value="leetcode.com1929" />
-              <option name="host" value="leetcode.com" />
-              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[1929]Concatenation of Array.java" />
-              <option name="titleSlug" value="concatenation-of-array" />
-            </LeetcodeEditor>
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[1]Two Sum.java">
-          <value>
-            <LeetcodeEditor>
-              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[1]Two Sum.md" />
-              <option name="frontendQuestionId" value="leetcode.com1" />
-              <option name="host" value="leetcode.com" />
-              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[1]Two Sum.java" />
-              <option name="titleSlug" value="two-sum" />
-            </LeetcodeEditor>
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[206]Reverse Linked List.java">
-          <value>
-            <LeetcodeEditor>
-              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[206]Reverse Linked List.md" />
-              <option name="frontendQuestionId" value="leetcode.com206" />
-              <option name="host" value="leetcode.com" />
-              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[206]Reverse Linked List.java" />
-              <option name="titleSlug" value="reverse-linked-list" />
-            </LeetcodeEditor>
-          </value>
-        </entry>
         <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[2114]Maximum Number of Words Found in Sentences.java">
           <value>
             <LeetcodeEditor>
@@ -124,113 +14,36 @@
             </LeetcodeEditor>
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[2520]Count the Digits That Divide a Number.java">
+        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[2535]Difference Between Element Sum and Digit Sum of an Array.java">
           <value>
             <LeetcodeEditor>
-              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[2520]Count the Digits That Divide a Number.md" />
-              <option name="frontendQuestionId" value="leetcode.com2520" />
+              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[2535]Difference Between Element Sum and Digit Sum of an Array.md" />
+              <option name="frontendQuestionId" value="leetcode.com2535" />
               <option name="host" value="leetcode.com" />
-              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[2520]Count the Digits That Divide a Number.java" />
-              <option name="titleSlug" value="count-the-digits-that-divide-a-number" />
+              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[2535]Difference Between Element Sum and Digit Sum of an Array.java" />
+              <option name="titleSlug" value="difference-between-element-sum-and-digit-sum-of-an-array" />
             </LeetcodeEditor>
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[258]Add Digits.java">
+        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[2942]Find Words Containing Character.java">
           <value>
             <LeetcodeEditor>
-              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[258]Add Digits.md" />
-              <option name="frontendQuestionId" value="leetcode.com258" />
+              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[2942]Find Words Containing Character.md" />
+              <option name="frontendQuestionId" value="leetcode.com2942" />
               <option name="host" value="leetcode.com" />
-              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[258]Add Digits.java" />
-              <option name="titleSlug" value="add-digits" />
+              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[2942]Find Words Containing Character.java" />
+              <option name="titleSlug" value="find-words-containing-character" />
             </LeetcodeEditor>
           </value>
         </entry>
-        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[2703]Return Length of Arguments Passed.java">
+        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[709]To Lower Case.java">
           <value>
             <LeetcodeEditor>
-              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[2703]Return Length of Arguments Passed.md" />
-              <option name="frontendQuestionId" value="leetcode.com2703" />
+              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[709]To Lower Case.md" />
+              <option name="frontendQuestionId" value="leetcode.com709" />
               <option name="host" value="leetcode.com" />
-              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[2703]Return Length of Arguments Passed.java" />
-              <option name="titleSlug" value="return-length-of-arguments-passed" />
-            </LeetcodeEditor>
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[2825]Make String a Subsequence Using Cyclic Increments.java">
-          <value>
-            <LeetcodeEditor>
-              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[2825]Make String a Subsequence Using Cyclic Increments.md" />
-              <option name="frontendQuestionId" value="leetcode.com2825" />
-              <option name="host" value="leetcode.com" />
-              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[2825]Make String a Subsequence Using Cyclic Increments.java" />
-              <option name="titleSlug" value="make-string-a-subsequence-using-cyclic-increments" />
-            </LeetcodeEditor>
-          </value>
-        </entry>
-<<<<<<< Updated upstream
-        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[387]First Unique Character in a String.java">
-          <value>
-            <LeetcodeEditor>
-              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[387]First Unique Character in a String.md" />
-              <option name="frontendQuestionId" value="leetcode.com387" />
-              <option name="host" value="leetcode.com" />
-              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[387]First Unique Character in a String.java" />
-              <option name="titleSlug" value="first-unique-character-in-a-string" />
-=======
-        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[3024]Type of Triangle.java">
-          <value>
-            <LeetcodeEditor>
-              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[3024]Type of Triangle.md" />
-              <option name="frontendQuestionId" value="leetcode.com3024" />
-              <option name="host" value="leetcode.com" />
-              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[3024]Type of Triangle.java" />
-              <option name="titleSlug" value="type-of-triangle" />
->>>>>>> Stashed changes
-            </LeetcodeEditor>
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[412]Fizz Buzz.java">
-          <value>
-            <LeetcodeEditor>
-              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[412]Fizz Buzz.md" />
-              <option name="frontendQuestionId" value="leetcode.com412" />
-              <option name="host" value="leetcode.com" />
-              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[412]Fizz Buzz.java" />
-              <option name="titleSlug" value="fizz-buzz" />
-            </LeetcodeEditor>
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[682]Baseball Game.java">
-          <value>
-            <LeetcodeEditor>
-              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[682]Baseball Game.md" />
-              <option name="frontendQuestionId" value="leetcode.com682" />
-              <option name="host" value="leetcode.com" />
-              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[682]Baseball Game.java" />
-              <option name="titleSlug" value="baseball-game" />
-            </LeetcodeEditor>
-          </value>
-        </entry>
-        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[94]Binary Tree Inorder Traversal.java">
-          <value>
-            <LeetcodeEditor>
-              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[94]Binary Tree Inorder Traversal.md" />
-              <option name="frontendQuestionId" value="leetcode.com94" />
-              <option name="host" value="leetcode.com" />
-              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[94]Binary Tree Inorder Traversal.java" />
-              <option name="titleSlug" value="binary-tree-inorder-traversal" />
-            </LeetcodeEditor>
-          </value>
-        </entry>
-        <entry key="/tmp/leetcode/editor/en/[20]Valid Parentheses.java">
-          <value>
-            <LeetcodeEditor>
-              <option name="contentPath" value="/tmp/leetcode/editor/en/doc/content/[20]Valid Parentheses.md" />
-              <option name="frontendQuestionId" value="leetcode.com20" />
-              <option name="host" value="leetcode.com" />
-              <option name="path" value="/tmp/leetcode/editor/en/[20]Valid Parentheses.java" />
-              <option name="titleSlug" value="valid-parentheses" />
+              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[709]To Lower Case.java" />
+              <option name="titleSlug" value="to-lower-case" />
             </LeetcodeEditor>
           </value>
         </entry>
