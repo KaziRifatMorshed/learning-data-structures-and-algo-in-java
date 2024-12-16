@@ -1,4 +1,7 @@
-package LeetcodeSolving.leetcode.editor.en;//You are given positive integers n and m.
+package LeetcodeSolving.leetcode.editor.en;
+
+
+//You are given positive integers n and m.
 //
 // Define two integers as follows:
 //
@@ -59,13 +62,18 @@ package LeetcodeSolving.leetcode.editor.en;//You are given positive integers n a
 //
 //
 // Related Topics Math 👍 234 👎 20
-//
-//*/
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class differenceOfSums {
     public int differenceOfSums(int n, int m) {
-        return 0;
+
+        int sum1 = 0, sum2 = 0;
+        for (int i = 0; i <= n; i++) {
+            if (i % m == 0) sum2 += i;
+            else sum1 += i;
+        }
+        return sum1 - sum2;
     }
+    // don't know how to solve it Linearly
 }
 //leetcode submit region end(Prohibit modification and deletion)

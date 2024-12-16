@@ -70,7 +70,7 @@ class chalkReplacer {
             i++;
             if (i == len) i = 0;
         }
-    }
+    } // DONE
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();

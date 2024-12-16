@@ -1,4 +1,5 @@
-package LeetcodeSolving.leetcode.editor.en;//Given an integer array nums sorted in non-decreasing order, return an array of
+package LeetcodeSolving.leetcode.editor.en;
+//Given an integer array nums sorted in non-decreasing order, return an array of
 //the squares of each number sorted in non-decreasing order.
 //
 //
@@ -29,34 +30,62 @@ package LeetcodeSolving.leetcode.editor.en;//Given an integer array nums sorted 
 //
 //
 //Follow up: Squaring each element and sorting the new array is very trivial,
-//could you find an O(n) solution using a different approach?
+//could you find an O(n) solution using left different approach?
 //
 // Related Topics Array Two Pointers Sorting 👍 9482 👎 245
 
 
-import java.util.ArrayList;
-
 //leetcode submit region begin(Prohibit modification and deletion)
-class SolutionsortedSquares {
-    public int[] sortedSquares(int[] nums) {
-        int len = nums.length;
-        ArrayList<Integer> arrayList = new ArrayList<>();
+class Solution {
+    public static void main(String[] args) {
+        int[] arr = {2, 2};
+        int[] result = sortedSquares(arr);
+        for (int i : result) {
+            System.out.println(i);
+        }
+    }
 
-        for (int a = 0, b = len - 1;
-             a >= b; ) {
-            if (Math.abs(nums[a]) < Math.abs(nums[b])) {
-                arrayList.add((int) Math.pow(nums[a], 2));
-                a++;
-            } else {
-                arrayList.add((int) Math.pow(nums[b], 2));
-                b--;
+    public static int[] sortedSquares(int[] nums) {
+        int len = nums.length;
+        int[] answer = new int[len];
+        int right = 0, index = 0;
+
+        for (int i = 0; i < len; i++) {
+            right = i;
+            if (nums[i] > 0) {
+                break;
             }
         }
 
-        int[] answer = new int[arrayList.size()];
-        for (int i = 0; i < arrayList.size(); i++) {
-            answer[i] = arrayList.get(i);
+        int left = right - 1;
+        if (left < 0) left = 0;
+
+//        System.out.println(left + " " + right);
+        while (left >= 0 && right < len) {
+            int leftElement = (int) (nums[left] * nums[left]);
+            int rightElement = (int) (nums[right] * nums[right]);
+
+            if (Math.abs(nums[left]) < Math.abs(nums[right])) {
+                answer[index++] = leftElement;
+                left--;
+            } else {
+                answer[index++] = rightElement;
+                right++;
+                if (len == 1) left--;
+            }
         }
+
+        while (left >= 0) {
+            answer[index++] = (int) (nums[left] * nums[left]);
+            left--;
+        }
+
+        while (right < len) {
+            answer[index++] = (int) (nums[right] * nums[right]);
+            right++;
+        }
+
+
         return answer;
     } // INCOMPLETE
 }
