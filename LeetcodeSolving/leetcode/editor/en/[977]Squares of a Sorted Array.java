@@ -38,7 +38,7 @@ package LeetcodeSolving.leetcode.editor.en;
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
     public static void main(String[] args) {
-        int[] arr = {2, 2};
+        int[] arr = {1, 2};
         int[] result = sortedSquares(arr);
         for (int i : result) {
             System.out.println(i);
@@ -60,7 +60,7 @@ class Solution {
         int left = right - 1;
         if (left < 0) left = 0;
 
-//        System.out.println(left + " " + right);
+        System.out.println(left + " " + right);
         while (left >= 0 && right < len) {
             int leftElement = (int) (nums[left] * nums[left]);
             int rightElement = (int) (nums[right] * nums[right]);
@@ -75,12 +75,13 @@ class Solution {
             }
         }
 
-        while (left >= 0) {
+        System.out.println(left + " " + right);
+        while (left >= 0 && index < len) {
             answer[index++] = (int) (nums[left] * nums[left]);
             left--;
         }
 
-        while (right < len) {
+        while (right < len && index < len) {
             answer[index++] = (int) (nums[right] * nums[right]);
             right++;
         }
