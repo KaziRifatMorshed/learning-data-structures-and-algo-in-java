@@ -36,7 +36,7 @@ package LeetcodeSolving.leetcode.editor.en;
 
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class SolutionsortedSquares {
     public static void main(String[] args) {
         int[] arr = {1, 2};
         int[] result = sortedSquares(arr);

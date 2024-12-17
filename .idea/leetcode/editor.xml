@@ -3,6 +3,28 @@
   <component name="LeetcodeEditor">
     <option name="projectConfig">
       <map>
+        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[1281]Subtract the Product and Sum of Digits of an Integer.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[1281]Subtract the Product and Sum of Digits of an Integer.md" />
+              <option name="frontendQuestionId" value="leetcode.com1281" />
+              <option name="host" value="leetcode.com" />
+              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[1281]Subtract the Product and Sum of Digits of an Integer.java" />
+              <option name="titleSlug" value="subtract-the-product-and-sum-of-digits-of-an-integer" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[1672]Richest Customer Wealth.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[1672]Richest Customer Wealth.md" />
+              <option name="frontendQuestionId" value="leetcode.com1672" />
+              <option name="host" value="leetcode.com" />
+              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[1672]Richest Customer Wealth.java" />
+              <option name="titleSlug" value="richest-customer-wealth" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[1894]Find the Student that Will Replace the Chalk.java">
           <value>
             <LeetcodeEditor>
@@ -55,6 +77,17 @@
               <option name="host" value="leetcode.com" />
               <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[2652]Sum Multiples.java" />
               <option name="titleSlug" value="sum-multiples" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[2769]Find the Maximum Achievable Number.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[2769]Find the Maximum Achievable Number.md" />
+              <option name="frontendQuestionId" value="leetcode.com2769" />
+              <option name="host" value="leetcode.com" />
+              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[2769]Find the Maximum Achievable Number.java" />
+              <option name="titleSlug" value="find-the-maximum-achievable-number" />
             </LeetcodeEditor>
           </value>
         </entry>
