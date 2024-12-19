@@ -40,9 +40,12 @@ package LeetcodeSolving.leetcode.editor.en;
 
 //There is no code of Java type for this problem
 
+//leetcode submit region begin(Prohibit modification and deletion)
 class argumentsLength {
-    public int argumentsLength(String[] args) {
+    // Not a JAVA code BTW
+    public static int argumentsLength(String[] args) {
         return args.length;
     }
-}
- // for some reason, compile error dekhay
+} // DONE
+//leetcode submit region end(Prohibit modification and deletion)
+
