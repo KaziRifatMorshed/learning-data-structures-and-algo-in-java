@@ -129,10 +129,10 @@ class SinglyLinkedList {
     } // completed
 
 
-////////////// my buggy code ///////////////////
+// //////////// my buggy code ///////////////////
 //    void addLast(data_SLL d) {
 //        Node_SLL last_node = getLast();
-////        System.out.println(STR."add last 119 \{last_node == null}");
+// //        System.out.println(STR."add last 119 \{last_node == null}");
 //        Node_SLL new_node = new Node_SLL(d, null);
 //        last_node.setNext(new_node);
 
@@ -168,21 +168,22 @@ class SinglyLinkedList {
     }
 
     Node_SLL search(int integer_data) {
-        for (Node_SLL p = head; p.next != null; p = p.getNext()) {
-            if (p.getDataObj().getData() == integer_data) {
-                return p;
+        if (!isEmpty()) {
+            for (Node_SLL p = head; p != null; p = p.getNext()) {  // -------- p.next != null hobe NA
+                if (p.getDataObj().getData() == integer_data) {
+                    return p;
+                }
             }
         }
         return null;
     } // done
 
     Node_SLL search_return_previous(int integer_data) {
-        if (head.next == null) {
-            return null;  // ----------------------------------------------- seems vulnerable
-        }
-        for (Node_SLL p = head; p.next != null; p = p.getNext()) {
-            if (p.next.getDataObj().getData() == integer_data) {
-                return p;
+        if (!isEmpty()) {
+            for (Node_SLL p = head; (p.next) != null; p = p.getNext()) {
+                if ((p.next).getDataObj().getData() == integer_data) {
+                    return p;
+                }
             }
         }
         return null;
@@ -199,7 +200,7 @@ class SinglyLinkedList {
         // instead of else-if, using if is better, as, one case may appear where
         // there are 2 element, and they are same and to be deleted
         // so, I am avoiding all return statements
-        if (getLast().getDataObj().getData() == integer_data) {
+        else if (getLast().getDataObj().getData() == integer_data) {
             // delete last
             removeLast();
         } else {
@@ -220,9 +221,10 @@ class SinglyLinkedList {
     }
 
 
-    ///////////////////////////////////////////////////////////////////////////
+    // ////////////////////////////////////////////////////////////////////////
     // -------------------------- PROBLEM SOLVING -------------------------- //
-    ///////////////////////////////////////////////////////////////////////////
+
+    // ////////////////////////////////////////////////////////////////////////
 
     /* Question:                                                     Farhan Sir
     You are given the heads of two 'sorted' singly linked lists list1 and list2.
@@ -274,7 +276,7 @@ class SinglyLinkedList {
     void deleteDuplicate() {
 //        for (Node_SLL i = head; i.next != null; i = i.getNext()) {
         for (Node_SLL i = head; i != null; i = i.getNext()) { // i != null
-            for (Node_SLL j = i.getNext(); j != null; j = j.getNext()) { // ---------------------------- j er vumika ???
+            for (Node_SLL j = i.getNext(); j != null; j = j.getNext()) { // ----------------------- j er vumika ???
                 if (i.getNext() != null &&
                         i.getDataObj().getData() == i.getNext().getDataObj().getData()) {
                     i.setNext(i.getNext().getNext());
@@ -304,7 +306,7 @@ class SinglyLinkedList {
         }
     }
 
-///////////////////////////////////////////////////////////////////////////
+    // ////////////////////////////////////////////////////////////////////////
 
     public static void main(String[] args) {
         SinglyLinkedList list1 = new SinglyLinkedList();

@@ -68,7 +68,7 @@ class Node {
 //            return null; // না, নাল রিটার্ন করলে লাস্ট নোড কে হারিয়ে ফেললাম
             return p;
         }
-        Node q = REVERSE_a_Linked_List(p.next); // ???
+        Node q = REVERSE_a_Linked_List(p.next); // Age recursion kore deep e dhuke jabo
         (p.next).next = p; // পরবর্তী নোডের এর নেক্সট এ নিজেকে রাখবে
 //      =(q).next = p;
         (p.next) = null; // পরবর্তী এর নেক্সটে নিজেকে রেখে নিজের ভবিষ্যতকে নাল করে দিবে

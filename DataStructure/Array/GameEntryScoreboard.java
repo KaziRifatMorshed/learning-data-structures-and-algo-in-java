@@ -40,7 +40,6 @@ class ScoreBoard {
     private GameEntry[] board;
 
     public ScoreBoard(int numEntry) {
-//        this.numEntry = numEntry; shit man !!!!
         board = new GameEntry[numEntry];
     }
 
@@ -60,7 +59,7 @@ class ScoreBoard {
 
 //    static ScoreBoard increase_board_size(ScoreBoard b) { // increases board size by one and clone previous board
 //        int old_board_len = b.board.length;
-////        ScoreBoard new_board = new ScoreBoard(old_board_len + 1); // will not work
+//   //     ScoreBoard new_board = new ScoreBoard(old_board_len + 1); // will not work
 //        GameEntry[] new_board = new GameEntry[old_board_len + 1];
 //        for (int i = 0; i < old_board_len; i++) {
 //            new_board[i] = b.board[i];
@@ -90,7 +89,7 @@ class ScoreBoard {
 
 
     GameEntry remove(int index) throws IndexOutOfBoundsException {
-        if (index < 0 || index > board.length) {
+        if (index < 0 || index >= board.length) {
             throw new IndexOutOfBoundsException("Invalid Index " + index + " has been inputted");
         }
         GameEntry to_bre_returned = board[index];
