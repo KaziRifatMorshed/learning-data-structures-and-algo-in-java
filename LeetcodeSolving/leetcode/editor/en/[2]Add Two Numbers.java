@@ -61,42 +61,41 @@ package LeetcodeSolving.leetcode.editor.en;//You are given two non-empty linked 
 //leetcode submit region begin(Prohibit modification and deletion)
 
 
-class Solution {
+class ListNode_addTwoNumbers {
 
     private ListNode addTwoNum(ListNode l1, ListNode l2, ListNode sum, int carry) {
         int a, b;
 
         if (l1 == null && l2 == null) {
-            return null;
+            if (carry > 0) return new ListNode(carry, null);
+            else return null;
         } else if (l1 == null && l2 != null) {
             a = 0;
             b = l2.val;
-
             l2 = l2.next;
         } else if (l1 != null && l2 == null) {
             a = l1.val;
             b = 0;
-
             l1 = l1.next;
         } else {
             a = l1.val;
             b = l2.val;
-
             l1 = l1.next;
             l2 = l2.next;
         }
 
         int result = (a + b + carry);
+
         ListNode newNode = new ListNode((result % 10), null);
         if (sum != null) sum.next = newNode;
-        else if (sum == null) sum = newNode;
+//        else if (sum == null) sum = newNode;
 
-        addTwoNum(l1, l2, newNode, (result / 10));
+        newNode.next = addTwoNum(l1, l2, newNode, (result / 10));
         return newNode;
-    }
+    } // DONE
 
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         return addTwoNum(l1, l2, null, 0);
     }
-}
+} // DONE
 //leetcode submit region end(Prohibit modification and deletion)
