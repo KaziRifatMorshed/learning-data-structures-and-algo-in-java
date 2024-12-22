@@ -69,6 +69,17 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[232]Implement Queue using Stacks.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[232]Implement Queue using Stacks.md" />
+              <option name="frontendQuestionId" value="leetcode.com232" />
+              <option name="host" value="leetcode.com" />
+              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[232]Implement Queue using Stacks.java" />
+              <option name="titleSlug" value="implement-queue-using-stacks" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[2535]Difference Between Element Sum and Digit Sum of an Array.java">
           <value>
             <LeetcodeEditor>
