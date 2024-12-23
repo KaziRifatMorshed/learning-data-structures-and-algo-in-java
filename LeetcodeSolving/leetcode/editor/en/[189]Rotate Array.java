@@ -44,7 +44,7 @@ package LeetcodeSolving.leetcode.editor.en;//Given an integer array nums, rotate
 // Related Topics Array Math Two Pointers 👍 18706 👎 2032
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class rotateArray {
     public void rotate(int[] nums, int k) {
         int n = nums.length;
         int[] arr = new int[n];
