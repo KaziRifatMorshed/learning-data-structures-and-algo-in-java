@@ -65,7 +65,7 @@ class MyLinkedList {
 
     static class Node {
         int value;
-        Node next;
+        private Node next;
 
         public Node(int value, Node next) {
             this.value = value;
@@ -94,8 +94,8 @@ class MyLinkedList {
         }
     }
 
-    Node head = null, tail = null;
-    int size = 0;
+    private Node head = null, tail = null;
+    private int size = 0;
 
     public MyLinkedList() {
         head = null;
@@ -103,34 +103,99 @@ class MyLinkedList {
         size = 0;
     }
 
+    public void updateTail() {
+        Node p = this.head;
+        for (; p != null; p = p.next) {
+            if (p.next == null) tail = p;
+        }
+    } // seems vulnerable
+
     public boolean isEmpty() {
         return this.size == 0;
     }
 
-    public int get(int index) {
-
+    private void printWholeLinkedList() {
+        for (Node p = head; p != null; p = p.getNext()) {
+            System.out.print(p.getValue() + " ");
+        }
+        System.out.println();
     }
 
+    public int get(int index) {
+        printWholeLinkedList();
+        if (isEmpty() || index < 0 || index >= size) return -1;
+        Node p = head;
+        for (int i = 0; p != null; i++, p = p.next) {
+            if (i == index) return p.getValue();
+        }
+        return -1;
+    } // seems OK but confused
+
     public void addAtHead(int val) {
-        if (head == null) {
-            head = new Node(val);
+        if (isEmpty()) {
+            head = tail = new Node(val);
         } else {
             Node newNode = new Node(val, head);
             head = newNode;
         }
-    }
+        size++;
+    } // seems OK
 
     public void addAtTail(int val) {
-
-    }
+        Node newNode = new Node(val);
+        if (isEmpty()) {
+            head = tail = newNode;
+        } else {
+            tail.setNext(newNode);
+            tail = newNode;
+        }
+        size++;
+    } // seems OK
 
     public void addAtIndex(int index, int val) {
-
-    }
+        if (index < 0 || index > size) {
+            return;
+        }
+        Node newNode = new Node(val);
+        if (index == 0) { // add at head
+            addAtHead(val);
+            return;
+        } else if (index == size) { // add tail
+            addAtTail(val);
+            return; // tail contains size increment so return here
+        } else {
+            Node prev = this.head, curr = this.head;
+            for (int i = 0; i < size && curr != null; i++, curr = curr.getNext()) {
+                if (i == index) {
+                    newNode.setNext(curr);
+                    prev.setNext(newNode);
+                    break;
+                }
+                prev = curr;
+            }
+        }
+        size++;
+        printWholeLinkedList();
+    } // seems ok
 
     public void deleteAtIndex(int index) {
-
-    }
+        if (index >= 0 && index < size && !isEmpty()) {
+            if (index == 0) { // delete head
+                this.head = head.getNext();
+            } else {
+                Node prev = this.head, curr = this.head;
+                for (int i = 0; i < size && curr != null; i++, curr = curr.getNext()) {
+                    if (i == index) {
+                        prev.setNext(curr.getNext());
+                        break;
+                    }
+                    prev = curr;
+                }
+            }
+            size--;
+        }
+        printWholeLinkedList();
+    } // seems OK
 }
 
 /*
