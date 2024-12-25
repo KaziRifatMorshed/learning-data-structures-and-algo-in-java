@@ -14,6 +14,17 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[1475]Final Prices With a Special Discount in a Shop.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[1475]Final Prices With a Special Discount in a Shop.md" />
+              <option name="frontendQuestionId" value="leetcode.com1475" />
+              <option name="host" value="leetcode.com" />
+              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[1475]Final Prices With a Special Discount in a Shop.java" />
+              <option name="titleSlug" value="final-prices-with-a-special-discount-in-a-shop" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[1672]Richest Customer Wealth.java">
           <value>
             <LeetcodeEditor>
@@ -66,6 +77,17 @@
               <option name="host" value="leetcode.com" />
               <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[2114]Maximum Number of Words Found in Sentences.java" />
               <option name="titleSlug" value="maximum-number-of-words-found-in-sentences" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[21]Merge Two Sorted Lists.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[21]Merge Two Sorted Lists.md" />
+              <option name="frontendQuestionId" value="leetcode.com21" />
+              <option name="host" value="leetcode.com" />
+              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[21]Merge Two Sorted Lists.java" />
+              <option name="titleSlug" value="merge-two-sorted-lists" />
             </LeetcodeEditor>
           </value>
         </entry>
@@ -220,6 +242,17 @@
               <option name="host" value="leetcode.com" />
               <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[3110]Score of a String.java" />
               <option name="titleSlug" value="score-of-a-string" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
+        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[707]Design Linked List.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[707]Design Linked List.md" />
+              <option name="frontendQuestionId" value="leetcode.com707" />
+              <option name="host" value="leetcode.com" />
+              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[707]Design Linked List.java" />
+              <option name="titleSlug" value="design-linked-list" />
             </LeetcodeEditor>
           </value>
         </entry>
