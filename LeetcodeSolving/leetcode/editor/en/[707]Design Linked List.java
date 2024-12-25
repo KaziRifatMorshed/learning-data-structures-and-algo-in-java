@@ -61,7 +61,9 @@ deleteAtIndex.
 */
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class MyLinkedList {
+class MyLinkedListDoneHurrahhhh {
+
+    // DONE
 
     static class Node {
         int value;
@@ -97,17 +99,18 @@ class MyLinkedList {
     private Node head = null, tail = null;
     private int size = 0;
 
-    public MyLinkedList() {
+    public MyLinkedListDoneHurrahhhh() {
         head = null;
         tail = null;
         size = 0;
     }
 
-    public void updateTail() {
+    private Node updateTail() {
         Node p = this.head;
         for (; p != null; p = p.next) {
-            if (p.next == null) tail = p;
+            if (p.next == null) return this.tail = p;
         }
+        return tail;
     } // seems vulnerable
 
     public boolean isEmpty() {
@@ -115,17 +118,17 @@ class MyLinkedList {
     }
 
     private void printWholeLinkedList() {
-        for (Node p = head; p != null; p = p.getNext()) {
-            System.out.print(p.getValue() + " ");
-        }
-        System.out.println();
+//        for (Node p = head; p != null; p = p.getNext()) {
+//            System.out.print(p.getValue() + " ");
+//        }
+//        System.out.println();
     }
 
     public int get(int index) {
         printWholeLinkedList();
         if (isEmpty() || index < 0 || index >= size) return -1;
         Node p = head;
-        for (int i = 0; p != null; i++, p = p.next) {
+        for (int i = 0; p != null; i++, p = p.getNext()) {
             if (i == index) return p.getValue();
         }
         return -1;
@@ -169,12 +172,14 @@ class MyLinkedList {
                 if (i == index) {
                     newNode.setNext(curr);
                     prev.setNext(newNode);
+                    size++;
+                    updateTail(); // edge case e tail pointer update kora hocchilo na
                     break;
                 }
                 prev = curr;
             }
         }
-        size++;
+//        size++;
         printWholeLinkedList();
     } // seems ok
 
@@ -187,6 +192,7 @@ class MyLinkedList {
                 for (int i = 0; i < size && curr != null; i++, curr = curr.getNext()) {
                     if (i == index) {
                         prev.setNext(curr.getNext());
+                        updateTail(); // tail pointer update kora hocchilo na
                         break;
                     }
                     prev = curr;
@@ -196,7 +202,7 @@ class MyLinkedList {
         }
         printWholeLinkedList();
     } // seems OK
-}
+} // DONE
 
 /*
  * Your MyLinkedList object will be instantiated and called as such:
@@ -208,3 +214,7 @@ class MyLinkedList {
  * obj.deleteAtIndex(index);
  */
 //leetcode submit region end(Prohibit modification and deletion)
+/*
+["MyLinkedList","addAtHead","addAtTail","addAtTail","get","get","addAtTail","addAtIndex","addAtHead","addAtHead","addAtTail","addAtTail","addAtTail","addAtTail","get","addAtHead","addAtHead","addAtIndex","addAtIndex","addAtHead","addAtTail","deleteAtIndex","addAtHead","addAtHead","addAtIndex","addAtTail","get","addAtIndex","addAtTail","addAtHead","addAtHead","addAtIndex","addAtTail","addAtHead","addAtHead","get","deleteAtIndex","addAtTail","addAtTail","addAtHead","addAtTail","get","deleteAtIndex","addAtTail","addAtHead","addAtTail","deleteAtIndex","addAtTail","deleteAtIndex","addAtIndex","deleteAtIndex","addAtTail","addAtHead","addAtIndex","addAtHead","addAtHead","get","addAtHead","get","addAtHead","deleteAtIndex","get","addAtHead","addAtTail","get","addAtHead","get","addAtTail","get","addAtTail","addAtHead","addAtIndex","addAtIndex","addAtHead","addAtHead","deleteAtIndex","get","addAtHead","addAtIndex","addAtTail","get","addAtIndex","get","addAtIndex","get","addAtIndex","addAtIndex","addAtHead","addAtHead","addAtTail","addAtIndex","get","addAtHead","addAtTail","addAtTail","addAtHead","get","addAtTail","addAtHead","addAtTail","get","addAtIndex"]
+			[[],[84],[2],[39],[3],[1],[42],[1,80],[14],[1],[53],[98],[19],[12],[2],[16],[33],[4,17],[6,8],[37],[43],[11],[80],[31],[13,23],[17],[4],[10,0],[21],[73],[22],[24,37],[14],[97],[8],[6],[17],[50],[28],[76],[79],[18],[30],[5],[9],[83],[3],[40],[26],[20,90],[30],[40],[56],[15,23],[51],[21],[26],[83],[30],[12],[8],[4],[20],[45],[10],[56],[18],[33],[2],[70],[57],[31,24],[16,92],[40],[23],[26],[1],[92],[3,78],[42],[18],[39,9],[13],[33,17],[51],[18,95],[18,33],[80],[21],[7],[17,46],[33],[60],[26],[4],[9],[45],[38],[95],[78],[54],[42,86]]
+* */
