@@ -57,7 +57,7 @@ You should not do any reverse operation, the resulting string is "abcd".
 import java.util.Stack;
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class reversePrefix {
     public String reversePrefix(String word, char ch) {
         String result = "";
         Stack<Character> stack = new Stack<>();
@@ -75,6 +75,6 @@ class Solution {
             }
         }
         return word;
-    }
+    } // DONE
 }
 //leetcode submit region end(Prohibit modification and deletion)
