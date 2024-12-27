@@ -49,7 +49,7 @@ Explanation: There are three 132 patterns in the sequence: [-1, 3, 2], [-1, 3, 0
 import java.util.Stack;
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class SolutionbinarySearch {
 
 //    private boolean binarySearch(int[] arr, int startIdx, int endIdx, int key) {
 //        if (startIdx < endIdx) {
