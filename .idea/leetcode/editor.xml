@@ -69,6 +69,17 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[151]Reverse Words in a String.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[151]Reverse Words in a String.md" />
+              <option name="frontendQuestionId" value="leetcode.com151" />
+              <option name="host" value="leetcode.com" />
+              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[151]Reverse Words in a String.java" />
+              <option name="titleSlug" value="reverse-words-in-a-string" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[1672]Richest Customer Wealth.java">
           <value>
             <LeetcodeEditor>
