@@ -157,6 +157,17 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[2011]Final Value of Variable After Performing Operations.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[2011]Final Value of Variable After Performing Operations.md" />
+              <option name="frontendQuestionId" value="leetcode.com2011" />
+              <option name="host" value="leetcode.com" />
+              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[2011]Final Value of Variable After Performing Operations.java" />
+              <option name="titleSlug" value="final-value-of-variable-after-performing-operations" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[2108]Find First Palindromic String in the Array.java">
           <value>
             <LeetcodeEditor>
