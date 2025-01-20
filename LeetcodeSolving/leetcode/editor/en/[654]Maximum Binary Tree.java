@@ -71,7 +71,7 @@ Output: [3,null,2,null,1]
  *     }
  * }
  */
-class Solution {
+class constructMaximumBinaryTree {
     private TreeNode constructMBT(int[] arr, TreeNode node, int leftIdx, int rightIdx) {
         if (leftIdx <= rightIdx) {
             int max = arr[leftIdx];

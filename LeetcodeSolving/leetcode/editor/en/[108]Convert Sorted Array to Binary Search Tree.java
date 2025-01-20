@@ -52,7 +52,7 @@ Explanation: [1,null,3] and [3,1] are both height-balanced BSTs.
  */
 class Solution {
     public TreeNode sortedArrayToBST(int[] nums) {
-        
+        return null;
     }
 }
 //leetcode submit region end(Prohibit modification and deletion)
