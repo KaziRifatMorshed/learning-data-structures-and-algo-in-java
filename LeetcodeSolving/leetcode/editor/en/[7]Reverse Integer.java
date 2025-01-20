@@ -32,33 +32,25 @@ Output: 21
 */
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solutions {
+class reverseInteger {
     //    2^31 = 2147483648
     public static int reverse(int x) {
-        int result = 0;
-        int maxInt = Integer.MAX_VALUE;
-        int minInt = Integer.MIN_VALUE;
-        boolean isNegative = false;
-        if (x < 0) {
-            isNegative = true;
-            x *= -1;
-        }
+        long result = 0;
         while (x != 0) {
-
+            System.out.println("result = " + result + " , x = " + x);
             result = result * 10 + x % 10;
             x /= 10;
-            System.out.println("result = " + result + " , x = " + x);
+            if (result > Integer.MAX_VALUE || result < Integer.MIN_VALUE) {
+                return 0;
+            }
         }
-        if (isNegative) result *= -1;
-        return result;
+        return (int) result;
     }
 
     public static void main(String[] args) {
-        reverse(1534236469);
+        System.out.println(reverse(1534236469));
+        System.out.println(reverse(-2147483648));
+        System.out.println(reverse(1463847412)); // 2147483641
     }
-}
+} // DONE
 //leetcode submit region end(Prohibit modification and deletion)
-/*
-2147483648
-964632435
-* */
