@@ -44,6 +44,7 @@ is the largest possible number.
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.PriorityQueue;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class largestInteger {
@@ -52,7 +53,39 @@ class largestInteger {
         return ((i % 2) == 0);
     }
 
-    public static int largestInteger(int num) {
+    public static int largestInteger(int num) { // efficient
+        PriorityQueue<Character> evenDigits = new PriorityQueue<>(Collections.reverseOrder());
+        PriorityQueue<Character> oddDigits = new PriorityQueue<>(Collections.reverseOrder());
+
+        String n = String.valueOf(num);
+        for (char c : n.toCharArray()) {
+            if (isEven(c)) {
+                evenDigits.add(c);
+            } else {
+                oddDigits.add(c);
+            }
+        }
+
+//        String result = "";
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < n.length(); i++) {
+            if (isEven(n.charAt(i))) {
+//                result += evenDigits.poll();
+                result.append(evenDigits.poll());
+            } else {
+//                result += oddDigits.poll();
+                result.append(oddDigits.poll());
+            }
+        }
+        return Integer.parseInt(result.toString());
+        /*
+        Success:
+            	Runtime:2 ms, faster than 72.08% of Java online submissions.
+            	Memory Usage:40.1 MB, less than 98.79% of Java online submissions.
+        */
+    }
+
+    public static int largestInteger_My(int num) {
         StringBuilder n = new StringBuilder(Integer.toString(num));
         ArrayList<Character> evenDigits = new ArrayList<>();
         ArrayList<Character> oddDigits = new ArrayList<>();
@@ -70,8 +103,7 @@ class largestInteger {
         Collections.sort(oddDigits, Collections.reverseOrder());
         System.out.println(oddDigits);
 
-        for (int i = 0, evenIdx = 0, oddIdx = 0;
-             i < n.length(); i++) {
+        for (int i = 0, evenIdx = 0, oddIdx = 0; i < n.length(); i++) {
             if (isEven(n.charAt(i))) {
                 result += evenDigits.get(evenIdx++);
             } else {
@@ -79,6 +111,12 @@ class largestInteger {
             }
         }
         return Integer.parseInt(result);
+        /*
+        Success:
+            	Runtime:7 ms, faster than 5.91% of Java online submissions.
+	            Memory Usage:41 MB, less than 27.52% of Java online submissions.
+
+        * */
     }
 
     public static void main(String[] args) {
