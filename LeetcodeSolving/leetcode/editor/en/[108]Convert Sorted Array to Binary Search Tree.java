@@ -50,7 +50,7 @@ Explanation: [1,null,3] and [3,1] are both height-balanced BSTs.
  *     }
  * }
  */
-class Solution {
+class Solutionnn {
     public TreeNode sortedArrayToBST(int[] nums) {
         return null;
     }
