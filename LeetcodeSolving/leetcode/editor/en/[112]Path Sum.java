@@ -72,10 +72,10 @@ class hasPathSum {
         }
         return hasPathSumRecursive(node.left, targetSum, node.val + currentSum) |
                 hasPathSumRecursive(node.right, targetSum, node.val + currentSum);
-    }
+    } // DONE
 
     public boolean hasPathSum(TreeNode root, int targetSum) {
         return hasPathSumRecursive(root, targetSum, 0);
     }
-}
+} // DONE
 //leetcode submit region end(Prohibit modification and deletion)
