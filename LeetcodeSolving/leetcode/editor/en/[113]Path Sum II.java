@@ -73,7 +73,7 @@ import java.util.List;
  * }
  * }
  */
-class Solution {
+class pathSumII {
 
     private void hasPathSumRecursive(TreeNode node, List<List<Integer>> listOfResults, List<Integer> currentPath, int targetSum, int currentSum) {
         if (node == null) return;
@@ -82,11 +82,11 @@ class Solution {
             if (node.val + currentSum == targetSum) {
                 List<Integer> temp = new ArrayList<>(currentPath);
                 listOfResults.add(temp);
+                if (!currentPath.isEmpty()) currentPath.removeLast();
                 return;
             }
         }
         hasPathSumRecursive(node.left, listOfResults, currentPath, targetSum, node.val + currentSum);
-//        if (!currentPath.isEmpty()) currentPath.removeLast();
         hasPathSumRecursive(node.right, listOfResults, currentPath, targetSum, node.val + currentSum);
         if (!currentPath.isEmpty()) currentPath.removeLast();
     }
@@ -96,10 +96,6 @@ class Solution {
         List<Integer> singlePath = new ArrayList<>();
         hasPathSumRecursive(root, listOfResults, singlePath, targetSum, 0);
         return listOfResults;
-    }
-
-    public static void main(String[] args) {
-
-    }
-}
+    } // DONE
+} // DONE
 //leetcode submit region end(Prohibit modification and deletion)
