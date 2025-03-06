@@ -18,7 +18,7 @@ class Kruskal {
     static int kruskal2(ArrayList<node> nodes) {
         int totalCost = 0;
         // sort arraylist on basis of cost
-        Collections.sort(nodes, );
+//        Collections.sort(nodes, );
 
         return totalCost;
     }
