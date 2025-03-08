@@ -1,71 +1,104 @@
 package Algorithms;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.nio.file.Paths;
+import java.util.*;
 
 class Kruskal {
-    static class node {
-        int a, b, cost;
+    static final int MAX_VERTICES = 10000;
+    static final ArrayList<Edge> edgeList = new ArrayList<>(); // ------------------------------ SYNTAX
+    //    static final ArrayList<Integer> depth = new ArrayList<>(Collections.nCopies(MAX_VERTICES, 0)); // USELESS
+    static final ArrayList<Integer> parent = new ArrayList<>(Collections.nCopies(MAX_VERTICES, 0));
+    // parent's index is child and value is parent
+    static final ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(MAX_VERTICES, false));
 
-        public node(int a, int b, int cost) {
-            this.a = a;
-            this.b = b;
-            this.cost = cost;
+    static class Edge {
+        int source, destination, weight;
+
+        public Edge(int source, int destination, int weight) {
+            this.source = source;
+            this.destination = destination;
+            this.weight = weight;
         }
     }
 
-    static int kruskal2(ArrayList<node> nodes) {
-        int totalCost = 0;
-        // sort arraylist on basis of cost
-//        Collections.sort(nodes, );
+    static boolean hasCycle(ArrayList<Integer>[] graph, int currentNode) { // ---------- kom bujhi
+        visited.set(currentNode, true);
 
-        return totalCost;
+        for (int adjacentNode : graph[currentNode]) { // --------------------------------- be careful
+            if (!visited.get(adjacentNode)) { // if this adjacent is not visited
+                // adjacent node er parent set korbo current node ke
+                parent.set(adjacentNode, currentNode);
+//                depth.set(adjacentNode, 1 + depth.get(currentNode)); // USELESS
+                if (hasCycle(graph, adjacentNode)) {
+                    return true;
+                }
+            } else if (adjacentNode != parent.get(currentNode)) { // --------------------- ???
+                return true;
+            }
+        }
+        // ❗ Mark as unvisited to allow other DFS traversals
+        visited.set(currentNode, false);
+        return false;
     }
 
-//    static int kruskal(int[][] graph) {
-//        int totalCost = 0;
-//        int n = graph.length;
-//        int[][] MST = new int[n][n];
-//        // finding minimum edge
-//        for (int i = 1; i <= n; i++) {
-//            for (int j = 1; j <= n; j++) {
-//                int minimumCost = graph[i][j];
-
-    /// /                if (minimumCost < graph[]){}
-//            }
-//        }
-//        return totalCost;
-//    }
-//
-//    static void buildMatrix(String[] inputs, int[][] matrix) {
-//        for (int i = 0; i < inputs.length; i++) {
-//            Scanner scanner = new Scanner(inputs[i]);
-//            int a = scanner.nextInt();
-//            int b = scanner.nextInt();
-//            int cost = scanner.nextInt();
-//            matrix[a][b] = cost;
-//            matrix[b][a] = cost;
-//        }
-//    }
-    static void takeInput(String[] inputs, ArrayList<node> nodes) {
-        for (int i = 0; i < inputs.length; i++) {
-            Scanner scanner = new Scanner(inputs[i]);
+    static void takeInputFromFile(String filePath) throws FileNotFoundException {
+        Scanner fs = new Scanner(new File(filePath));
+        while (fs.hasNext()) {
+            String s = fs.nextLine();
+            Scanner scanner = new Scanner(s);
             int a = scanner.nextInt();
             int b = scanner.nextInt();
-            int cost = scanner.nextInt();
-            node new_node = new node(a, b, cost);
-            nodes.add(new_node);
+            int wt = scanner.nextInt();
+            if (a == b && b == wt && wt == 0) return;
+            Edge new_node = new Edge(a, b, wt);
+            edgeList.add(new_node);
         }
+    } // SHOULD WORK
+
+    private static int minimumSpanningTree() {
+        int minimumSpanningTreeWeight = 0;
+
+        edgeList.sort(Comparator.comparingInt(edge -> edge.weight)); // ------------------------------ SYNTAX
+
+//        amar kase edge ache, ekhn graph banabo
+        ArrayList<Integer>[] graph = new ArrayList[MAX_VERTICES];
+        for (int i = 0; i < MAX_VERTICES; i++) {
+            graph[i] = new ArrayList<>();
+        } // graph has been initialized
+
+        // Kruskal's Algorithm
+        for (Edge edge : edgeList) {
+            // add edge to graph
+            graph[edge.source].add(edge.destination);
+            graph[edge.destination].add(edge.source);
+
+            // Reset visited array for each cycle check
+            Collections.fill(visited, false); // ------------------------------ SYNTAX
+            // visited ke recursive call er agei empty korte hobe
+
+            // checking
+            if (hasCycle(graph, edge.source)) {
+                // Remove edge if it creates a cycle
+                graph[edge.source].removeLast();
+                graph[edge.destination].removeLast();
+                /* Alternate Way
+                graph[edge.source].remove(graph[edge.source].size() - 1);
+                graph[edge.destination].remove(graph[edge.destination].size() - 1);
+                */
+            } else {
+                minimumSpanningTreeWeight += edge.weight;
+            }
+        }
+        return minimumSpanningTreeWeight;
     }
 
-    public static void main(String[] args) {
-
-        int node_count = 8;
-//        int[][] cost_matrix = new int[node_count + 1][node_count + 1];
-        ArrayList<node> nodes = new ArrayList<>();
-        String input[] = {"1 3 13", "1 2 11", "2 1 11", "2 3 15", "2 4 8", "2 5 12", "5 4 14", "0 0 0"};
-//        buildMatrix(input, cost_matrix);
-        takeInput(input, nodes);
+    public static void main(String[] args) throws FileNotFoundException {
+//        String currentPath = Paths.get("").toAbsolutePath().toString();
+//        System.out.println("Current Path: " + currentPath);
+        takeInputFromFile("./Algorithms/KruskalGraph.txt");
+        int minimumSpanningTreeWeight = minimumSpanningTree();
+        System.out.println("minimumSpanningTree Total Weight = " + minimumSpanningTreeWeight);
     }
-}
+} // done
