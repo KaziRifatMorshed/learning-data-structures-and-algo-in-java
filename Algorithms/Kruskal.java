@@ -38,8 +38,7 @@ class Kruskal {
                 return true;
             }
         }
-        // ❗ Mark as unvisited to allow other DFS traversals
-        visited.set(currentNode, false);
+//        visited.set(currentNode, false);
         return false;
     }
 
@@ -79,7 +78,7 @@ class Kruskal {
             // visited ke recursive call er agei empty korte hobe
 
             // checking
-            if (hasCycle(graph, edge.source)) {
+            if (hasCycle(graph, edge.source)) { // -------------------------- careful
                 // Remove edge if it creates a cycle
                 graph[edge.source].removeLast();
                 graph[edge.destination].removeLast();
