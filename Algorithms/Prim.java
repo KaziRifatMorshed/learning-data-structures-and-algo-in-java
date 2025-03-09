@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 
-class Kruskal2 {
+class Prim {
     static class Edge {
         int source, destination, weight;
 
@@ -20,7 +20,7 @@ class Kruskal2 {
 
     static int MAX_CAPACITY = 100;
     static ArrayList<Edge> edgeList = new ArrayList<>();
-    static ArrayList<Integer> visited = new ArrayList<>(MAX_CAPACITY);
+    static ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(MAX_CAPACITY, false));
     static ArrayList<Integer> parent = new ArrayList<>(Collections.nCopies(MAX_CAPACITY, 0));
     static ArrayList<Integer>[] graph = new ArrayList[MAX_CAPACITY];
 
@@ -51,10 +51,11 @@ class Kruskal2 {
         }
     } // unnecessary
 
+
     static boolean hasCycle(ArrayList<Integer>[] graph, int currentVertex) {
-        visited.add(currentVertex); // visit korbo
+        visited.set(currentVertex, true); // visit korbo
         for (int adjacentVertex : graph[currentVertex]) { // adjacent traverse korbo
-            if (!visited.contains(adjacentVertex)) {
+            if (!visited.get(adjacentVertex)) {
 //              parent.set(currentVertex, adjacentVertex); // ------------------ WRONG, ulta
                 parent.set(adjacentVertex, currentVertex);
                 if (hasCycle(graph, adjacentVertex)) return true;
@@ -63,30 +64,17 @@ class Kruskal2 {
         return false;
     }
 
-    static int kruskal() {
+    static int prim(int Source) {
         int totalWeight = 0;
-        initGraph();
-        // sort all edges according to weight
-        edgeList.sort(Comparator.comparingInt(edge -> edge.weight));
-        for (Edge edge : edgeList) {
-            graph[edge.source].add(edge.destination);
-            graph[edge.destination].add(edge.source);
-            visited.removeAll(visited);
-            if (hasCycle(graph, edge.source)) {
-                graph[edge.source].removeLast();
-                graph[edge.destination].removeLast();
-            } else {
-                totalWeight += edge.weight;
-            }
-        }
+
         return totalWeight;
-    } // ok
+    }
 
     public static void main(String[] args) throws FileNotFoundException {
 //        String currentPath = Paths.get("").toAbsolutePath().toString();
 //        System.out.println("Current Path: " + currentPath);
         takeInputFromFile("./Algorithms/KruskalGraph.txt");
-        int minimumSpanningTreeWeight = kruskal();
+        int minimumSpanningTreeWeight = prim(1);
         System.out.println("Total Weight = " + minimumSpanningTreeWeight);
     }
 }
