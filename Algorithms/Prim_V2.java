@@ -7,7 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 
-class Prim {
+class Prim_V2 {
     static class Edge {
         int source, destination, weight;
 
@@ -20,9 +20,11 @@ class Prim {
 
     static int MAX_CAPACITY = 100;
     static ArrayList<Edge> edgeList = new ArrayList<>();
-    static ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(MAX_CAPACITY, false));
+    static ArrayList<Integer> visited = new ArrayList<>();
     static ArrayList<Integer> parent = new ArrayList<>(Collections.nCopies(MAX_CAPACITY, 0));
-    static ArrayList<Integer>[] graph = new ArrayList[MAX_CAPACITY];
+    static ArrayList<Edge>[] graph = new ArrayList[MAX_CAPACITY];
+    static ArrayList<Integer>[] mstGraph = new ArrayList[MAX_CAPACITY];
+
 
     static void takeInputFromFile(String filePath) throws FileNotFoundException {
         Scanner fs = new Scanner(new File(filePath));
@@ -38,6 +40,14 @@ class Prim {
         }
     } // WORKS
 
+    static int getNodeCount() {
+        int max = 0;
+        for (ArrayList<Edge> t : graph) {
+            max = Math.max(max, t.size());
+        }
+        return max;
+    }
+
     static void initGraph() {
         for (int i = 0; i < MAX_CAPACITY; i++) {
             graph[i] = new ArrayList<>();
@@ -46,17 +56,15 @@ class Prim {
 
     static void constructGraph() {
         for (Edge edge : edgeList) {
-            graph[edge.source].add(edge.destination);
-            graph[edge.destination].add(edge.source);
+            graph[edge.source].add(new Edge(edge.source, edge.destination, edge.weight));
+            graph[edge.destination].add(new Edge(edge.destination, edge.source, edge.weight));
         }
-    } // unnecessary
-
+    }
 
     static boolean hasCycle(ArrayList<Integer>[] graph, int currentVertex) {
-        visited.set(currentVertex, true); // visit korbo
+        visited.add(currentVertex); // visit korbo
         for (int adjacentVertex : graph[currentVertex]) { // adjacent traverse korbo
-            if (!visited.get(adjacentVertex)) {
-//              parent.set(currentVertex, adjacentVertex); // ------------------ WRONG, ulta
+            if (!visited.contains(adjacentVertex)) {
                 parent.set(adjacentVertex, currentVertex);
                 if (hasCycle(graph, adjacentVertex)) return true;
             } else if (adjacentVertex != parent.get(currentVertex)) return true;
@@ -69,7 +77,33 @@ class Prim {
         initGraph();
         constructGraph();
 
-        edgeList.sort(Comparator.comparingInt(edge -> edge.weight));
+        int currentlySelectedNode = Source;
+        visited.add(currentlySelectedNode);
+
+        int nodeCount = getNodeCount();
+        for (int i = 0; i < nodeCount; i++) { // --------- ?????????
+            ArrayList<Edge> allAvailableEdges = new ArrayList<>();
+            for (int v : visited) { // visited e joto gulo int visited note ache
+                for (Edge e : graph[v]) { // sei sob node er sob edge gulo ke add korbo
+                    allAvailableEdges.add(e);
+                }
+            }
+            // edge gulo ke sort korbo
+            allAvailableEdges.sort(Comparator.comparingInt(edge -> edge.weight));
+
+            for (Edge e : allAvailableEdges) {
+                mstGraph[e.source].add(e.destination);
+                mstGraph[e.destination].add(e.source);
+                if (hasCycle(mstGraph, e.source)) {
+                    mstGraph[e.source].removeLast();
+                    mstGraph[e.destination].removeLast();
+                } else {
+                    totalWeight += e.weight;
+                    visited.add(e.source);
+                    break;
+                }
+            }
+        }
 
 
         return totalWeight;
