@@ -89,4 +89,4 @@ class Kruskal2 {
         int minimumSpanningTreeWeight = kruskal();
         System.out.println("Total Weight = " + minimumSpanningTreeWeight);
     }
-}
+} // DONE

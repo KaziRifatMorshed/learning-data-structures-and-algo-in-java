@@ -21,7 +21,7 @@ class Prim_V2 {
     static int MAX_CAPACITY = 100;
     static ArrayList<Edge> edgeList = new ArrayList<>();
     static ArrayList<Integer> visited = new ArrayList<>();
-    static ArrayList<Integer> parent = new ArrayList<>(Collections.nCopies(MAX_CAPACITY, 0));
+    static ArrayList<Integer> parent = new ArrayList<>(Collections.nCopies(MAX_CAPACITY, -1));
     static ArrayList<Edge>[] graph = new ArrayList[MAX_CAPACITY];
     static ArrayList<Integer>[] mstGraph = new ArrayList[MAX_CAPACITY];
 
@@ -41,16 +41,17 @@ class Prim_V2 {
     } // WORKS
 
     static int getNodeCount() {
-        int max = 0;
-        for (ArrayList<Edge> t : graph) {
-            max = Math.max(max, t.size());
+        int count = 0;
+        for (ArrayList<Edge> g : graph) {
+            if (!g.isEmpty()) count++;
         }
-        return max;
+        return count;
     }
 
     static void initGraph() {
         for (int i = 0; i < MAX_CAPACITY; i++) {
             graph[i] = new ArrayList<>();
+            mstGraph[i] = new ArrayList<>();
         }
     }
 
@@ -84,14 +85,16 @@ class Prim_V2 {
         for (int i = 0; i < nodeCount; i++) { // --------- ?????????
             ArrayList<Edge> allAvailableEdges = new ArrayList<>();
             for (int v : visited) { // visited e joto gulo int visited note ache
-                for (Edge e : graph[v]) { // sei sob node er sob edge gulo ke add korbo
-                    allAvailableEdges.add(e);
-                }
+//                for (Edge e : graph[v]) { // sei sob node er sob edge gulo ke add korbo
+//                    allAvailableEdges.add(e);
+//                }
+                allAvailableEdges.addAll(graph[v]);
             }
             // edge gulo ke sort korbo
             allAvailableEdges.sort(Comparator.comparingInt(edge -> edge.weight));
 
             for (Edge e : allAvailableEdges) {
+                if (e == null) continue;
                 mstGraph[e.source].add(e.destination);
                 mstGraph[e.destination].add(e.source);
                 if (hasCycle(mstGraph, e.source)) {
@@ -104,8 +107,6 @@ class Prim_V2 {
                 }
             }
         }
-
-
         return totalWeight;
     }
 
@@ -113,7 +114,7 @@ class Prim_V2 {
 //        String currentPath = Paths.get("").toAbsolutePath().toString();
 //        System.out.println("Current Path: " + currentPath);
         takeInputFromFile("./Algorithms/PrimGraph.txt");
-        int minimumSpanningTreeWeight = prim(1);
+        int minimumSpanningTreeWeight = prim(0);
         System.out.println("Total Weight = " + minimumSpanningTreeWeight); // 77
     }
 }

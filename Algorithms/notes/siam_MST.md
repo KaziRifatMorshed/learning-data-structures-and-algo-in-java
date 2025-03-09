@@ -4,6 +4,7 @@
 using namespace std;
 #define maxsize 200001
 int parent[maxsize];
+
 void makeSet(int n)
 {
     parent[n] = n;
