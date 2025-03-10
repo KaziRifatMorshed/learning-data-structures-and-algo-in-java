@@ -45,7 +45,16 @@ class Prim {
             Edge currentEdge = minHeap.poll();
             int currentNode = currentEdge.destination;
             if (visited[currentNode]) continue;
-            
+            else {
+                visited[currentNode] = true;
+                totalWeight += currentEdge.weight;
+                for (Edge adjacentEdge : graph[currentNode]) {
+                    if (!visited[adjacentEdge.destination]) {
+                        minHeap.add(adjacentEdge);
+                    }
+                }
+            }
+
         }
 
         return totalWeight;
@@ -61,5 +70,4 @@ class Prim {
         int minimumSpanningTreeWeight = prim(1);
         System.out.println("Total Weight = " + minimumSpanningTreeWeight); // Expected: 77
     }
-
-}
+} // DONE
