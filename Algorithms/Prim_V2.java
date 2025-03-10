@@ -97,6 +97,7 @@ class Prim_V2 {
                 if (e == null) continue;
                 mstGraph[e.source].add(e.destination);
                 mstGraph[e.destination].add(e.source);
+//                visited.removeAll(visited); // -------- no change
                 if (hasCycle(mstGraph, e.source)) {
                     mstGraph[e.source].removeLast();
                     mstGraph[e.destination].removeLast();
