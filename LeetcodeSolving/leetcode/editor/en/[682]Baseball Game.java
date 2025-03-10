@@ -1,6 +1,6 @@
 package LeetcodeSolving.leetcode.editor.en;
 
-/**
+/*
 You are keeping the scores for a baseball game with strange rules. At the 
 beginning of the game, you start with an empty record. 
 
@@ -98,10 +98,44 @@ on the record.
 
 */
 
+import java.util.Stack;
+
 //leetcode submit region begin(Prohibit modification and deletion)
 class BaseballGame {
-    public int calPoints(String[] operations) {
-        return 0;
+    static boolean isNumeric(String str) {
+        if (str == null) {
+            return false;
+        }
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
     }
-}
+
+    public int calPoints(String[] operations) {
+        int result = 0;
+        Stack<Integer> stack = new Stack<>();
+        for (String s : operations) {
+            if (isNumeric(s)) {
+                stack.push(Integer.parseInt(s));
+            } else if (s.equals("+")) {
+                int a = stack.pop();
+                int b = stack.peek();
+                int sum = a + b;
+                stack.push(a);
+                stack.push(sum);
+            } else if (s.equals("D")) {
+                stack.push(stack.peek() * 2);
+            } else if (s.equals("C")) {
+                stack.pop();
+            }
+            System.out.println(stack);
+        }
+        for (int i : stack) result += i;
+        System.out.println();
+        return result;
+    }
+} // DONE
 //leetcode submit region end(Prohibit modification and deletion)
