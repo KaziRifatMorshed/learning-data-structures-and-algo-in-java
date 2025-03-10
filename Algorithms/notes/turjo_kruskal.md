@@ -19,6 +19,8 @@ vector<vector<int>> adj;
 // vector<int> adj[N];
 vector<int> d(N), p(N);
 vector<bool> visited(N, 0);
+
+
 int dfs(vector<int> *temp, int u) {
     // cout << u << " ";
     visited[u] = 1;

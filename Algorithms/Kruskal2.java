@@ -57,7 +57,6 @@ class Kruskal2 {
             if (!visited.contains(adjacentVertex)) {
 //              parent.set(currentVertex, adjacentVertex); // ------------------ WRONG, ulta
                 parent.set(adjacentVertex, currentVertex);
-                if (hasCycle(graph, adjacentVertex)) return true;
             } else if (adjacentVertex != parent.get(currentVertex)) return true;
         }
         return false;
@@ -88,5 +87,5 @@ class Kruskal2 {
         takeInputFromFile("./Algorithms/KruskalGraph.txt");
         int minimumSpanningTreeWeight = kruskal();
         System.out.println("Total Weight = " + minimumSpanningTreeWeight);
-    }
+    } // 52
 } // DONE
