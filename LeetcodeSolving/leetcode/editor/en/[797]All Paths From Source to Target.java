@@ -45,11 +45,25 @@ import java.util.List;
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution {
+
+    static void DFS(int[][] graph, int node, int dest, List<Integer> aPath, List<List<Integer>> paths) {
+        aPath.add(node);
+        if (node == dest) {
+            paths.add(new ArrayList<>(aPath));
+//            aPath.removeLast();
+        } else {
+            for (Integer adjacent : graph[node]) {
+                DFS(graph, adjacent, dest, aPath, paths);
+                aPath.removeLast();
+            }
+        }
+    }
+
     public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
         List<List<Integer>> paths = new ArrayList<>();
-//        Collections.fill(paths, new ArrayList<>());
-
+        int n = graph.length;
+        DFS(graph, 0, n - 1, new ArrayList<Integer>(), paths);
         return paths;
     }
-}
+} // DONE
 //leetcode submit region end(Prohibit modification and deletion)
