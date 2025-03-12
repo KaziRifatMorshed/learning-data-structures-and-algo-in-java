@@ -124,6 +124,17 @@
             </LeetcodeEditor>
           </value>
         </entry>
+        <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[1557]Minimum Number of Vertices to Reach All Nodes.java">
+          <value>
+            <LeetcodeEditor>
+              <option name="contentPath" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/doc/content/[1557]Minimum Number of Vertices to Reach All Nodes.md" />
+              <option name="frontendQuestionId" value="leetcode.com1557" />
+              <option name="host" value="leetcode.com" />
+              <option name="path" value="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[1557]Minimum Number of Vertices to Reach All Nodes.java" />
+              <option name="titleSlug" value="minimum-number-of-vertices-to-reach-all-nodes" />
+            </LeetcodeEditor>
+          </value>
+        </entry>
         <entry key="$PROJECT_DIR$/LeetcodeSolving/leetcode/editor/en/[160]Intersection of Two Linked Lists.java">
           <value>
             <LeetcodeEditor>

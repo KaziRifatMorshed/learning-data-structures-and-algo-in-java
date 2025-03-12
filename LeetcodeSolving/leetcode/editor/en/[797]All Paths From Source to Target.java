@@ -44,7 +44,7 @@ import java.util.Collections;
 import java.util.List;
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class allPathsSourceTarget {
 
     static void DFS(int[][] graph, int node, int dest, List<Integer> aPath, List<List<Integer>> paths) {
         aPath.add(node);
