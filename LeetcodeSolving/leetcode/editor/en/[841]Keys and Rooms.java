@@ -56,7 +56,7 @@ import java.util.Collections;
 import java.util.List;
 
 //leetcode submit region begin(Prohibit modification and deletion)
-class Solution {
+class canVisitAllRooms {
     static void addRoom(int roomNo, ArrayList<Integer> visited) {
         if (visited.contains(roomNo)) {
             return;
@@ -77,11 +77,10 @@ class Solution {
     public boolean canVisitAllRooms(List<List<Integer>> rooms) {
         int n = rooms.size();
         ArrayList<Integer> visited = new ArrayList<>();
+        visited.add(0);
         DFS(rooms, 0, visited);
-//        for (int i = 0; i < visited.size(); i++){
         if (visited.size() != n) return false;
         else return true;
-//        }
     }
-}
+} // DONE
 //leetcode submit region end(Prohibit modification and deletion)
