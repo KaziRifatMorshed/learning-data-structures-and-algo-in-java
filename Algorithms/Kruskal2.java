@@ -58,6 +58,7 @@ Kruskal2 {
             if (!visited.contains(adjacentVertex)) {
 //              parent.set(currentVertex, adjacentVertex); // ------------------ WRONG, ulta
                 parent.set(adjacentVertex, currentVertex);
+                if (hasCycle(graph, adjacentVertex)) return true;
             } else if (adjacentVertex != parent.get(currentVertex)) return true;
         }
         return false;
