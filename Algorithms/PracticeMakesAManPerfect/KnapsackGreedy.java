@@ -1,4 +1,4 @@
-package Algorithms.Greedy;
+package Algorithms.PracticeMakesAManPerfect;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,25 +21,22 @@ class KnapsackGreedy {
     static ArrayList<Instance> instances = new ArrayList<>();
 
     static void takeInputFromFile(String filePath) throws FileNotFoundException {
-        Scanner fs = new Scanner(new File(filePath));
-        while (fs.hasNext()) {
-            String s = fs.nextLine();
-            Scanner scanner = new Scanner(s);
-            int a = scanner.nextInt();
-            int b = scanner.nextInt();
-            if (a == b && b == 0) return;
-            Instance k = new Instance(a, b);
-            instances.add(k);
+        Scanner scanner = new Scanner(new File(filePath));
+        while (scanner.hasNext()) {
+            String s = scanner.nextLine();
+            Scanner scanner1 = new Scanner(s);
+            int a = scanner1.nextInt();
+            int b = scanner1.nextInt();
+            if (a == b && a == 0) return;
+            instances.add(new Instance(a, b));
         }
-    } // WORKS
+    }
 
-    static double knapsack(int maxNumItem, int maxWeight) {
-        //fill all p/w
-        for (Instance i : instances) {
-            i.pw = (double) i.price / (double) i.weight;
+    private static double knapsack(int maxNumItem, int maxWeight) {
+        for (Instance k : instances) {
+            k.pw = (double) k.price / (double) k.weight;
         }
         instances.sort(Comparator.comparingDouble(instance -> instance.pw));
-//        instances.reversed(); ----------- THIS DOES NOT WORK
         Collections.reverse(instances);
 
         ArrayList<Double> x = new ArrayList<>(Collections.nCopies(maxNumItem, 0.0));
@@ -54,18 +51,9 @@ class KnapsackGreedy {
                 double frac = (double) U / (double) instances.get(i).weight;
                 x.set(i, frac);
             }
-//            if (instances.get(i).weight > U) break;
-//            else {
-//                x.set(i, 1.0);
-//                U -= instances.get(i).weight;
-//            }
-//        }
-//        if (i <= maxWeight) {
-//            x.set(i, (double) ((double)U / (double)instances.get(i).weight));
         }
 
-        // calculate total profit
-        double totalProfit = 0;
+        double totalProfit = 0.0;
         for (i = 0; i < x.size(); i++) {
             System.out.println(x.get(i));
             totalProfit += x.get(i) * instances.get(i).price;

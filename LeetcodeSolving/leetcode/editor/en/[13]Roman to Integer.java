@@ -70,9 +70,9 @@ Explanation: M = 1000, CM = 900, XC = 90 and IV = 4.
 
 //leetcode submit region begin(Prohibit modification and deletion)
 class Solution6 {
-    public int romanToInt(String str) {
-        int result = 0;
-        str.replaceAll();
-    }
+//    public int romanToInt(String str) {
+//        int result = 0;
+//        str.replaceAll();
+//    }
 }
 //leetcode submit region end(Prohibit modification and deletion)

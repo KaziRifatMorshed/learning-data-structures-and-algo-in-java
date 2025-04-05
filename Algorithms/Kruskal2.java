@@ -7,7 +7,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 
-class Kruskal2 {
+class
+Kruskal2 {
     static class Edge {
         int source, destination, weight;
 
