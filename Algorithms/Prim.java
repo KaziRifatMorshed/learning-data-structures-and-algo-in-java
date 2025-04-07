@@ -25,7 +25,7 @@ class Prim {
             int a = fs.nextInt();
             int b = fs.nextInt();
             int wt = fs.nextInt();
-            if (a == 0 && b == 0 && wt == 0) break; // Stop reading if sentinel value is found
+//            if (a == 0 && b == 0 && wt == 0) break; // Stop reading if sentinel value is found // USELESS
             graph[a].add(new Edge(b, wt));
             graph[b].add(new Edge(a, wt));
         }
@@ -39,7 +39,7 @@ class Prim {
     static int prim(int source) {
         int totalWeight = 0;
         PriorityQueue<Edge> minHeap = new PriorityQueue<>(Comparator.comparingInt(edge -> edge.weight));
-        minHeap.add(new Edge(source, 0));
+        minHeap.add(new Edge(source, 0)); // first node for initialization, zero for avoiding it to be summed
 
         while (!minHeap.isEmpty()) {
             Edge currentEdge = minHeap.poll();
@@ -54,9 +54,7 @@ class Prim {
                     }
                 }
             }
-
         }
-
         return totalWeight;
     }
 
@@ -71,3 +69,4 @@ class Prim {
         System.out.println("Total Weight = " + minimumSpanningTreeWeight); // Expected: 77
     }
 } // DONE
+

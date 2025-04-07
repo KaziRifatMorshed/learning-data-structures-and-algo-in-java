@@ -58,6 +58,7 @@ Kruskal2 {
             if (!visited.contains(adjacentVertex)) {
 //              parent.set(currentVertex, adjacentVertex); // ------------------ WRONG, ulta
                 parent.set(adjacentVertex, currentVertex);
+                hasCycle(graph, adjacentVertex); // ------ ei line bad cole gesilo
             } else if (adjacentVertex != parent.get(currentVertex)) return true;
         }
         return false;

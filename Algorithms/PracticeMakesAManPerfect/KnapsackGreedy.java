@@ -33,32 +33,34 @@ class KnapsackGreedy {
     }
 
     private static double knapsack(int maxNumItem, int maxWeight) {
-        for (Instance k : instances) {
-            k.pw = (double) k.price / (double) k.weight;
+        for (int i = 0; i < instances.size(); i++) {
+            instances.get(i).pw = (double) instances.get(i).price / (double) instances.get(i).weight;
         }
         instances.sort(Comparator.comparingDouble(instance -> instance.pw));
         Collections.reverse(instances);
 
-        ArrayList<Double> x = new ArrayList<>(Collections.nCopies(maxNumItem, 0.0));
+        double profit = 0.0;
+        ArrayList<Double> x = new ArrayList<>(Collections.nCopies(instances.size(), 0.0));
 
-        int U = maxWeight;
+        double U = maxWeight;
+
         int i = 0;
-        for (i = 0; i < maxNumItem; i++) {
-            if (instances.get(i).weight <= U) {
+        for (i = 0; i < x.size(); i++) {
+            if (instances.get(i).weight < U) break;
+            else {
                 x.set(i, 1.0);
-                U -= instances.get(i).weight;
-            } else {
-                double frac = (double) U / (double) instances.get(i).weight;
-                x.set(i, frac);
+                maxNumItem -= instances.get(i).weight;
             }
         }
+        double frac = (double) U / (double) instances.get(i).weight;
+        if (i <= maxNumItem) x.set(i, frac);
 
-        double totalProfit = 0.0;
+        // calculate total profit
         for (i = 0; i < x.size(); i++) {
             System.out.println(x.get(i));
-            totalProfit += x.get(i) * instances.get(i).price;
+            profit += x.get(i) * instances.get(i).price;
         }
-        return totalProfit;
+        return profit;
     }
 
     public static void main(String[] args) throws FileNotFoundException {
