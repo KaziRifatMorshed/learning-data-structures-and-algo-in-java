@@ -9,7 +9,7 @@ class Kruskal {
     static final int MAX_VERTICES = 10000;
     static final ArrayList<Edge> edgeList = new ArrayList<>(); // ------------------------------ SYNTAX
     //    static final ArrayList<Integer> depth = new ArrayList<>(Collections.nCopies(MAX_VERTICES, 0)); // USELESS
-    static final ArrayList<Integer> parent = new ArrayList<>(Collections.nCopies(MAX_VERTICES, 0));
+    static final ArrayList<Integer> parent = new ArrayList<>(Collections.nCopies(MAX_VERTICES, 0)); // // You never initialize parent with default values, causing IndexOutOfBounds.
     // parent's index is child and value is parent
     static final ArrayList<Boolean> visited = new ArrayList<>(Collections.nCopies(MAX_VERTICES, false));
 

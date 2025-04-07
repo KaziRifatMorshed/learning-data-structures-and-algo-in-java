@@ -7,8 +7,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
 
-class
-Kruskal2 {
+class Kruskal2 {
     static class Edge {
         int source, destination, weight;
 
@@ -33,7 +32,8 @@ Kruskal2 {
             int a = scanner.nextInt();
             int b = scanner.nextInt();
             int wt = scanner.nextInt();
-            if (a == b && b == wt && wt == 0) return;
+            if (a == b && b == wt && wt == 0)
+                return;
             Edge new_node = new Edge(a, b, wt);
             edgeList.add(new_node);
         }
@@ -56,10 +56,11 @@ Kruskal2 {
         visited.add(currentVertex); // visit korbo
         for (int adjacentVertex : graph[currentVertex]) { // adjacent traverse korbo
             if (!visited.contains(adjacentVertex)) {
-//              parent.set(currentVertex, adjacentVertex); // ------------------ WRONG, ulta
+                // parent.set(currentVertex, adjacentVertex); // ------------------ WRONG, ulta
                 parent.set(adjacentVertex, currentVertex);
                 hasCycle(graph, adjacentVertex); // ------ ei line bad cole gesilo
-            } else if (adjacentVertex != parent.get(currentVertex)) return true;
+            } else if (adjacentVertex != parent.get(currentVertex))
+                return true;
         }
         return false;
     }
@@ -84,8 +85,8 @@ Kruskal2 {
     } // ok
 
     public static void main(String[] args) throws FileNotFoundException {
-//        String currentPath = Paths.get("").toAbsolutePath().toString();
-//        System.out.println("Current Path: " + currentPath);
+        // String currentPath = Paths.get("").toAbsolutePath().toString();
+        // System.out.println("Current Path: " + currentPath);
         takeInputFromFile("./Algorithms/KruskalGraph.txt");
         int minimumSpanningTreeWeight = kruskal();
         System.out.println("Total Weight = " + minimumSpanningTreeWeight);
