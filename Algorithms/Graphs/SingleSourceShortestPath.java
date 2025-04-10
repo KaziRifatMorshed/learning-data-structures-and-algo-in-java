@@ -68,7 +68,8 @@ class SingleSourceShortestPath {
             int b = scanner.nextInt();
             int w = scanner.nextInt();
             if (a == b && b == w && w == 0) return;
-            cost[a - 1][b - 1] = w;
+//            cost[a - 1][b - 1] = w; // directed digraph
+            cost[a - 1][b - 1] = cost[b - 1][a - 1] = w; // undirected graph
         }
     }
 
