@@ -34,10 +34,10 @@ class nQueens {
                 x[row] = column;
                 if (row == n - 1) { // ?
                     solutions.add(x.clone());
-//                    print_nQueens();
+                    print_nQueens();
+                } else {
+                    solve_nQueens(row + 1);
                 }
-            } else {
-                solve_nQueens(row + 1);
             }
             x[row] = null;
         }
