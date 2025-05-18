@@ -10,7 +10,10 @@ class AllPairShortestPathAGAIN {
     static int n = 3 + 1;
     static int[][] cost = new int[n][n];
     static int[][] A = new int[n][n];
-    static int[][] next = new int[n][n]; // To reconstruct paths
+
+    static int[][] next = new int[n][n];
+    static int MAX_STEPS = n * n;
+
 
     static void initCost() {
         for (int i = 0; i < cost.length; i++) {
@@ -37,18 +40,16 @@ class AllPairShortestPathAGAIN {
         }
     }
 
-    // Reconstruct shortest path from u to v
+    // Reconstruct all shortest path from u to v
     static String getPath(int u, int v) {
-        if (next[u][v] == -1) return "no path";
+        if (next[u][v] == -1) return "no paths.";
         StringBuilder path = new StringBuilder();
         path.append(u);
-        // Prevent infinite loop if next[u][v] is corrupted or forms a cycle
         int steps = 0;
-        final int MAX_STEPS = n * n; // reasonable bound for a graph of this size
         while (u != v) {
             u = next[u][v];
             steps++;
-            if (u == -1 || steps > MAX_STEPS) return "no path";
+            if (u == -1 || steps > MAX_STEPS) return "no paths.";
             path.append(" -> ").append(u);
         }
         return path.toString();
@@ -59,8 +60,9 @@ class AllPairShortestPathAGAIN {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 A[i][j] = cost[i][j];
-                if (i == j || cost[i][j] == INF) {
-                    next[i][j] = -1; // No path
+
+                if (cost[i][j] == INF || i == j) { // condition kheyal koro
+                    next[i][j] = -1; // jaoa possible na
                 } else {
                     next[i][j] = j;
                 }
@@ -72,7 +74,7 @@ class AllPairShortestPathAGAIN {
                 for (int j = 1; j < n; j++) {
                     if (A[i][k] + A[k][j] < A[i][j]) {
                         A[i][j] = A[i][k] + A[k][j];
-                        next[i][j] = next[i][k]; // Update next step on path
+                        next[i][j] = next[i][k];
                     }
                 }
             }
@@ -85,15 +87,15 @@ class AllPairShortestPathAGAIN {
         System.out.println("Distance Matrix:");
         for (int[] row : A) System.out.println(Arrays.toString(row));
 
-        System.out.println("\nShortest paths between each pair of vertices:");
+        System.out.println("\nAll paths:");
         for (int i = 1; i < n; i++) {
             for (int j = 1; j < n; j++) {
                 if (i != j) {
-                    System.out.print("Shortest path from " + i + " to " + j + ": ");
                     String path = getPath(i, j);
-                    System.out.println(path + " (Cost: " + (A[i][j] == INF ? "INF" : A[i][j]) + ")");
+                    String c = (A[i][j] == INF) ? "INF" : Integer.toString(A[i][j]);
+                    System.out.println("Shortest path from " + i + " to " + j + " : " + path + " (Cost: " + c + ")");
                 }
             }
         }
     }
-}
+} // DONE
