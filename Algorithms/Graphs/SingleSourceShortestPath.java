@@ -68,15 +68,14 @@ class SingleSourceShortestPath {
             int b = scanner.nextInt();
             int w = scanner.nextInt();
             if (a == b && b == w && w == 0) return;
-//            cost[a - 1][b - 1] = w; // directed digraph // NO OUTPUT
+            cost[a - 1][b - 1] = w; // directed digraph
 //            cost[a - 1][b - 1] = cost[b - 1][a - 1] = w; // undirected graph
-            cost[b - 1][a - 1] = w; // undirected graph
         }
     }
 
     public static void main(String[] args) throws FileNotFoundException {
         readFromFile("./Algorithms/Graphs/SingleSourceShortestPath.txt");
-        int sourceNode = 1;
+        int sourceNode = 5;
         findShortestPaths(sourceNode, cost, n);
 //        remember to input source
     }
