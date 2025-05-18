@@ -4,13 +4,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Collections;
 
-class SingleSourceShortestPath {
+class  SingleSourceShortestPath_printPath{
 
     final static int inf = 100000;
     static int n = 0;
     static int[][] cost;
     static int[] distance_arr;
+    static int[] parent; // Array to store the parent node of each vertex
 
     static int minimumIndex(boolean[] hasVisited) {
         int minIdx = 0, min = inf;
@@ -30,10 +34,14 @@ class SingleSourceShortestPath {
         for (int i = 0; i < numNodes; i++) {
             hasVisited[i] = false; // init
             distance_arr[i] = cost[source][i];
+            // Initialize parent array: if directly connected to source, parent is source
+            // otherwise, parent is -1 (no parent yet)
+            parent[i] = (cost[source][i] != inf) ? source : -1;
         }
 
         hasVisited[source] = true;
         distance_arr[source] = 0;
+        parent[source] = -1; // Source has no parent
 
         for (int i = 1; i < numNodes; i++) {
             int nearestNode = minimumIndex(hasVisited);
@@ -41,9 +49,43 @@ class SingleSourceShortestPath {
             for (int j = 0; j < numNodes; j++) {
                 if (!hasVisited[j] && distance_arr[j] > distance_arr[nearestNode] + cost[nearestNode][j]) {
                     distance_arr[j] = distance_arr[nearestNode] + cost[nearestNode][j];
+                    parent[j] = nearestNode; // Update parent for the new shorter path
                 }
             }
             System.out.println(Arrays.toString(distance_arr));
+        }
+    }
+
+    static void printShortestPaths(int source) {
+        source--; // Adjust for 0-based indexing
+        System.out.println("\nShortest paths from node " + (source + 1) + ":");
+
+        for (int i = 0; i < n; i++) {
+            if (i == source) continue; // Skip source node
+
+            System.out.print("Path to node " + (i + 1) + " (distance = " + distance_arr[i] + "): ");
+            if (distance_arr[i] == inf) {
+                System.out.println("No path exists");
+                continue;
+            }
+
+            // Reconstruct path using parent array
+            List<Integer> path = new ArrayList<>();
+            int current = i;
+            while (current != -1) {
+                path.add(current + 1); // +1 to convert back to 1-based indexing
+                current = parent[current];
+            }
+            Collections.reverse(path); // Reverse to get path from source to destination
+
+            // Print the path
+            for (int j = 0; j < path.size(); j++) {
+                System.out.print(path.get(j));
+                if (j < path.size() - 1) {
+                    System.out.print(" → ");
+                }
+            }
+            System.out.println();
         }
     }
 
@@ -55,7 +97,11 @@ class SingleSourceShortestPath {
                 else
                     cost[i][j] = inf;
         distance_arr = new int[n];
-        for (int i = 0; i < n; i++) distance_arr[i] = inf;
+        parent = new int[n]; // Initialize parent array
+        for (int i = 0; i < n; i++) {
+            distance_arr[i] = inf;
+            parent[i] = -1; // -1 indicates no parent assigned yet
+        }
     }
 
 
@@ -68,9 +114,9 @@ class SingleSourceShortestPath {
             int b = scanner.nextInt();
             int w = scanner.nextInt();
             if (a == b && b == w && w == 0) return;
-//            cost[a - 1][b - 1] = w; // directed digraph // NO OUTPUT
+//            cost[a - 1][b - 1] = w; // directed digraph // not output
 //            cost[a - 1][b - 1] = cost[b - 1][a - 1] = w; // undirected graph
-            cost[b - 1][a - 1] = w; // undirected graph
+            cost[b - 1][a - 1] = w; // directed graph
         }
     }
 
@@ -78,6 +124,6 @@ class SingleSourceShortestPath {
         readFromFile("./Algorithms/Graphs/SingleSourceShortestPath.txt");
         int sourceNode = 1;
         findShortestPaths(sourceNode, cost, n);
-//        remember to input source
+        printShortestPaths(sourceNode); // Print the shortest paths
     }
 }
