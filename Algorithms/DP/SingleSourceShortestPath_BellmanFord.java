@@ -77,8 +77,8 @@ class SingleSourceShortestPath_BellmanFord {
 
                 // For each (i, u) where there's an edge
                 for (int i = 0; i < n; i++) {
-                    if (dist[i] < INF && cost[i][u] < INF) {
-                        if (dist[u] > dist[i] + cost[i][u]) {
+                    if (dist[i] < INF && cost[i][u] < INF) { // careful
+                        if (dist[u] > dist[i] + cost[i][u]) { // dist[u]
                             dist[u] = dist[i] + cost[i][u];
                         }
                     }
