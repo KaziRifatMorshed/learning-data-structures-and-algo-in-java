@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Collections;
 
-class  SingleSourceShortestPath_printPath{
+class SingleSourceShortestPath_printPath {
 
     final static int inf = 100000;
     static int n = 0;
@@ -47,7 +47,8 @@ class  SingleSourceShortestPath_printPath{
             int nearestNode = minimumIndex(hasVisited);
             hasVisited[nearestNode] = true;
             for (int j = 0; j < numNodes; j++) {
-                if (!hasVisited[j] && distance_arr[j] > distance_arr[nearestNode] + cost[nearestNode][j]) {
+                if (!hasVisited[j] &&
+                        distance_arr[j] > distance_arr[nearestNode] + cost[nearestNode][j]) {
                     distance_arr[j] = distance_arr[nearestNode] + cost[nearestNode][j];
                     parent[j] = nearestNode; // Update parent for the new shorter path
                 }
@@ -63,9 +64,13 @@ class  SingleSourceShortestPath_printPath{
         for (int i = 0; i < n; i++) {
             if (i == source) continue; // Skip source node
 
-            System.out.print("Path to node " + (i + 1) + " (distance = " + distance_arr[i] + "): ");
+            StringBuilder sb = new StringBuilder();
+            sb.append("Path to node ").append(i + 1)
+                    .append(" (distance = ").append(distance_arr[i]).append("): ");
+
             if (distance_arr[i] == inf) {
-                System.out.println("No path exists");
+                sb.append("No path exists");
+                System.out.println(sb.toString());
                 continue;
             }
 
@@ -78,14 +83,15 @@ class  SingleSourceShortestPath_printPath{
             }
             Collections.reverse(path); // Reverse to get path from source to destination
 
-            // Print the path
+            // Build the path string
             for (int j = 0; j < path.size(); j++) {
-                System.out.print(path.get(j));
+                sb.append(path.get(j));
                 if (j < path.size() - 1) {
-                    System.out.print(" → ");
+                    sb.append(" → ");
                 }
             }
-            System.out.println();
+
+            System.out.println(sb.toString());
         }
     }
 
