@@ -52,8 +52,8 @@ public class BellmanFord_AGAIN {
             // Initialize parent array
             if (i == src) {
                 parent[i] = -1; // Source has no parent
-            } else if (cost[src][i] < inf) {
-                parent[i] = src; // Direct edge from source
+            } else if (cost[src][i] < inf) { // source theke jodi i te jaoar rasta thake
+                parent[i] = src; // then i er parent holo source
             } else {
                 parent[i] = -1; // No path known yet
             }
