@@ -43,7 +43,7 @@ class Prim {
 
         while (!minHeap.isEmpty()) {
             Edge currentEdge = minHeap.poll();
-            int currentNode = currentEdge.destination;
+            int currentNode = currentEdge.destination; // dest
             if (visited[currentNode]) continue;
             else {
                 visited[currentNode] = true;

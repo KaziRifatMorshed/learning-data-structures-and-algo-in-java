@@ -73,7 +73,7 @@ public class BellmanFord_AGAIN {
                 if (!hasIncoming) continue;
 
                 for (int i = 0; i < n; i++) {
-                    if (distance_arr[i] < inf && cost[i][u] < inf) {
+                    if (distance_arr[i] < inf && cost[i][u] < inf) { // careful
                         if (distance_arr[u] > distance_arr[i] + cost[i][u]) {
                             distance_arr[u] = distance_arr[i] + cost[i][u];
                             parent[u] = i; // Update parent when finding a better path

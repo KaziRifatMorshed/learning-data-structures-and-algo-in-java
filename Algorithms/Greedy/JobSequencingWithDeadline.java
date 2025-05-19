@@ -53,12 +53,12 @@ public class JobSequencingWithDeadline {
 //        jobs.reversed(); // --------------------- THIS DOES NOT WORK
         Collections.reverse(jobs);
 
-        System.out.println(jobs);
+//        System.out.println(jobs);
 
         myJobSchedule = new ArrayList<>(Collections.nCopies(workWithin, null));
 
 //        for (int i = 0; !isFull() && i < workWithin; i++) {
-        for (int i = 0; i < workWithin; i++) {
+        for (int i = 0; i < workWithin; i++) { // sorted list er first theke ekta ekta kore dhorbo
             int targetIndex = jobs.get(i).deadlineDays - 1;
             while (targetIndex >= 0 && targetIndex < workWithin) {
                 if (myJobSchedule.get(targetIndex) == null) {

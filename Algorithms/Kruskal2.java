@@ -22,7 +22,7 @@ class Kruskal2 {
     static ArrayList<Edge> edgeList = new ArrayList<>();
     static ArrayList<Integer> visited = new ArrayList<>(MAX_CAPACITY);
     static ArrayList<Integer> parent = new ArrayList<>(Collections.nCopies(MAX_CAPACITY, 0));
-    static ArrayList<Integer>[] graph = new ArrayList[MAX_CAPACITY];
+    static ArrayList<Integer>[] graph = new ArrayList[MAX_CAPACITY]; // syntax
 
     static void takeInputFromFile(String filePath) throws FileNotFoundException {
         Scanner fs = new Scanner(new File(filePath));
@@ -45,12 +45,12 @@ class Kruskal2 {
         }
     }
 
-    static void constructGraph() {
-        for (Edge edge : edgeList) {
-            graph[edge.source].add(edge.destination);
-            graph[edge.destination].add(edge.source);
-        }
-    } // unnecessary
+//    static void constructGraph() {
+//        for (Edge edge : edgeList) {
+//            graph[edge.source].add(edge.destination);
+//            graph[edge.destination].add(edge.source);
+//        }
+//    } // unnecessary
 
     static boolean hasCycle(ArrayList<Integer>[] graph, int currentVertex) {
         visited.add(currentVertex); // visit korbo
@@ -58,7 +58,10 @@ class Kruskal2 {
             if (!visited.contains(adjacentVertex)) {
                 // parent.set(currentVertex, adjacentVertex); // ------------------ WRONG, ulta
                 parent.set(adjacentVertex, currentVertex);
-                hasCycle(graph, adjacentVertex); // ------ ei line bad cole gesilo
+//                hasCycle(graph, adjacentVertex); // ------ ei line bad cole gesilo
+                if (hasCycle(graph, adjacentVertex)) {
+                    return true;
+                }
             } else if (adjacentVertex != parent.get(currentVertex))
                 return true;
         }
