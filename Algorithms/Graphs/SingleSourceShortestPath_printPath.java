@@ -102,6 +102,7 @@ class SingleSourceShortestPath_printPath {
                 if (i == j) cost[i][j] = 0;
                 else
                     cost[i][j] = inf;
+
         distance_arr = new int[n];
         parent = new int[n]; // Initialize parent array
         for (int i = 0; i < n; i++) {
@@ -129,6 +130,7 @@ class SingleSourceShortestPath_printPath {
         readFromFile("./Algorithms/Graphs/SingleSourceShortestPath.txt");
         int sourceNode = 5;
         findShortestPaths(sourceNode, cost, n);
+        System.out.println(Arrays.toString(parent));
         printShortestPaths(sourceNode); // Print the shortest paths
     }
 }
