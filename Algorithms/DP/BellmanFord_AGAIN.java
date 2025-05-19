@@ -4,20 +4,21 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
 public class BellmanFord_AGAIN {
-    int n;
-    int[] dist;
-    int[] parent; // Added parent array to track the predecessor of each vertex
-    int[][] cost;
-    static final int INF = 999;
+    static int n;
+    static int[] distance_arr;  // Renamed dist to distance_arr
+    static int[] parent;        // Parent array to track the shortest path tree
+    static int[][] cost;
+    static final int inf = 999; // Renamed INF to inf
 
     public BellmanFord_AGAIN(int n) {
         this.n = n;
-        dist = new int[n];
-        parent = new int[n]; // Initialize parent array
+        distance_arr = new int[n];
+        parent = new int[n];
         cost = new int[n][n];
     }
 
@@ -25,7 +26,7 @@ public class BellmanFord_AGAIN {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
                 if (i == j) cost[i][j] = 0;
-                else cost[i][j] = INF;
+                else cost[i][j] = inf;
             }
         }
     }
@@ -40,33 +41,31 @@ public class BellmanFord_AGAIN {
             int b = scanner1.nextInt();
             int w = scanner1.nextInt();
             if (a == b && b == w && w == 0) return;
-            cost[a - 1][b - 1] = w; // directed graph
+            cost[a - 1][b - 1] = w;
         }
     }
 
     int[] bellmanFord(int src) {
         // Initialize distance and parent arrays
         for (int i = 0; i < n; i++) {
-            dist[i] = cost[src][i];
-            // Set parent for directly connected vertices
-            if (cost[src][i] < INF && // jodi source and i connected thake
-                    src != i) {
-                parent[i] = src;
+            distance_arr[i] = cost[src][i];
+            // Initialize parent array
+            if (i == src) {
+                parent[i] = -1; // Source has no parent
+            } else if (cost[src][i] < inf) {
+                parent[i] = src; // Direct edge from source
             } else {
-                parent[i] = -1; // -1 means no parent
+                parent[i] = -1; // No path known yet
             }
         }
 
-        // Set source vertex's parent as itself
-        parent[src] = src;
-
-        for (int k = 2; k < n - 1; k++) { // 2 to n-1
+        for (int k = 2; k < n - 1; k++) {
             for (int u = 0; u < n; u++) {
                 if (u == src) continue;
 
                 boolean hasIncoming = false;
                 for (int t = 0; t < n; t++) {
-                    if (cost[t][u] < INF) {
+                    if (cost[t][u] < inf) {
                         hasIncoming = true;
                         break;
                     }
@@ -74,45 +73,53 @@ public class BellmanFord_AGAIN {
                 if (!hasIncoming) continue;
 
                 for (int i = 0; i < n; i++) {
-                    if (dist[i] < INF && cost[i][u] < INF) {
-                        if (dist[u] > dist[i] + cost[i][u]) {
-                            dist[u] = dist[i] + cost[i][u];
+                    if (distance_arr[i] < inf && cost[i][u] < inf) {
+                        if (distance_arr[u] > distance_arr[i] + cost[i][u]) {
+                            distance_arr[u] = distance_arr[i] + cost[i][u];
                             parent[u] = i; // Update parent when finding a better path
                         }
                     }
                 }
             }
         }
-        return dist;
+        return distance_arr;
     }
 
-    // Function to print the path from source to destination using parent array
-    void printPath(int dest) {
-        if (parent[dest] == -1) {
-            System.out.println("No path exists to vertex " + (dest + 1));
-            return;
-        }
+    static void printShortestPaths(int source) {
+        source--; // Adjust for 0-based indexing
+        System.out.println("\nShortest paths from node " + (source + 1) + ":");
 
-        List<Integer> path = new ArrayList<>();
-        for (int v = dest; v != parent[v]; v = parent[v]) {
-            path.add(0, v);
-        }
-        path.add(0, parent[dest] == dest ? dest : parent[dest]); // Add source vertex
-
-        System.out.print("Path to vertex " + (dest + 1) + ": ");
-        for (int i = 0; i < path.size(); i++) {
-            System.out.print((path.get(i) + 1) + (i < path.size() - 1 ? " -> " : ""));
-        }
-        System.out.println(" (Distance: " + dist[dest] + ")");
-    }
-
-    // Function to print all paths from the source
-    void printAllPaths() {
-        System.out.println("Shortest paths from the source vertex " + (parent[0] + 1) + ":");
         for (int i = 0; i < n; i++) {
-            if (i != parent[0]) { // Skip the source vertex itself
-                printPath(i);
+            if (i == source) continue; // Skip source node
+
+            StringBuilder sb = new StringBuilder();
+            sb.append("Path to node ").append(i + 1)
+                    .append(" (distance = ").append(distance_arr[i]).append("): ");
+
+            if (distance_arr[i] == inf) {
+                sb.append("No path exists");
+                System.out.println(sb.toString());
+                continue;
             }
+
+            // Reconstruct path using parent array
+            List<Integer> path = new ArrayList<>();
+            int current = i;
+            while (current != -1) {
+                path.add(current + 1); // +1 to convert back to 1-based indexing
+                current = parent[current];
+            }
+            Collections.reverse(path); // Reverse to get path from source to destination
+
+            // Build the path string
+            for (int j = 0; j < path.size(); j++) {
+                sb.append(path.get(j));
+                if (j < path.size() - 1) {
+                    sb.append(" → ");
+                }
+            }
+
+            System.out.println(sb.toString());
         }
     }
 
@@ -122,9 +129,9 @@ public class BellmanFord_AGAIN {
         int[] solu = prob.bellmanFord(0);
 
         System.out.println("Distances: " + Arrays.toString(solu));
-        System.out.println("Parents: " + Arrays.toString(prob.parent));
+        System.out.println("Parents: " + Arrays.toString(parent));
 
-        // Print all paths from the source vertex
-        prob.printAllPaths();
+        // Print all paths from the source vertex (using 1-based indexing for the method call)
+        printShortestPaths(1); // Source is vertex 1 (0-indexed in the code, 1-indexed for display)
     }
 }
