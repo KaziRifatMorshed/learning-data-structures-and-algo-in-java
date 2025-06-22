@@ -8,7 +8,7 @@ import java.util.Scanner;
 class AllPairShortestPath {
 
     static int INF = 999;
-    static int n = 3 + 1;
+    static int n = 4 + 1;
     static int[][] cost = new int[n][n];
     static int[][] A = new int[n][n];
     static int[][] next = new int[n][n]; // To reconstruct paths
@@ -77,13 +77,17 @@ class AllPairShortestPath {
                     }
                 }
             }
+//            /* DEBUGGING PURPOSE
+            System.out.println("NEXT Matrix:");
+            for (int[] row : next) System.out.println(Arrays.toString(row));
+//            * */
         }
     }
 
     public static void main(String[] args) throws FileNotFoundException {
         readFromFile("./Algorithms/DP/AllPairShortestPath.txt");
         AllPairShortestPaths();
-        System.out.println("Distance Matrix:");
+        System.out.println("Distance Matrix is :");
         for (int[] row : A) System.out.println(Arrays.toString(row));
 
         System.out.println("\nShortest paths between each pair of vertices:");

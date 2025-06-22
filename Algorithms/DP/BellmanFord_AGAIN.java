@@ -14,6 +14,7 @@ public class BellmanFord_AGAIN {
     static int[] parent;        // Parent array to track the shortest path tree
     static int[][] cost;
     static final int inf = 999; // Renamed INF to inf
+    static boolean debug = true;
 
     public BellmanFord_AGAIN(int n) {
         this.n = n;
@@ -59,7 +60,10 @@ public class BellmanFord_AGAIN {
             }
         }
 
-        for (int k = 2; k < n - 1; k++) {
+        for (int k = 1; k < n - 1; k++) { // k = 1 hobe (algo er indexing toh 1 theke silo bole okhane 2 deoa silo
+            if (debug){
+                System.out.println("\n----------------------\nAttempt : k = " + k);
+            }
             for (int u = 0; u < n; u++) {
                 if (u == src) continue;
 
@@ -75,12 +79,23 @@ public class BellmanFord_AGAIN {
                 for (int i = 0; i < n; i++) {
                     if (distance_arr[i] < inf && cost[i][u] < inf) { // careful // nicher RHS
                         if (distance_arr[u] > distance_arr[i] + cost[i][u]) {
+                            if (debug){
+                                System.out.println("\nrelaxing vertex u = " + u + " with " + i);
+                                System.out.println(Arrays.toString(distance_arr));
+                            }
                             distance_arr[u] = distance_arr[i] + cost[i][u];
+                            if (debug) System.out.println(Arrays.toString(distance_arr));
                             parent[u] = i; // Update parent when finding a better path
                         }
                     }
                 }
             }
+
+//            if (debug){
+//                System.out.println("\nAfter Attempt : k = " + k );
+//                System.out.println(Arrays.toString(distance_arr));
+//            }
+
         }
         return distance_arr;
     }
@@ -124,7 +139,7 @@ public class BellmanFord_AGAIN {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        BellmanFord_AGAIN prob = new BellmanFord_AGAIN(7);
+        BellmanFord_AGAIN prob = new BellmanFord_AGAIN(5);
         prob.readFromFile("./Algorithms/DP/BellmanFord.txt");
         int[] solu = prob.bellmanFord(0);
 
