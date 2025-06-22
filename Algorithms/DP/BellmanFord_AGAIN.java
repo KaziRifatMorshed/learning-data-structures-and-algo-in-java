@@ -78,7 +78,7 @@ public class BellmanFord_AGAIN {
 
                 for (int i = 0; i < n; i++) {
                     if (distance_arr[i] < inf && cost[i][u] < inf) { // careful // nicher RHS
-                        if (distance_arr[u] > distance_arr[i] + cost[i][u]) {
+                        if (distance_arr[u] > distance_arr[i] + cost[i][u]) {// *****
                             if (debug){
                                 System.out.println("\nrelaxing vertex u = " + u + " with " + i);
                                 System.out.println(Arrays.toString(distance_arr));
