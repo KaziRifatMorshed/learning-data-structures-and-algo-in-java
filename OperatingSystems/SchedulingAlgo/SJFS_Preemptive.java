@@ -16,6 +16,7 @@ class SJFS_Preemptive { // Shortest-Job-First Scheduling
     }
 
     void addProcess(Process p) {
+        p.status = Status.Ready;
         processes.add(p);
         processCount++;
     }
@@ -28,7 +29,6 @@ class SJFS_Preemptive { // Shortest-Job-First Scheduling
 
         for (int servedProcess = 0; servedProcess < processCount; currentTime++) {
             for (Process p : processes) {
-                p.status = Status.Ready;
                 if (currentTime == p.arrivalTime && !queue.contains(p)) queue.add(p);
             }
 
@@ -39,6 +39,14 @@ class SJFS_Preemptive { // Shortest-Job-First Scheduling
             if (currentlyExecuting.remainingBurstTime == currentlyExecuting.burstTime) {
                 currentlyExecuting.startingTime = currentTime;
             }
+
+            for (Process p : queue) {
+                if (p.pid != currentlyExecuting.pid) {
+                    p.status = Status.Waiting;
+                    p.waitingTime++;
+                }
+            }
+
             if (currentlyExecuting.remainingBurstTime > 0) {
                 currentlyExecuting.remainingBurstTime--;
                 currentlyExecuting.turnaroundTime++;
@@ -46,19 +54,18 @@ class SJFS_Preemptive { // Shortest-Job-First Scheduling
             }
             if (currentlyExecuting.remainingBurstTime == 0) {
                 currentlyExecuting.endingTime = currentTime;
+
                 currentlyExecuting.status = Status.Terminated;
                 queue.poll();
                 servedProcess++;
             }
-
         }
 
         System.out.println("Total time taken = " + currentTime);
         System.out.println("Waiting time for all processes:");
         double avgWaitingTime = 0;
         for (Process process : processes) {
-            System.out.println("pid = " + process.pid + ", waiting time = " + process.startingTime);
-            process.waitingTime += (process.startingTime - process.arrivalTime);
+            System.out.println("pid = " + process.pid + ", waiting time = " + process.waitingTime);
             avgWaitingTime += (double) process.waitingTime;
         }
         avgWaitingTime /= (double) processes.size();
@@ -97,5 +104,5 @@ class SJFS_Preemptive { // Shortest-Job-First Scheduling
         sjfs_p.addProcess(p4);
         sjfs_p.exec();
     }
-} // RUNNING...
+} // OK
 
