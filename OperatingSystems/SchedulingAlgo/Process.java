@@ -9,6 +9,7 @@ public class Process {
     public int remainingBurstTime;
     public int waitingTime;
     public int startingTime;
+    public int endingTime;
 
     public Process(int pid, int arrivalTime, int burstTime, Status status) {
         this.pid = pid;
@@ -25,5 +26,17 @@ public class Process {
         this.remainingBurstTime = burstTime;
     }
 
-
+    @Override
+    public String toString() {
+        return "Process{" +
+                "pid=" + pid +
+                ", arrivalTime=" + arrivalTime +
+                ", burstTime=" + burstTime +
+                ", status=" + status +
+                ", remainingBurstTime=" + remainingBurstTime +
+                ", waitingTime=" + waitingTime +
+                ", startingTime=" + startingTime +
+                ", endingTime=" + endingTime +
+                '}';
+    }
 }
