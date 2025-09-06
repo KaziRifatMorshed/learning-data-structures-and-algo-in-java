@@ -21,7 +21,9 @@ class FCFS { // First-Come, First-Served Scheduling
 
     void exec() {
         int currentTime = 0; // nano-sec
-        PriorityQueue<Process> queue = new PriorityQueue<>(Comparator.comparingInt(process -> process.arrivalTime));
+        PriorityQueue<Process> queue = new PriorityQueue<>(
+                Comparator.comparingInt((Process process) -> process.arrivalTime)
+                .thenComparingInt(process -> process.pid));
 
         for (int servedProcess = 0; servedProcess < processCount; currentTime++) {
             for (Process p : processes) {
@@ -50,11 +52,12 @@ class FCFS { // First-Come, First-Served Scheduling
         double avgWaitingTime = 0;
         for (Process process : processes) {
             System.out.println("pid = " + process.pid + ", waiting time = " + process.startingTime);
-            process.waitingTime += (double) (process.startingTime - process.arrivalTime);
-            avgWaitingTime += process.waitingTime;
+            process.waitingTime += (process.startingTime - process.arrivalTime);
+            avgWaitingTime += (double) process.waitingTime;
         }
         avgWaitingTime /= (double) processes.size();
         System.out.println("Avg Waiting Time = " + avgWaitingTime);
+        System.out.println("Throughput = " + (double) (currentTime / processCount));
 
         printGanttChart();
 

@@ -39,4 +39,11 @@ public class Process {
                 ", endingTime=" + (endingTime+1) +
                 '}';
     }
+
+    public static void main(String[] args) {
+        Process p1 = new Process(1, 0, 24);
+        Process p2 = new Process(2, 0, 3);
+        Process p3 = new Process(3, 0, 3);
+
+    }
 }
