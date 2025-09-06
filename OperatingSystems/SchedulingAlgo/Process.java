@@ -36,7 +36,7 @@ public class Process {
                 ", remainingBurstTime=" + remainingBurstTime +
                 ", waitingTime=" + waitingTime +
                 ", startingTime=" + startingTime +
-                ", endingTime=" + endingTime +
+                ", endingTime=" + (endingTime+1) +
                 '}';
     }
 }

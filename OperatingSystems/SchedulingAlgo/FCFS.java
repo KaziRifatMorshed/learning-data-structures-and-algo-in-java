@@ -8,6 +8,7 @@ class FCFS { // First-Come, First-Served Scheduling
     // age asle age pabe, pore asle pore pabe
     ArrayList<Process> processes;
     int processCount = 0;
+    ArrayList<String> ganttChart = new ArrayList<>();
 
     FCFS() {
         processes = new ArrayList<>();
@@ -24,17 +25,19 @@ class FCFS { // First-Come, First-Served Scheduling
 
         for (int servedProcess = 0; servedProcess < processCount; currentTime++) {
             for (Process p : processes) {
-                if (currentTime >= p.arrivalTime) queue.add(p);
+                if (currentTime == p.arrivalTime && !queue.contains(p)) queue.add(p);
             }
 
             Process currentlyExecuting = queue.peek();
+            ganttChart.add("p" + currentlyExecuting.pid);
 
             if (currentlyExecuting.remainingBurstTime == currentlyExecuting.burstTime) {
                 currentlyExecuting.startingTime = currentTime;
             }
             if (currentlyExecuting.remainingBurstTime > 0) {
                 currentlyExecuting.remainingBurstTime--;
-            } else {
+            }
+            if (currentlyExecuting.remainingBurstTime == 0) {
                 currentlyExecuting.endingTime = currentTime;
                 queue.poll();
                 servedProcess++;
@@ -46,17 +49,27 @@ class FCFS { // First-Come, First-Served Scheduling
         System.out.println("Waiting time for all processes:");
         double avgWaitingTime = 0;
         for (Process process : processes) {
-            System.out.println("pid = " + process.pid + ", waiting time (exec started at) = " + process.startingTime);
-            avgWaitingTime += (double) (process.startingTime - process.arrivalTime);
+            System.out.println("pid = " + process.pid + ", waiting time = " + process.startingTime);
+            process.waitingTime += (double) (process.startingTime - process.arrivalTime);
+            avgWaitingTime += process.waitingTime;
         }
         avgWaitingTime /= (double) processes.size();
         System.out.println("Avg Waiting Time = " + avgWaitingTime);
 
+        printGanttChart();
+
         debug();
     }
 
+    void printGanttChart() {
+        System.out.println("\nPrinting Gantt Chart:");
+        for (String s : ganttChart) {
+            System.out.print(s + "|");
+        }
+    }
+
     void debug() {
-        System.out.println("\nPrinting all process details:");
+        System.out.println("\n\nPrinting all process details:");
         for (Process p : processes) {
             System.out.println(p);
         }
@@ -74,4 +87,4 @@ class FCFS { // First-Come, First-Served Scheduling
 
         fcfs.exec();
     }
-}
+} // i think, OK
