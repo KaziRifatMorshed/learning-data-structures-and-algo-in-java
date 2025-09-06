@@ -10,6 +10,7 @@ public class Process {
     public int waitingTime;
     public int startingTime;
     public int endingTime;
+    public int turnaroundTime = 0;
 
     public Process(int pid, int arrivalTime, int burstTime, Status status) {
         this.pid = pid;
