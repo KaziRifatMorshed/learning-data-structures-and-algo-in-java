@@ -49,7 +49,6 @@ class SJFS_Preemptive { // Shortest-Job-First Scheduling
 
             if (currentlyExecuting.remainingBurstTime > 0) {
                 currentlyExecuting.remainingBurstTime--;
-                currentlyExecuting.turnaroundTime++;
                 currentlyExecuting.status = Status.Waiting;
             }
             if (currentlyExecuting.remainingBurstTime == 0) {

@@ -23,21 +23,25 @@ class FCFS { // First-Come, First-Served Scheduling
         int currentTime = 0; // nano-sec
         PriorityQueue<Process> queue = new PriorityQueue<>(
                 Comparator.comparingInt((Process process) -> process.arrivalTime)
-                .thenComparingInt(process -> process.pid));
+                        .thenComparingInt(process -> process.pid)); // readyQueue
 
         for (int servedProcess = 0; servedProcess < processCount; currentTime++) {
-            for (Process p : processes) {
+            for (Process p : processes) { // readyQueue te process include koro
                 if (currentTime == p.arrivalTime && !queue.contains(p)) queue.add(p);
             }
 
+            // this time moment e ekta process ke execute korbo
             Process currentlyExecuting = queue.peek();
             ganttChart.add("p" + currentlyExecuting.pid);
 
             if (currentlyExecuting.remainingBurstTime == currentlyExecuting.burstTime) {
+                // jodi ekebare new process hoy, age execute hoy nai emon
                 currentlyExecuting.startingTime = currentTime;
+                currentlyExecuting.status = Status.Running;
             }
             if (currentlyExecuting.remainingBurstTime > 0) {
                 currentlyExecuting.remainingBurstTime--;
+                currentlyExecuting.status = Status.Running;
             }
             if (currentlyExecuting.remainingBurstTime == 0) {
                 currentlyExecuting.endingTime = currentTime;

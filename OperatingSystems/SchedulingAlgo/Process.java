@@ -2,15 +2,15 @@ package OperatingSystems.SchedulingAlgo;
 
 public class Process {
     public int pid;
-    public int arrivalTime;
+    public int arrivalTime; // submission timestamp
     public int burstTime;
     public Status status;
 
     public int remainingBurstTime;
     public int waitingTime;
-    public int startingTime;
-    public int endingTime;
-    public int turnaroundTime = 0;
+    public int startingTime; // when remainingBurstTime == BurstTime
+    public int endingTime; // when remainingBurstTime == 0
+    private int turnaroundTime = 0; // submission to completion
 
     public Process(int pid, int arrivalTime, int burstTime, Status status) {
         this.pid = pid;
@@ -27,6 +27,11 @@ public class Process {
         this.remainingBurstTime = burstTime;
     }
 
+    int calculateTurnaroundTime() {
+        this.turnaroundTime = endingTime - arrivalTime;
+        return this.turnaroundTime;
+    }
+
     @Override
     public String toString() {
         return "Process{" +
@@ -37,7 +42,8 @@ public class Process {
                 ", remainingBurstTime=" + remainingBurstTime +
                 ", waitingTime=" + waitingTime +
                 ", startingTime=" + startingTime +
-                ", endingTime=" + (endingTime+1) +
+                ", endingTime=" + (endingTime + 1) +
+                ", turnaroundTime=" + calculateTurnaroundTime() +
                 '}';
     }
 
