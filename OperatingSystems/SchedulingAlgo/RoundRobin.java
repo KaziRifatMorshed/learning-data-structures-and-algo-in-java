@@ -1,12 +1,9 @@
 package OperatingSystems.SchedulingAlgo;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.PriorityQueue;
+import java.util.*;
 
 class RoundRobin {
-    int quanta = 5;
+    int quanta = 20;
     ArrayList<Process> processes;
     int processCount = 0;
     ArrayList<GanttChart> ganttChart = new ArrayList<>();
@@ -32,61 +29,68 @@ class RoundRobin {
 
     void exec() {
         int currentTime = 0;
-/*
-        PriorityQueue<Process> queue = new PriorityQueue<>(Comparator.comparingInt((Process p) -> p.arrivalTime).thenComparingInt(p -> p.pid));
- */
-        PriorityQueue<Process> queue = new PriorityQueue<>();
+        int servedProcess = 0;
 
-        for (int servedProcess = 0; servedProcess < processCount; ) {
-            for (Process process : processes) {
-                if (process.arrivalTime >= currentTime && !queue.contains(process)) {
+        Queue<Process> queue = new LinkedList<>();
+
+        while (servedProcess < processCount) {
+
+            AddNewProcess:
+            for (Process process : processes) { // add new process
+                if (process.arrivalTime <= currentTime && process.remainingBurstTime > 0 && !queue.contains(process)) {
                     queue.add(process);
                 }
             }
 
-            Process currentlyExecuting = queue.peek();
-            int thisQuanta = (currentlyExecuting.remainingBurstTime > quanta) ? quanta : currentlyExecuting.remainingBurstTime;
+            Process currentlyExecuting = queue.poll();
+            int thisQuanta = Math.min(quanta, currentlyExecuting.remainingBurstTime);
 
+            AdjustWaitingTimeForAllProcesses:
             for (Process process : queue) {
-                if (process.pid != currentlyExecuting.pid) {
+                if (process.pid != currentlyExecuting.pid && process.remainingBurstTime > 0) {
                     process.waitingTime += thisQuanta;
                 }
             }
 
-            if (currentlyExecuting.remainingBurstTime == currentlyExecuting.burstTime) {
+            if (currentlyExecuting.remainingBurstTime == currentlyExecuting.burstTime) { // init process
                 currentlyExecuting.startingTime = currentTime;
             }
-            if (currentlyExecuting.remainingBurstTime > 0) {
+            if (currentlyExecuting.remainingBurstTime > 0) { // execute and calculate
                 currentlyExecuting.remainingBurstTime -= thisQuanta;
                 currentTime += thisQuanta;
-            }
-            if (currentlyExecuting.remainingBurstTime > 0) {
+
                 ganttChart.add(new GanttChart(currentlyExecuting.pid, thisQuanta));
-                queue.add(queue.poll());
-            }
-            if (currentlyExecuting.remainingBurstTime == 0) {
-                ganttChart.add(new GanttChart(currentlyExecuting.pid, thisQuanta));
+
+                queue.add(currentlyExecuting); // process not finished
+            } else { // process finished
                 currentlyExecuting.endingTime = currentTime;
-                queue.poll();
                 servedProcess++;
             }
-
-
         }
-
 
         printGanttChart();
         debug();
-    }
+    } // ONE TEST CASE PASSED
 
     void debug() {
         System.out.println("\n\nPrinting All Process Details:");
         for (Process process : processes) System.out.println(process);
     }
 
-    void printGanttChart() {
+    void printGanttChart() { // simple
         System.out.println("\n\nPrinting Gantt Chart:");
-        // remaining
+        for (GanttChart gc : ganttChart) {
+            System.out.print("|P" + gc.processId + " ");
+        }
+        System.out.println("|");
+
+        int t = 0;
+        System.out.print(t + "\t");
+        for (GanttChart gc : ganttChart) {
+            t += gc.width;
+            System.out.print(t + "\t");
+        }
+        System.out.println();
     }
 
     public static void main(String[] args) {
@@ -102,5 +106,4 @@ class RoundRobin {
         roundRobin.addProcess(p4);
         roundRobin.exec();
     }
-
 }
