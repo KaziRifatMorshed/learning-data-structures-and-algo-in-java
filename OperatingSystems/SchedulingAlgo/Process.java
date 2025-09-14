@@ -5,6 +5,7 @@ public class Process {
     public int arrivalTime; // submission timestamp
     public int burstTime;
     public Status status;
+    public int priority;
 
     public int remainingBurstTime;
     public int waitingTime;
@@ -24,6 +25,14 @@ public class Process {
         this.pid = pid;
         this.arrivalTime = arrivalTime;
         this.burstTime = burstTime;
+        this.remainingBurstTime = burstTime;
+    }
+
+    public Process(int pid, int priority, int arrivalTime, int burstTime) {
+        this.pid = pid;
+        this.arrivalTime = arrivalTime;
+        this.burstTime = burstTime;
+        this.priority = priority;
         this.remainingBurstTime = burstTime;
     }
 
