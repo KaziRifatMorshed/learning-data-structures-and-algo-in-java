@@ -1,0 +1,52 @@
+Implement Paging and Segmentation memory management techniques.
+
+For Paging
+Input
+    Process/Program Size
+    Page Size
+    Page Table Entry
+    Logical Address
+Output
+	Physical Address
+
+For Segmentation
+Input
+    Number of Segment
+    Size of Each Segment
+    Segment Table Entry
+    Logical Address
+    Logical Address (Segment Number and Offset)
+Output
+	Physical Address
+
+public int getLogicalAddress(int physicalAddress) {
+    int frameNumber = physicalAddress / pageSize;
+    int offset = physicalAddress % pageSize;
+
+    // Find the page mapped to this frame
+    int pageNumber = -1;
+    for (int i = 0; i < pageTable.length; i++) {
+        if (pageTable[i] == frameNumber) {
+            pageNumber = i;
+            break;
+        }
+    }
+
+    if (pageNumber == -1) {
+        System.out.println("Frame not found in page table!");
+        return -1;
+    }
+
+    return pageNumber * pageSize + offset;
+}
+
+public String getLogicalAddress(int physicalAddress) {
+    for (int i = 0; i < numSegments; i++) {
+        if (physicalAddress >= base[i] && physicalAddress < base[i] + limit[i]) {
+            int offset = physicalAddress - base[i];
+            return "Segment " + i + " , Offset " + offset;
+        }
+    }
+    System.out.println("Invalid physical address!");
+    return -1;
+}
