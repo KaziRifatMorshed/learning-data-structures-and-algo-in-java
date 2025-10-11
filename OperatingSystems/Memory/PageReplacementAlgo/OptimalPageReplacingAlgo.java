@@ -3,7 +3,6 @@ package OperatingSystems.Memory.PageReplacementAlgo;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 
 class OptimalPageReplacingAlgo {
@@ -13,7 +12,8 @@ class OptimalPageReplacingAlgo {
     private int numFaults = 0;
     private ArrayList<Integer> pageSequence = new ArrayList<>();
     private ArrayList<Integer> frames;
-    private HashMap<ArrayList<Integer>, Character> result = new HashMap<>();
+    private ArrayList<ArrayList<Integer>> frameHistory = new ArrayList<>();
+    private ArrayList<Character> statusHistory = new ArrayList<>();
 
     OptimalPageReplacingAlgo() {
     }
@@ -21,70 +21,95 @@ class OptimalPageReplacingAlgo {
     void exec() {
         for (int pgSeqIdx = 0; pgSeqIdx < pageSequence.size(); pgSeqIdx++) {
             int pageNo = pageSequence.get(pgSeqIdx);
+
             if (frames.contains(pageNo)) { // hit
                 numHits++;
-                ArrayList<Integer> snapshot = new ArrayList<>(frames);
-                result.put(snapshot, 'h');
+                frameHistory.add(new ArrayList<>(frames));
+                statusHistory.add('H');
             } else { // page fault
-                if (frames.size() < numFrame) { // new addition
+                numFaults++;
+                if (frames.size() < numFrame) {
                     frames.add(pageNo);
-
                 } else { // replacement
-                    int[][] pgIdxPair = new int[pageNo][2];
+                    int[][] pgIdxPair = new int[numFrame][2];
+
                     for (int i = 0; i < numFrame; i++) {
                         pgIdxPair[i][0] = frames.get(i);
-                        pgIdxPair[i][1] = pgSeqIdx;
+                        pgIdxPair[i][1] = -1;
                     }
 
-                    // oi index er porer index theke last porjonto search korbo
+                    // look ahead for next use
                     for (int i = pgSeqIdx + 1; i < pageSequence.size(); i++) {
-                        int iteratorPageNo = pageSequence.get(i);
-                        if (frames.contains(iteratorPageNo)) {
-                            pgIdxPair[frames.indexOf(iteratorPageNo)][1] = i;
+                        int futurePg = pageSequence.get(i);
+                        if (frames.contains(futurePg)) {
+                            int idx = frames.indexOf(futurePg);
+                            if (pgIdxPair[idx][1] == -1) {
+                                pgIdxPair[idx][1] = i;
+                            }
                         }
                     }
 
-                    // find max
-                    int idxToBeReplaced = pgIdxPair[0][1];
-                    for (int k = 1; k < pageNo; k++) {
-                        if (idxToBeReplaced < pgIdxPair[k][1]) {
-                            idxToBeReplaced = k;
+                    int furthest = -1;
+                    int indexToReplace = -1;
+                    for (int i = 0; i < numFrame; i++) {
+                        if (pgIdxPair[i][1] == -1) {
+                            indexToReplace = i;
+                            break;
+                        }
+                        if (pgIdxPair[i][1] > furthest) {
+                            furthest = pgIdxPair[i][1];
+                            indexToReplace = i;
                         }
                     }
-                    frames.set(idxToBeReplaced, pageNo);
+
+                    frames.set(indexToReplace, pageNo);
                 }
 
-                ArrayList<Integer> snapshot = new ArrayList<>(frames);
-                result.put(snapshot, 'f');
-                numFaults++;
+                frameHistory.add(new ArrayList<>(frames));
+                statusHistory.add('F');
             }
         }
-
     }
 
     void readFromFile(String path) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(path));
         numFrame = scanner.nextInt();
         frames = new ArrayList<>(numFrame);
-        while (scanner.hasNext()) {
+        while (scanner.hasNextInt()) {
             pageSequence.add(scanner.nextInt());
         }
+        scanner.close();
     }
 
     void printResult() {
-        for (int i = 1; i <= numFrame; i++) {
-            System.out.printf("F%d\t", i);
+        System.out.println("\n--- Optimal Page Replacement Simulation ---");
+        System.out.print("Page sequence: ");
+        for (int p : pageSequence) System.out.print(p + " ");
+        System.out.println("\n");
 
+        // print frame table
+        for (int f = 0; f < numFrame; f++) {
+            System.out.printf("F%d:\t", f + 1);
+            for (ArrayList<Integer> snapshot : frameHistory) {
+                if (f < snapshot.size()) System.out.printf("%d\t", snapshot.get(f));
+                else System.out.print(" \t");
+            }
+            System.out.println();
         }
+
+        System.out.print("S:\t");
+        for (char c : statusHistory) System.out.printf("%c\t", c);
         System.out.println();
-        Double hitRatio = (double) numHits / (double) pageSequence.size();
-        System.out.printf("\nHit ratio = " + (hitRatio * 100) + "%");
+
+        double hitRatio = (double) numHits / pageSequence.size();
+        System.out.printf("\nHits: %d, Faults: %d\nHit Ratio = %.2f%%\n",
+                numHits, numFaults, hitRatio * 100);
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        OptimalPageReplacingAlgo optimalPageReplacingAlgo = new OptimalPageReplacingAlgo();
-        optimalPageReplacingAlgo.readFromFile("OperatingSystems/Memory/PageReplacementAlgo/OptimalPageReplacingAlgo.txt");
-        optimalPageReplacingAlgo.exec();
-        optimalPageReplacingAlgo.printResult();
+        OptimalPageReplacingAlgo algo = new OptimalPageReplacingAlgo();
+        algo.readFromFile("OperatingSystems/Memory/PageReplacementAlgo/OptimalPageReplacingAlgo.txt");
+        algo.exec();
+        algo.printResult();
     }
 }
