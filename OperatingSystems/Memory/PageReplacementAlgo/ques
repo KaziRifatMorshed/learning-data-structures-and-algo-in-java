@@ -1,0 +1,16 @@
+Next Lab Work
+
+ Implementation of different page replacement algorithm.
+ 1) Optimal 2) FIFO 3) Second Chance  4) NRU
+
+
+For each algorithm
+Input
+	Number of pages to be referenced
+             Page sequence
+             Number of frame
+             reference bit status of pages in frame (only for Second Chance)
+             reference and modification bit status of pages in frame (only for NRU)
+Output
+	Sequential graphical presentation of frame (how page replacement occurs)
+             Number of page faults
