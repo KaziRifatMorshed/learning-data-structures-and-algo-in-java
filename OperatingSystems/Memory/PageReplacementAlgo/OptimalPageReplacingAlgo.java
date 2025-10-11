@@ -82,7 +82,7 @@ class OptimalPageReplacingAlgo {
     }
 
     void printResult() {
-        System.out.println("\n--- Optimal Page Replacement Simulation ---");
+        System.out.println("Optimal Page Replacement Simulation:");
         System.out.print("Page sequence: ");
         for (int p : pageSequence) System.out.print(p + " ");
         System.out.println("\n");
