@@ -3,6 +3,7 @@ package OperatingSystems.Memory.PageReplacementAlgo;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 class LRU_PageReplacementAlgo {
@@ -30,35 +31,49 @@ class LRU_PageReplacementAlgo {
                 numFaults++;
                 if (frames.size() < numFrame) {
                     frames.add(pageNo);
-                } else { // replacement
-                    int[][] pgIdxPair = new int[numFrame][2];
+                } else { // replacement (LRU)
+                    // lastUse[i] will store the index of the most recent use (before current)
+                    // of the page stored in frames.get(i). If not found, it stays -1.
+                    int[] lastUse = new int[numFrame];
+                    Arrays.fill(lastUse, -1);
 
-                    for (int i = 0; i < numFrame; i++) {
-                        pgIdxPair[i][0] = frames.get(i);
-                        pgIdxPair[i][1] = -1;
-                    }
-
-                    // look back for next use
-                    for (int i = pgSeqIdx - 1; i <= 0; i--) {
-                        int futurePg = pageSequence.get(i);
-                        if (frames.contains(futurePg)) {
-                            int idx = frames.indexOf(futurePg);
-                            if (pgIdxPair[idx][1] == -1) {
-                                pgIdxPair[idx][1] = i;
+                    // look back for last use (scan backwards from current position - 1)
+                    for (int i = pgSeqIdx - 1; i >= 0; i--) {
+                        int prevPg = pageSequence.get(i);
+                        int idx = frames.indexOf(prevPg);
+                        if (idx != -1 && lastUse[idx] == -1) {
+                            lastUse[idx] = i;
+                        }
+                        // Optimization: if all frames have lastUse filled, break early
+                        boolean allFound = true;
+                        for (int j = 0; j < numFrame; j++) {
+                            if (lastUse[j] == -1) {
+                                allFound = false;
+                                break;
                             }
                         }
+                        if (allFound) break;
                     }
 
-                    int furthest = -1;
-                    int indexToReplace = -1;
+                    // Choose replacement index:
+                    // - If any lastUse == -1 (i.e., not found in past), that page is the least recently used for our purposes.
+                    // - Otherwise choose the page with the smallest lastUse value (farthest in the past).
+                    int indexToReplace = 0;
+                    boolean foundNeverUsed = false;
                     for (int i = 0; i < numFrame; i++) {
-                        if (pgIdxPair[i][1] == -1) {
+                        if (lastUse[i] == -1) {
                             indexToReplace = i;
+                            foundNeverUsed = true;
                             break;
                         }
-                        if (pgIdxPair[i][1] > furthest) {
-                            furthest = pgIdxPair[i][1];
-                            indexToReplace = i;
+                    }
+                    if (!foundNeverUsed) {
+                        int minIdx = Integer.MAX_VALUE;
+                        for (int i = 0; i < numFrame; i++) {
+                            if (lastUse[i] < minIdx) {
+                                minIdx = lastUse[i];
+                                indexToReplace = i;
+                            }
                         }
                     }
 
@@ -73,7 +88,12 @@ class LRU_PageReplacementAlgo {
 
     void readFromFile(String path) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(path));
-        numFrame = scanner.nextInt();
+        if (scanner.hasNextInt()) {
+            numFrame = scanner.nextInt();
+        } else {
+            scanner.close();
+            throw new FileNotFoundException("Input file does not start with number of frames.");
+        }
         frames = new ArrayList<>(numFrame);
         while (scanner.hasNextInt()) {
             pageSequence.add(scanner.nextInt());
@@ -128,4 +148,3 @@ class LRU_PageReplacementAlgo {
         algo.printResult();
     }
 }
-
