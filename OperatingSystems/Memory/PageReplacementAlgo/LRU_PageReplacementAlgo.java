@@ -44,6 +44,7 @@ class LRU_PageReplacementAlgo {
                         if (idx != -1 && lastUse[idx] == -1) {
                             lastUse[idx] = i;
                         }
+
                         // Optimization: if all frames have lastUse filled, break early
                         boolean allFound = true;
                         for (int j = 0; j < numFrame; j++) {
