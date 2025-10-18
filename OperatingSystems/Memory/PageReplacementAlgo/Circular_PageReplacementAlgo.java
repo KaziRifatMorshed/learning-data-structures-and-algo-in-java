@@ -2,7 +2,8 @@ package OperatingSystems.Memory.PageReplacementAlgo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 class Circular_PageReplacementAlgo {
 
@@ -10,20 +11,33 @@ class Circular_PageReplacementAlgo {
     private int numHits = 0;
     private int numFaults = 0;
     private ArrayList<Integer> pageSequence = new ArrayList<>();
-    private int[] pageSequenceBits;
-    private ArrayList<int[]> pageSequenceBitInput;
-    private ArrayList<Frame> frames;
-    private ArrayList<ArrayList<Frame>> frameHistory = new ArrayList<>();
+    private ArrayList<Frame_C> frames;
+    private ArrayList<ArrayList<Frame_C>> frameHistory = new ArrayList<>();
     private ArrayList<Character> statusHistory = new ArrayList<>();
+    private int clockHand = 0;
 
     Circular_PageReplacementAlgo() {
     }
 
+    // Inner Frame class
+    private static class Frame_C {
+        int pageNo;
+        int refBit; // 0 or 1
+
+        Frame_C(int pageNo) {
+            this.pageNo = pageNo;
+            this.refBit = 1; // when a page is loaded or referenced, refBit = 1
+        }
+
+        Frame_C(Frame_C other) {
+            this.pageNo = other.pageNo;
+            this.refBit = other.refBit;
+        }
+    }
+
     int frameContains(int key) {
-        int i = 0;
-        for (Frame frame : frames) {
-            if (frame.pageNo == key) return i;
-            i++;
+        for (int i = 0; i < frames.size(); i++) {
+            if (frames.get(i).pageNo == key) return i;
         }
         return -1;
     }
@@ -35,52 +49,50 @@ class Circular_PageReplacementAlgo {
 
             if (idx >= 0) { // hit
                 numHits++;
-                frames.get(idx).refBit = pageSequenceBitInput.get(idx)[frames.size() - 1]; // set reference bit
-                frameHistory.add(new ArrayList<>(frames));
+                frames.get(idx).refBit = 1;
+                frameHistory.add(snapshotFrames());
                 statusHistory.add('H');
             } else { // fault
                 numFaults++;
                 if (frames.size() < numFrame) {
-                    frames.add(new Frame(pageNo, pgSeqIdx, pageSequenceBitInput.get(frames.size())[frames.size()], pgSeqIdx));
+                    frames.add(new Frame_C(pageNo));
                 } else {
-                    ArrayList<Frame> temp = new ArrayList<>(numFrame);
-                    for (int i = 0; i < numFrame; i++) {
-                        temp.add(frames.get(i));
-                    }
-                    for (int i = 0; i < numFrame; i++) {
-                        Collections.sort(temp, Comparator.comparingInt((Frame f) -> f.arrival));
-                    }
-                    for (int i = 0; i < numFrame; i++) {
-                        if (temp.get(i).refBit == 0) {
-                            int thisPgNo = temp.get(i).pageNo;
-                            int thisFrmNo = 0;
-                            for (int j = 0; j < numFrame; j++) {
-                                if (frames.get(i).pageNo == thisPgNo) thisFrmNo = j;
-                            }
-                            frames.get(thisFrmNo).pageNo = pageNo;
-                            frames.get(thisFrmNo).arrival = pgSeqIdx;
+                    while (true) {
+                        Frame_C cur = frames.get(clockHand);
+                        if (cur.refBit == 0) { // replace this frame
+                            frames.set(clockHand, new Frame_C(pageNo));
+                            clockHand = (clockHand + 1) % numFrame;
                             break;
+                        } else { // second chance
+                            cur.refBit = 0;
+                            clockHand = (clockHand + 1) % numFrame;
                         }
                     }
                 }
-                frameHistory.add(new ArrayList<>(frames));
+                frameHistory.add(snapshotFrames());
                 statusHistory.add('F');
             }
         }
     }
 
+    private ArrayList<Frame_C> snapshotFrames() {
+        ArrayList<Frame_C> snap = new ArrayList<>(numFrame);
+        for (Frame_C f : frames) {
+            snap.add(new Frame_C(f));
+        }
+        return snap;
+    }
+
     void readFromFile(String path) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(path));
+        if (!scanner.hasNextInt()) {
+            scanner.close();
+            throw new FileNotFoundException("Input file does not start with number of frames.");
+        }
         numFrame = scanner.nextInt();
         frames = new ArrayList<>(numFrame);
-        pageSequenceBits = new int[numFrame];
-        pageSequenceBitInput = new ArrayList<>();
         while (scanner.hasNextInt()) {
             pageSequence.add(scanner.nextInt());
-            for (int i = 0; i < numFrame; i++) {
-                pageSequenceBits[i] = scanner.nextInt();
-            }
-            pageSequenceBitInput.add(pageSequenceBits);
         }
         scanner.close();
     }
@@ -92,7 +104,7 @@ class Circular_PageReplacementAlgo {
     }
 
     void printResult() {
-        System.out.println("Second Chance Page Replacement Simulation:");
+        System.out.println("Circular Page Replacement Simulation:");
         System.out.print("Page sequence: ");
         for (int p : pageSequence) System.out.print(p + " ");
         System.out.println("\n");
@@ -108,7 +120,7 @@ class Circular_PageReplacementAlgo {
 
         for (int f = 0; f < numFrame; f++) {
             System.out.printf("F%d:\t|", f + 1);
-            for (ArrayList<Frame> snapshot : frameHistory) {
+            for (ArrayList<Frame_C> snapshot : frameHistory) {
                 if (f < snapshot.size()) System.out.printf("%2d\t|", snapshot.get(f).pageNo);
                 else System.out.print("  \t|");
             }
@@ -121,13 +133,12 @@ class Circular_PageReplacementAlgo {
         System.out.println();
         printBarHelper();
 
-        double hitRatio = (double) numHits / pageSequence.size();
+        double hitRatio = pageSequence.isEmpty() ? 0.0 : (double) numHits / pageSequence.size();
         System.out.printf("\nHits: %d, Faults: %d\nHit Ratio = %.2f%%\n", numHits, numFaults, hitRatio * 100);
     }
 
     public static void main(String[] args) throws FileNotFoundException {
         Circular_PageReplacementAlgo algo = new Circular_PageReplacementAlgo();
-//        algo.readFromFile("src/Memory/PageReplacementAlgo/SecondChancePageReplaceAlgo.txt");
         algo.readFromFile("OperatingSystems/Memory/PageReplacementAlgo/Circular_PageReplacementAlgo.txt");
         algo.exec();
         algo.printResult();
