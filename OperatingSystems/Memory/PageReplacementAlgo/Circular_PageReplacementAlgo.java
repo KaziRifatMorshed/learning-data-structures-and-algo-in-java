@@ -4,30 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
 
-class SecondChancePageReplaceAlgo {
-
-//    static class Frame {
-//        public int pageNo;
-//        public int iddx;
-//        public int refBit;
-//        public int arrival;
-//
-//        public Frame(int pageNo, int iddx, int refBit, int arrival) {
-//            this.pageNo = pageNo;
-//            this.iddx = iddx;
-//            this.refBit = refBit;
-//            this.arrival = arrival;
-//        }
-//
-//        Frame colne() {
-//            return new Frame(pageNo, iddx, refBit, arrival);
-//        }
-//
-//        @Override
-//        public String toString() {
-//            return "" + pageNo + refBit;
-//        }
-//    }
+class Circular_PageReplacementAlgo {
 
     private int numFrame;
     private int numHits = 0;
@@ -39,7 +16,7 @@ class SecondChancePageReplaceAlgo {
     private ArrayList<ArrayList<Frame>> frameHistory = new ArrayList<>();
     private ArrayList<Character> statusHistory = new ArrayList<>();
 
-    SecondChancePageReplaceAlgo() {
+    Circular_PageReplacementAlgo() {
     }
 
     int frameContains(int key) {
@@ -91,16 +68,6 @@ class SecondChancePageReplaceAlgo {
             }
         }
     }
-
-//    void readFromFile(String path) throws FileNotFoundException {
-//        Scanner scanner = new Scanner(new File(path));
-//        numFrame = scanner.nextInt();
-//        frames = new ArrayList<>(numFrame);
-//        while (scanner.hasNextInt()) {
-//            pageSequence.add(scanner.nextInt());
-//        }
-//        scanner.close();
-//    }
 
     void readFromFile(String path) throws FileNotFoundException {
         Scanner scanner = new Scanner(new File(path));
@@ -159,9 +126,9 @@ class SecondChancePageReplaceAlgo {
     }
 
     public static void main(String[] args) throws FileNotFoundException {
-        SecondChancePageReplaceAlgo algo = new SecondChancePageReplaceAlgo();
+        Circular_PageReplacementAlgo algo = new Circular_PageReplacementAlgo();
 //        algo.readFromFile("src/Memory/PageReplacementAlgo/SecondChancePageReplaceAlgo.txt");
-        algo.readFromFile("OperatingSystems/Memory/PageReplacementAlgo/SecondChancePageReplaceAlgoNew.txt");
+        algo.readFromFile("OperatingSystems/Memory/PageReplacementAlgo/Circular_PageReplacementAlgo.txt");
         algo.exec();
         algo.printResult();
     }
