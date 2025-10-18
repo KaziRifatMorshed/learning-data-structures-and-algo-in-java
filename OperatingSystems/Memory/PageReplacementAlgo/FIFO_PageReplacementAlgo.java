@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 class FIFO_PageReplacementAlgo {
-    
+
     private int numFrame;
     private int numHits = 0;
     private int numFaults = 0;
@@ -62,24 +62,39 @@ class FIFO_PageReplacementAlgo {
         scanner.close();
     }
 
+    void printBarHelper() {
+        System.out.printf("-----");
+        for (int i = 0; i < pageSequence.size(); i++) System.out.printf("----");
+        System.out.println();
+    }
+
     void printResult() {
-        System.out.println("FIFO Page Replacement Simulation:");
+        System.out.println("FIFO Replacement Simulation:");
         System.out.print("Page sequence: ");
         for (int p : pageSequence) System.out.print(p + " ");
         System.out.println("\n");
 
+        printBarHelper();
+        System.out.printf("   \t|");
+        for (int inputPage : pageSequence) {
+            System.out.printf("%2d\t|", inputPage);
+        }
+        System.out.println();
+
+        printBarHelper();
         // print frame table
         for (int f = 0; f < numFrame; f++) {
-            System.out.printf("F%d:\t", f + 1);
+            System.out.printf("F%d:\t|", f + 1);
             for (ArrayList<Integer> snapshot : frameHistory) {
-                if (f < snapshot.size()) System.out.printf("%d\t", snapshot.get(f));
-                else System.out.print(" \t");
+                if (f < snapshot.size()) System.out.printf("%2d\t|", snapshot.get(f));
+                else System.out.print(" \t|");
             }
             System.out.println();
         }
 
-        System.out.print("S:\t");
-        for (char c : statusHistory) System.out.printf("%c\t", c);
+        printBarHelper();
+        System.out.print("S:\t|");
+        for (char c : statusHistory) System.out.printf("%2c\t|", c);
         System.out.println();
 
         double hitRatio = (double) numHits / pageSequence.size();

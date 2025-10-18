@@ -25,6 +25,8 @@ class NRU_PageReplacementAlgo {
     private int numFaults = 0;
     private ArrayList<Integer> pageSequence = new ArrayList<>();
     private ArrayList<Frame> frames;
+    private int[][] pageSequenceBits;
+    private ArrayList<int[][]> pageSequenceBitInput;
     private ArrayList<ArrayList<Integer>> frameHistory = new ArrayList<>();
     private ArrayList<Character> statusHistory = new ArrayList<>();
     private Random random = new Random();
@@ -70,7 +72,7 @@ class NRU_PageReplacementAlgo {
                     frames.add(new Frame(pageNo, 1, random.nextBoolean() ? 1 : 0));
                 } else {
                     // Replacement using NRU logic
-                    int replaceIdx = selectNRUFrame();
+                    int replaceIdx = selectNRUFrame(pgSeqIdx);
                     frames.set(replaceIdx, new Frame(pageNo, 1, random.nextBoolean() ? 1 : 0));
                 }
 
@@ -82,14 +84,15 @@ class NRU_PageReplacementAlgo {
     }
 
     // Select victim frame based on NRU class
-    int selectNRUFrame() {
+    int selectNRUFrame(int pgSeqIdx) {
         // Classes: 0=(0,0), 1=(0,1), 2=(1,0), 3=(1,1)
         ArrayList<Integer>[] classes = new ArrayList[4];
         for (int i = 0; i < 4; i++) classes[i] = new ArrayList<>();
 
         for (int i = 0; i < frames.size(); i++) {
             Frame f = frames.get(i);
-            int cls = (f.refBit << 1) | f.modBit;
+
+            int cls = (pageSequenceBitInput.get(pgSeqIdx)[i][0] << 1) | (pageSequenceBitInput.get(pgSeqIdx)[i][0]);
             classes[cls].add(i);
         }
 
@@ -114,10 +117,23 @@ class NRU_PageReplacementAlgo {
         Scanner scanner = new Scanner(new File(path));
         numFrame = scanner.nextInt();
         frames = new ArrayList<>(numFrame);
+        pageSequenceBitInput = new ArrayList<>();
         while (scanner.hasNextInt()) {
             pageSequence.add(scanner.nextInt());
+            pageSequenceBits = new int[numFrame][2];
+            for (int i = 0; i < numFrame; i++) {
+                pageSequenceBits[i][0] = scanner.nextInt();
+                pageSequenceBits[i][1] = scanner.nextInt();
+            }
+            pageSequenceBitInput.add(pageSequenceBits);
         }
         scanner.close();
+    }
+
+    void printBarHelper() {
+        System.out.printf("-----");
+        for (int i = 0; i < pageSequence.size(); i++) System.out.printf("----");
+        System.out.println();
     }
 
     void printResult() {
@@ -126,28 +142,38 @@ class NRU_PageReplacementAlgo {
         for (int p : pageSequence) System.out.print(p + " ");
         System.out.println("\n");
 
+        printBarHelper();
+        System.out.printf("   \t|");
+        for (int inputPage : pageSequence) {
+            System.out.printf("%2d\t|", inputPage);
+        }
+        System.out.println();
+
+        printBarHelper();
         // Print frame table
         for (int f = 0; f < numFrame; f++) {
-            System.out.printf("F%d:\t", f + 1);
+            System.out.printf("F%d:\t|", f + 1);
             for (ArrayList<Integer> snapshot : frameHistory) {
-                if (f < snapshot.size()) System.out.printf("%d\t", snapshot.get(f));
-                else System.out.print(" \t");
+                if (f < snapshot.size()) System.out.printf("%2d\t|", snapshot.get(f));
+//                if (f < snapshot.size()) System.out.printf("%2d(%d,%d)|\t", snapshot.get(f));
+                else System.out.print(" \t|");
             }
             System.out.println();
         }
 
-        System.out.print("S:\t");
-        for (char c : statusHistory) System.out.printf("%c\t", c);
+        printBarHelper();
+        System.out.print("S:\t|");
+        for (char c : statusHistory) System.out.printf("%2c\t|", c);
         System.out.println();
+        printBarHelper();
 
         double hitRatio = (double) numHits / pageSequence.size();
-        System.out.printf("\nHits: %d, Faults: %d\nHit Ratio = %.2f%%\n",
-                numHits, numFaults, hitRatio * 100);
+        System.out.printf("\nHits: %d, Faults: %d\nHit Ratio = %.2f%%\n", numHits, numFaults, hitRatio * 100);
     }
 
     public static void main(String[] args) throws FileNotFoundException {
         NRU_PageReplacementAlgo algo = new NRU_PageReplacementAlgo();
-        algo.readFromFile("OperatingSystems/Memory/PageReplacementAlgo/NRU_PageReplacementAlgo.txt");
+        algo.readFromFile("OperatingSystems/Memory/PageReplacementAlgo/NRU_PageReplacementAlgoNew.txt");
         algo.exec();
         algo.printResult();
     }

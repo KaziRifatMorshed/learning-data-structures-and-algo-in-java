@@ -7,8 +7,8 @@ Next Lab Work
 For each algorithm
 Input
 	Number of pages to be referenced
-             Page sequence
              Number of frame
+             Page sequence
              reference bit status of pages in frame (only for Second Chance)
              reference and modification bit status of pages in frame (only for NRU)
 Output

@@ -20,9 +20,9 @@ abstract class _Product {
 }
 
 class OneProduct extends _Product {
-    static {
-        ProductFactory.instance()
-    }
+//    static {
+//        ProductFactory.instance();
+//    }
 
     @Override
     public _Product createProduct() {
