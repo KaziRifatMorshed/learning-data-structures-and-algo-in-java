@@ -1,5 +1,7 @@
 package DesignPatterns.CreationalDesignPatterns.Singleton;
 
+// A more advanced solution - Factory design pattern with abstractions(Factory Method)
+
 import java.util.HashMap;
 
 class ProductFactory {

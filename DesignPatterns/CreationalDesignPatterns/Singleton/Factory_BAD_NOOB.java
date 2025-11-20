@@ -1,6 +1,8 @@
 package DesignPatterns.CreationalDesignPatterns.Singleton;
 
-class Product {
+// Procedural Solution - switch/case noob instantiation
+
+abstract class Product {
 }
 
 class ProductA extends Product {

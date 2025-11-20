@@ -21,14 +21,6 @@ This alternate is also usable
 //}
 */
 abstract class Trip {
-    public final void performTrip() {
-        doComingTransport();
-        doDayA();
-        doDayB();
-        doDayC();
-        doReturningTransport();
-    }
-
     public abstract void doComingTransport();
 
     public abstract void doDayA();
@@ -39,6 +31,13 @@ abstract class Trip {
 
     public abstract void doReturningTransport();
 
+    public final void performTrip() {
+        doComingTransport();
+        doDayA();
+        doDayB();
+        doDayC();
+        doReturningTransport();
+    }
 }
 
 class PackageA extends Trip {
