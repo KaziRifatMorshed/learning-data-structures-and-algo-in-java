@@ -2,11 +2,11 @@ package InformationSystemLab.lab1;
 
 import java.util.Scanner;
 
-public class CeaserCypher {
+public class CeaserCipher {
     private int round;
     private char[] encoder = new char[26], decoder = new char[26];
 
-    public CeaserCypher(int rounding) {
+    public CeaserCipher(int rounding) {
         this.round = rounding % 26;
         for (int i = 0; i < 26; i++) {
             encoder[i] = (char) (('A' + ((i + round) % 26)));
@@ -35,7 +35,7 @@ public class CeaserCypher {
     }
 
     public static void main(String[] args) {
-        CeaserCypher ceaserCypher = new CeaserCypher(3);
+        CeaserCipher ceaserCypher = new CeaserCipher(3);
         Scanner scanner = new Scanner(System.in);
         System.out.print("Input a msg: ");
         String user_input = scanner.nextLine();
