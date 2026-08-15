@@ -2,11 +2,11 @@ package DataStructure.Array;
 
 import java.util.Scanner;
 
-public class CeaserCypher {
+public class CeaserCypher_ {
     private int round;
     private char[] encoder = new char[26], decoder = new char[26];
 
-    public CeaserCypher(int rounding) {
+    public CeaserCypher_(int rounding) {
         this.round = rounding % 26;
         for (int i = 0; i < 26; i++) {
             encoder[i] = (char) (('A' + ((i + round) % 26)));
@@ -47,7 +47,7 @@ public class CeaserCypher {
     }
 
     public static void main(String[] args) {
-        CeaserCypher ceaserCypher = new CeaserCypher(3);
+        CeaserCypher_ ceaserCypher = new CeaserCypher_(3);
         Scanner scanner = new Scanner(System.in);
         String user_input = scanner.nextLine();
 
