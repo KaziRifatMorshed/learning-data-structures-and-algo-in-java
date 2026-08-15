@@ -1,41 +1,42 @@
 package InformationSystemLab.lab1;
 
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.LinkedHashSet;
+import java.util.*;
 
 public class PlayFairCipher {
+
+    static class Pair<A, B> {
+        private final A first;
+        private final B second;
+
+        public Pair(A first, B second) {
+            this.first = first;
+            this.second = second;
+        }
+
+        public A getFirst() {
+            return first;
+        }
+
+        public B getSecond() {
+            return second;
+        }
+    }
+
     private String keyword;
     private char[][] matrix = new char[5][5];
 
     public PlayFairCipher(String keyword) {
         this.keyword = keyword.toUpperCase();
-        Queue<Character> charQueue = new PriorityQueue<>();
-        for (Character c : this.keyword.toCharArray()) {
-//            System.out.println("added char: " + c);
-            charQueue.add(c);
-        }
+        Set<Character> usedChars = new LinkedHashSet<>();
+        for (Character c : this.keyword.toCharArray()) usedChars.add(c);
+        for (char c = 'A'; c <= 'Z'; c++) if (c != 'J') usedChars.add(c);
 
         int i = 0;
-        // first e keyword er sob char add korbo
-        for (; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                if (!charQueue.isEmpty()) matrix[i][j] = charQueue.remove();
-                else break;
-            }
-            if (charQueue.isEmpty()) break;
+        for (char c : usedChars) {
+            matrix[i / 5][i % 5] = c;
+            i++;
         }
-
-        //ebar keyword e na thaka char gulo add korbo
-        int k = (int) 'A';
-        for (; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
-                if (keyword.contains("" + k) || k == (int) 'J') continue;
-                else matrix[i][j] = (char) k;
-                k++;
-            }
-        }
-
-
     }
 
     public String getKeyword() {
@@ -61,9 +62,51 @@ public class PlayFairCipher {
         }
     }
 
+    private Pair<Integer, Integer> findIdx(char c) {
+        for (int i = 0; i < 5; i++) for (int j = 0; j < 5; j++) if (matrix[i][j] == c) return new Pair<>(i, j);
+        return null;
+    }
+
+    public String encode(String inputMsg) {
+        String encodedMsg = "";
+        inputMsg = inputMsg.toUpperCase();
+        inputMsg = inputMsg.replaceAll(" ", "");
+        int inputMsgLen = inputMsg.length();
+        StringBuilder newInputMsg = new StringBuilder();
+
+        int i = 0;
+        while (i < inputMsgLen) {
+            if (i == (inputMsgLen - 1)) {
+                newInputMsg.append(inputMsg.charAt(i)).append("X");
+                i++;
+            }
+            else if (inputMsg.charAt(i) == inputMsg.charAt(i + 1)) {
+                newInputMsg.append(inputMsg.charAt(i)).append("X");
+                i++;
+            } else {
+                newInputMsg.append(inputMsg.charAt(i)).append(inputMsg.charAt(i + 1));
+                i += 2;
+            }
+        }
+
+
+        encodedMsg = new String(newInputMsg);
+        return encodedMsg;
+    }
+
+    public String decode(String inputMsg) {
+        String decodedMsg = "";
+
+        return decodedMsg;
+    }
+
     static void main() {
         PlayFairCipher playFairCipher = new PlayFairCipher("COMPUTER");
         playFairCipher.printMatrix();
+
+        String msg = "TREE IS GREENQ";
+        String encoded = playFairCipher.encode(msg);
+        System.out.println(encoded);
 
     }
 }
