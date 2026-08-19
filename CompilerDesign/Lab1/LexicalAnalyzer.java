@@ -9,8 +9,9 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Scanner;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LexicalAnalyzer {
 
@@ -38,7 +39,8 @@ public class LexicalAnalyzer {
     static class Identifier<A> {
         String name, type;
         A value;
-        Identifier(String a, String b, A v){
+
+        Identifier(String a, String b, A v) {
             name = a;
             type = b;
             value = v;
@@ -46,7 +48,7 @@ public class LexicalAnalyzer {
 
         @Override
         public String toString() {
-            return "id name = "+  name + ", type= " + type + ", value = " + value;
+            return "id name = " + name + ", type= " + type + ", value = " + value;
         }
     }
 
@@ -60,11 +62,11 @@ public class LexicalAnalyzer {
     public LexicalAnalyzer(String s) {
         setInputSourceCode(s);
         setOutputSourceCode(s);
-        ready();
+        prepare();
         process();
     }
 
-    private void ready(){
+    private void prepare() {
         keywordList.add("int");
         keywordList.add("void");
         keywordList.add("float");
@@ -90,42 +92,81 @@ public class LexicalAnalyzer {
         this.outputSourceCode = outputSourceCode;
     }
 
-    public void printKeywords(){
-        for (String c: keywordList) {
+    public void printKeywords() {
+        for (String c : keywordList) {
             System.out.print(c + " ");
         }
-    }
-    public void printUsedKeywords(){
-        for (String c: usedKeywordList) {
-            System.out.print(c + " ");
-        }
+        System.out.println();
     }
 
-    public void printBuiltinFunctions(){
-        for (String c: builtinFunctionList) {
+    public void printUsedKeywords() {
+        for (String c : usedKeywordList) {
             System.out.print(c + " ");
         }
+        System.out.println();
     }
-    public void printUsedFunctions(){
-        for (String c: usedBuiltinFunctionList) {
+
+    public void printBuiltinFunctions() {
+        for (String c : builtinFunctionList) {
             System.out.print(c + " ");
         }
+        System.out.println();
+    }
+
+    public void printUsedFunctions() {
+        for (String c : usedBuiltinFunctionList) {
+            System.out.print(c + " ");
+        }
+        System.out.println();
+    }
+
+    public String getKeywords() {
+        StringBuilder s = new StringBuilder();
+        for (String c : keywordList) {
+            s.append(c).append(" ");
+        }
+        return s.toString();
+    }
+
+    public String getUsedKeywords() {
+        StringBuilder s = new StringBuilder();
+        for (String c : usedKeywordList) {
+            s.append(c).append(" ");
+        }
+        return s.toString();
+    }
+
+    public String getBuiltinFunctions() {
+        StringBuilder s = new StringBuilder();
+        for (String c : builtinFunctionList) {
+            s.append(c).append(" ");
+        }
+        return s.toString();
+    }
+
+    public String getUsedFunctions() {
+        StringBuilder s = new StringBuilder();
+        for (String c : usedBuiltinFunctionList) {
+            s.append(c).append(" ");
+        }
+        return s.toString();
     }
 
 
     private void process() {
         removeComment();
         cleanWhitespace();
+        identify();
     }
 
-    private boolean checkKeyword(String s){
-        for (String keyword: keywordList){
+    private boolean checkKeyword(String s) {
+        for (String keyword : keywordList) {
             if (keyword.equals(s)) return true;
         }
         return false;
     }
 
-    private boolean checkIdentifierValidity(String s){
+    private boolean checkIdentifierValidity(String s) {
         char c = s.charAt(0);
         if (c == '_' // single underscore
                 || ('a' <= c && c <= 'z')
@@ -134,6 +175,31 @@ public class LexicalAnalyzer {
             return true;
         } else {
             return false;
+        }
+    }
+
+    private void identify() {
+        ArrayList<String> list = new ArrayList<>();
+        String s = "", regex = "\\b\\w+\\b";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(outputSourceCode);
+
+        while (matcher.find()) {
+            s = matcher.group();
+//            System.out.println(s);
+            if (s.isEmpty()){
+                System.out.println("ERROR LA:");
+                continue;
+            }
+            if (!checkIdentifierValidity(s)) {
+                System.out.println("ERROR LA: INVALID IDENTIFIER NAME. (identifier must start with a character or an underscore.)");
+                continue;
+            }
+            if (keywordList.contains(s)) {
+                usedKeywordList.add(s);
+            } else if (builtinFunctionList.contains(s)) {
+                usedBuiltinFunctionList.add(s);
+            }
         }
     }
 
@@ -155,5 +221,7 @@ public class LexicalAnalyzer {
         rwFile.writeFile("CompilerDesign/Lab1/output.c", lexicalAnalyzer.getOutputSourceCode());
 
 //        System.out.println(lexicalAnalyzer.checkIdentifierValidity("?name"));
+        lexicalAnalyzer.printUsedKeywords();
+        lexicalAnalyzer.printUsedFunctions();
     }
 }
