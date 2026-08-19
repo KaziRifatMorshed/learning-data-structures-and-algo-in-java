@@ -32,10 +32,10 @@ class rwFile {
 
 }
 
-class LexicalAnalyzer {
+public class Lab1 {
     private String inputSourceCode, outputSourceCode;
 
-    public LexicalAnalyzer(String s) {
+    public Lab1(String s) {
         setInputSourceCode(s);
         setOutputSourceCode(s);
         process();
@@ -73,13 +73,20 @@ class LexicalAnalyzer {
     public void setOutputSourceCode(String outputSourceCode) {
         this.outputSourceCode = outputSourceCode;
     }
-}
 
-class test {
-    static void main() throws FileNotFoundException {
+    public static void main() throws FileNotFoundException {
         String input = rwFile.readFile("CompilerDesign/Lab1/input.c");
-        LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer(input);
+        Lab1 lexicalAnalyzer = new Lab1(input);
         System.out.println(lexicalAnalyzer.getOutputSourceCode());
         rwFile.writeFile("CompilerDesign/Lab1/output.c", lexicalAnalyzer.getOutputSourceCode());
     }
+}
+
+class test {
+//    public static void main() throws FileNotFoundException {
+//        String input = rwFile.readFile("CompilerDesign/Lab1/input.c");
+//        LexicalAnalyzer lexicalAnalyzer = new LexicalAnalyzer(input);
+//        System.out.println(lexicalAnalyzer.getOutputSourceCode());
+//        rwFile.writeFile("CompilerDesign/Lab1/output.c", lexicalAnalyzer.getOutputSourceCode());
+//    }
 }
