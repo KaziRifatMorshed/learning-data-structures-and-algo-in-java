@@ -1,31 +1,11 @@
-#include "stdio.h"
-#include "string.h"
+void main() {
+  int i,
+  j = 5, k = 10;
 
-void StrRev(char *str, int ci) {
-  if (str[ci] == '\0')             {
-    return;
-  } else { // Call first, print later
-        StrRev(str, ci + 1);
-        /*
-        yess
-        * no
-        ***** very WELL
-        */
-  }
-  printf("%c", str[ci]);
+  j = j + k; // j and k are already declared
+
+  printf("%d", i);
+  /* Add identifier in the
+  symbol table
+  */
 }
-
-char          OutOneChar(char *str, int ci) {
-  OutOneChar(str, ci + 1);
-  if (str[ci] == '\0') {
-    return '\0';
-  } else {
-    return str[ci + 1];
-  }
-} // will it work ???I
-
-int main(void) {
-  char str[10] = "HElloWW";
-  // int len = strlen(str); // দরকার নাই
-  StrRev(str, 0);
-} // WORKING
