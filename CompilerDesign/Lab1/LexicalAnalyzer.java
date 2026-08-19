@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class LexicalAnalyzer {
@@ -34,17 +35,26 @@ public class LexicalAnalyzer {
         }
     }
 
-    static class Identifier {
-        String id, type;
-        Identifier(String a, String b){
-            id = a;
+    static class Identifier<A> {
+        String name, type;
+        A value;
+        Identifier(String a, String b, A v){
+            name = a;
             type = b;
+            value = v;
+        }
+
+        @Override
+        public String toString() {
+            return "id name = "+  name + ", type= " + type + ", value = " + value;
         }
     }
 
     private String inputSourceCode, outputSourceCode;
     ArrayList<String> keywordList = new ArrayList<>();
+    ArrayList<String> usedKeywordList = new ArrayList<>();
     ArrayList<String> builtinFunctionList = new ArrayList<>();
+    ArrayList<String> usedBuiltinFunctionList = new ArrayList<>();
     ArrayList<Identifier> symbolTable = new ArrayList<>();
 
     public LexicalAnalyzer(String s) {
@@ -80,6 +90,29 @@ public class LexicalAnalyzer {
         this.outputSourceCode = outputSourceCode;
     }
 
+    public void printKeywords(){
+        for (String c: keywordList) {
+            System.out.print(c + " ");
+        }
+    }
+    public void printUsedKeywords(){
+        for (String c: usedKeywordList) {
+            System.out.print(c + " ");
+        }
+    }
+
+    public void printBuiltinFunctions(){
+        for (String c: builtinFunctionList) {
+            System.out.print(c + " ");
+        }
+    }
+    public void printUsedFunctions(){
+        for (String c: usedBuiltinFunctionList) {
+            System.out.print(c + " ");
+        }
+    }
+
+
     private void process() {
         removeComment();
         cleanWhitespace();
@@ -105,14 +138,14 @@ public class LexicalAnalyzer {
     }
 
     private void removeComment() {
-        outputSourceCode = outputSourceCode.replaceAll("//.*", ""); // single line comment
-        outputSourceCode = outputSourceCode.replaceAll("(?s)/\\*.*?\\*/", ""); // multi line comment
+        outputSourceCode = outputSourceCode.replaceAll("//.*\n", ""); // single line comment
+        outputSourceCode = outputSourceCode.replaceAll("(?s)/\\*.*\\*/", ""); // multi line comment
     }
 
     private void cleanWhitespace() {
         outputSourceCode = outputSourceCode.replace("\t", " "); // tab
-        outputSourceCode = outputSourceCode.replaceAll(" [ ]*?", " "); // multiple whitespace
-        outputSourceCode = outputSourceCode.replaceAll("\n[ ]*?\n", "\n"); // blank line
+        outputSourceCode = outputSourceCode.replaceAll(" [ ]*", " "); // multiple whitespace
+        outputSourceCode = outputSourceCode.replaceAll("\n[ ]*\n", "\n"); // blank line
     }
 
     public static void main(String[] args) throws FileNotFoundException {
