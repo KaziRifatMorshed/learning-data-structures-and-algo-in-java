@@ -11,8 +11,8 @@ class test {
 //        int c = 'Z';
 //        System.out.println(c);
 
-        String s = "name hello world";
-        s = s.replaceAll("", "~");
+        String s = "void main() {\n  int i,";
+        s = s.replaceAll("\\b\\w+\\b", "~");
         System.out.println(s);
     }
 
