@@ -34,12 +34,34 @@ public class LexicalAnalyzer {
         }
     }
 
+    static class Identifier {
+        String id, type;
+        Identifier(String a, String b){
+            id = a;
+            type = b;
+        }
+    }
+
     private String inputSourceCode, outputSourceCode;
+    ArrayList<String> keywordList = new ArrayList<>();
+    ArrayList<String> builtinFunctionList = new ArrayList<>();
+    ArrayList<Identifier> symbolTable = new ArrayList<>();
 
     public LexicalAnalyzer(String s) {
         setInputSourceCode(s);
         setOutputSourceCode(s);
+        ready();
         process();
+    }
+
+    private void ready(){
+        keywordList.add("int");
+        keywordList.add("void");
+        keywordList.add("float");
+        keywordList.add("double");
+        builtinFunctionList.add("main");
+        builtinFunctionList.add("printf");
+        builtinFunctionList.add("scanf");
     }
 
     public String getInputSourceCode() {
@@ -63,23 +85,7 @@ public class LexicalAnalyzer {
         cleanWhitespace();
     }
 
-    private void removeComment() {
-        outputSourceCode = outputSourceCode.replaceAll("//.*", ""); // single line comment
-        outputSourceCode = outputSourceCode.replaceAll("(?s)/\\*.*?\\*/", ""); // multi line comment
-    }
-
-    private void cleanWhitespace() {
-        outputSourceCode = outputSourceCode.replace("\t", " "); // tab
-        outputSourceCode = outputSourceCode.replaceAll(" [ ]*?", " "); // multiple whitespace
-        outputSourceCode = outputSourceCode.replaceAll("\n[ ]*?\n", "\n"); // blank line
-    }
-
-
     private boolean checkKeyword(String s){
-        ArrayList<String> keywordList = new ArrayList<>();
-        keywordList.add("int");
-        keywordList.add("void");
-
         for (String keyword: keywordList){
             if (keyword.equals(s)) return true;
         }
@@ -96,6 +102,17 @@ public class LexicalAnalyzer {
         } else {
             return false;
         }
+    }
+
+    private void removeComment() {
+        outputSourceCode = outputSourceCode.replaceAll("//.*", ""); // single line comment
+        outputSourceCode = outputSourceCode.replaceAll("(?s)/\\*.*?\\*/", ""); // multi line comment
+    }
+
+    private void cleanWhitespace() {
+        outputSourceCode = outputSourceCode.replace("\t", " "); // tab
+        outputSourceCode = outputSourceCode.replaceAll(" [ ]*?", " "); // multiple whitespace
+        outputSourceCode = outputSourceCode.replaceAll("\n[ ]*?\n", "\n"); // blank line
     }
 
     public static void main(String[] args) throws FileNotFoundException {
