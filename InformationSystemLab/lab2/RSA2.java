@@ -13,31 +13,24 @@ public class RSA2 {
     public RSA2(int bitLength) {
         SecureRandom random = new SecureRandom();
 
-        // 1. Generate two distinct random prime numbers p and q
         do {
             this.p = BigInteger.probablePrime(bitLength / 2, random);
             this.q = BigInteger.probablePrime(bitLength / 2, random);
         } while (this.p.equals(this.q));
 
-        // 2. Compute modulus n = p * q
         this.n = this.p.multiply(this.q);
-
-        // 3. Compute Euler's totient function phi = (p - 1) * (q - 1)
         this.phi = this.p.subtract(BigInteger.ONE)
                 .multiply(this.q.subtract(BigInteger.ONE));
 
-        // 4. Choose public exponent e such that 1 < e < phi and gcd(e, phi) == 1
         do {
             this.e = BigInteger.probablePrime(bitLength / 2, random);
         } while (this.e.compareTo(BigInteger.ONE) <= 0
                 || this.e.compareTo(this.phi) >= 0
                 || !this.e.gcd(this.phi).equals(BigInteger.ONE));
 
-        // 5. Calculate private exponent d = e^-1 mod phi
         this.d = calculatePrivateKey(this.e, this.phi);
     }
 
-    // Constructor for explicit key specification (e.g. for testing)
     public RSA2(long p, long q, long e) {
         this(BigInteger.valueOf(p), BigInteger.valueOf(q), BigInteger.valueOf(e));
     }
@@ -124,16 +117,21 @@ public class RSA2 {
     }
 
     public static void main(String[] args) {
-        RSA2 rsa = new RSA2(512);
+        RSA2 rsa = new RSA2(10);
 
-        BigInteger message = BigInteger.valueOf(123456789);
+        BigInteger message = BigInteger.valueOf(43);
 
         BigInteger encrypted = rsa.encrypt(message);
-        System.out.println("Original Message : " + message);
-        System.out.println("Encrypted Message: " + encrypted);
+        System.out.println("Message : " + message);
+        System.out.println("Encrypted: " + encrypted);
 
         BigInteger decrypted = rsa.decrypt(encrypted);
-        System.out.println("Decrypted Message: " + decrypted);
+        System.out.println("Decrypted: " + decrypted);
     }
 }
 
+/*
+Original Message : 43
+Encrypted Message: 214
+Decrypted Message: 43
+*/
