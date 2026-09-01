@@ -36,14 +36,18 @@ public class LexicalAnalyzer {
         }
     }
 
-    static class Identifier<A> {
+    static class SymbolTableEntry<A> {
         String name, type;
         A value;
 
-        Identifier(String a, String b, A v) {
+        SymbolTableEntry(String a, String b, A v) {
             name = a;
             type = b;
             value = v;
+        }
+
+        SymbolTableEntry(String a, String b) {
+            this(a, b, null);
         }
 
         @Override
@@ -57,7 +61,7 @@ public class LexicalAnalyzer {
     ArrayList<String> usedKeywordList = new ArrayList<>();
     ArrayList<String> builtinFunctionList = new ArrayList<>();
     ArrayList<String> usedBuiltinFunctionList = new ArrayList<>();
-    ArrayList<Identifier> symbolTable = new ArrayList<>();
+    ArrayList<SymbolTableEntry<?>> symbolTable = new ArrayList<>();
 
     public LexicalAnalyzer(String s) {
         setInputSourceCode(s);
@@ -152,6 +156,19 @@ public class LexicalAnalyzer {
         return s.toString();
     }
 
+    public void printSymbolTable() {
+        System.out.println("Symbol Table");
+        System.out.printf("Symbol No:\t\tSymbol:\t\tType:\n");
+        for (int i = 0; i < symbolTable.size(); i++) {
+            SymbolTableEntry<?> id = symbolTable.get(i);
+            System.out.println((i + 1)+ "\t\t" + id.name + "\t\t" + id.type);
+        }
+    }
+
+    public ArrayList<SymbolTableEntry<?>> getSymbolTable() {
+        return symbolTable;
+    }
+
 
     private void process() {
         removeComment();
@@ -178,11 +195,27 @@ public class LexicalAnalyzer {
         }
     }
 
+    private boolean isNumber(String s) {
+        if (s == null || s.isEmpty()) return false;
+        return s.matches("\\d+(\\.\\d+)?");
+    }
+
+    private boolean isInSymbolTable(String name) {
+        for (SymbolTableEntry<?> id : symbolTable) {
+            if (id.name.equals(name)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     private void identify() {
         ArrayList<String> list = new ArrayList<>();
         String s = "", regex = "\\b\\w+\\b";
         Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(outputSourceCode);
+        String codeWithoutLiterals = outputSourceCode.replaceAll("\"(\\\\.|[^\"])*\"", " ")
+                                                     .replaceAll("'(\\\\.|[^'])*'", " ");
+        Matcher matcher = pattern.matcher(codeWithoutLiterals);
 
         while (matcher.find()) {
             s = matcher.group();
@@ -191,14 +224,28 @@ public class LexicalAnalyzer {
                 System.out.println("ERROR LA:");
                 continue;
             }
-            if (!checkIdentifierValidity(s)) {
-                System.out.println("ERROR LA: INVALID IDENTIFIER NAME. (identifier must start with a character or an underscore.)");
-                continue;
-            }
             if (keywordList.contains(s)) {
-                usedKeywordList.add(s);
-            } else if (builtinFunctionList.contains(s)) {
-                usedBuiltinFunctionList.add(s);
+                if (!usedKeywordList.contains(s)) {
+                    usedKeywordList.add(s);
+                }
+                if (!isInSymbolTable(s)) {
+                    symbolTable.add(new SymbolTableEntry<>(s, "Keyword"));
+                }
+            } else if (isNumber(s)) {
+                if (!isInSymbolTable(s)) {
+                    symbolTable.add(new SymbolTableEntry<>(s, "Immediate Value", s));
+                }
+            } else if (checkIdentifierValidity(s)) {
+                if (builtinFunctionList.contains(s)) {
+                    if (!usedBuiltinFunctionList.contains(s)) {
+                        usedBuiltinFunctionList.add(s);
+                    }
+                }
+                if (!isInSymbolTable(s)) {
+                    symbolTable.add(new SymbolTableEntry<>(s, "Identifier"));
+                }
+            } else {
+                System.out.println("ERROR LA: INVALID IDENTIFIER NAME. (identifier must start with a character or an underscore.)");
             }
         }
     }
@@ -221,7 +268,8 @@ public class LexicalAnalyzer {
         rwFile.writeFile("CompilerDesign/Lab1/output.c", lexicalAnalyzer.getOutputSourceCode());
 
 //        System.out.println(lexicalAnalyzer.checkIdentifierValidity("?name"));
-        lexicalAnalyzer.printUsedKeywords();
-        lexicalAnalyzer.printUsedFunctions();
+//        lexicalAnalyzer.printUsedKeywords();
+//        lexicalAnalyzer.printUsedFunctions();
+        lexicalAnalyzer.printSymbolTable();
     }
 }
