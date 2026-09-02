@@ -213,9 +213,7 @@ public class LexicalAnalyzer {
         ArrayList<String> list = new ArrayList<>();
         String s = "", regex = "\\b\\w+\\b";
         Pattern pattern = Pattern.compile(regex);
-        String codeWithoutLiterals = outputSourceCode.replaceAll("\"(\\\\.|[^\"])*\"", " ")
-                                                     .replaceAll("'(\\\\.|[^'])*'", " ");
-        Matcher matcher = pattern.matcher(codeWithoutLiterals);
+        Matcher matcher = pattern.matcher(outputSourceCode);
 
         while (matcher.find()) {
             s = matcher.group();
