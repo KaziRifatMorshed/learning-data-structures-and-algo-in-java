@@ -88,18 +88,34 @@ public class DES {
 
     public static int[] fromString(String s) {
         int[] b = new int[s.length()];
-        for (int i = 0; i < s.length(); i++) {
-            b[i] = s.charAt(i) - '0';
-        }
+        for (int i = 0; i < s.length(); i++) b[i] = s.charAt(i) - '0';
         return b;
     }
 
     public static String toStringBits(int[] b) {
         StringBuilder sb = new StringBuilder(b.length);
-        for (int bit : b) {
-            sb.append(bit);
+        for (int bit : b) sb.append(bit);
+        return sb.toString();
+    }
+
+    public static String bitsToHex(int[] b) {
+        StringBuilder sb = new StringBuilder(b.length / 4);
+        for (int i = 0; i < b.length; i += 4) {
+            int val = (b[i] << 3) | (b[i + 1] << 2) | (b[i + 2] << 1) | b[i + 3];
+            sb.append(Integer.toHexString(val).toUpperCase());
         }
         return sb.toString();
+    }
+
+    public static int[] hexToBits(String hex) {
+        int[] bits = new int[hex.length() * 4];
+        for (int i = 0; i < hex.length(); i++) {
+            int val = Integer.parseInt(String.valueOf(hex.charAt(i)), 16);
+            for (int b = 3; b >= 0; b--) {
+                bits[i * 4 + (3 - b)] = (val >> b) & 1;
+            }
+        }
+        return bits;
     }
 
     public static int[] applyPerm(int[] in, int[] table, int n) {
@@ -120,9 +136,7 @@ public class DES {
 
     public static int[] xorBits(int[] a, int[] b) {
         int[] out = new int[a.length];
-        for (int i = 0; i < a.length; i++) {
-            out[i] = a[i] ^ b[i];
-        }
+        for (int i = 0; i < a.length; i++) out[i] = a[i] ^ b[i];
         return out;
     }
 
@@ -164,7 +178,7 @@ public class DES {
         return applyPerm(sout, T_P, 32);
     }
 
-    public static int[] desCore(int[] block, int[][] subkeys) {
+    public static int[] DESmain(int[] block, int[][] subkeys) {
         int[] data = applyPerm(block, T_IP, 64);
         int[] L = Arrays.copyOfRange(data, 0, 32);
         int[] R = Arrays.copyOfRange(data, 32, 64);
@@ -182,21 +196,18 @@ public class DES {
     }
 
     public static int[] encrypt(int[] plaintext, int[] key) {
-        return desCore(plaintext, keySchedule(key));
+        return DESmain(plaintext, keySchedule(key));
     }
 
     public static int[] decrypt(int[] ciphertext, int[] key) {
         int[][] sk = keySchedule(key);
         List<int[]> skList = Arrays.asList(sk);
         Collections.reverse(skList);
-        return desCore(ciphertext, skList.toArray(new int[0][]));
+        return DESmain(ciphertext, skList.toArray(new int[0][]));
     }
 
-    public static boolean isValid64BitBinary(String s) {
-        return s != null && s.matches("[01]{64}");
-    }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         String filePath = "InformationSystemLab/lab3/input.txt";
 
         try (Scanner fileScanner = new Scanner(new File(filePath))) {
@@ -204,32 +215,30 @@ public class DES {
                 System.err.println("[Error] File is empty.");
                 return;
             }
-            String ptStr = fileScanner.nextLine().trim();
+            String ptStr = fileScanner.nextLine();
 
             if (!fileScanner.hasNextLine()) {
                 System.err.println("[Error] Key is missing.");
                 return;
             }
-            String keyStr = fileScanner.nextLine().trim();
+            String keyStr = fileScanner.nextLine();
 
-            if (!isValid64BitBinary(ptStr) || !isValid64BitBinary(keyStr)) {
-                System.err.println("Error: Both plaintext and key must be exactly 64 binary bits.");
-                return;
-            }
-
-            int[] plaintext = fromString(ptStr);
-            int[] key = fromString(keyStr);
+            int[] plaintext = hexToBits(ptStr.trim().toUpperCase());
+            int[] key = hexToBits(keyStr.trim().toUpperCase());
 
             int[] ciphertext = encrypt(plaintext, key);
             int[] recovered = decrypt(ciphertext, key);
 
-            System.out.println("Plaintext: " + ptStr);
-            System.out.println("Key: " + keyStr);
-            System.out.println("Ciphertext: " + toStringBits(ciphertext));
-            System.out.println("Decrypted: " + toStringBits(recovered));
-
-        } catch (FileNotFoundException e) {
-            System.err.println("Error: File not found at '" + filePath + "'. Please check the path.");
+            System.out.println("Plaintext (hex): " + ptStr.trim().toUpperCase());
+            System.out.println("Key       (hex): " + keyStr.trim().toUpperCase());
+            System.out.println("Ciphertext(hex): " + bitsToHex(ciphertext));
+            System.out.println("Decrypted (hex): " + bitsToHex(recovered));
         }
     }
 }
+/*
+Plaintext (hex): 0123456789ABCDEF
+Key       (hex): FEDCBA9876543210
+Ciphertext(hex): ED39D950FA74BCC4
+Decrypted (hex): 0123456789ABCDEF
+ */
