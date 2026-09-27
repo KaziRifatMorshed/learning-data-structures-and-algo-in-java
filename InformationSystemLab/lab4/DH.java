@@ -47,7 +47,6 @@ public class DH {
         System.out.println("Public parameters: prime (q) = " + prime + ", alpha (g) = " + alpha);
         System.out.println("Alice's Public Key: " + alice.getPublicKey());
         System.out.println("Bob's Public Key: " + bob.getPublicKey());
-        System.out.println("--------------------------------------------------");
 
         alice.calculateSecretKey(bob.getPublicKey());
         bob.calculateSecretKey(alice.getPublicKey());
