@@ -196,107 +196,248 @@ public class FirstAndFollow {
         return s;
     }
 
+    /**
+     * Driver method that computes the FIRST sets for all non-terminals in the grammar.
+     * Uses recursive computation and iterates until all sets stabilize (fixed-point convergence),
+     * ensuring that recursive calls across mutual cycles are fully resolved.
+     */
     private void computeFirst() {
         boolean changed = true;
         while (changed) {
             changed = false;
             for (String nt : nonTerminals) {
-                Set<String> ntFirst = firstSets.get(nt);
-                int beforeSize = ntFirst.size();
-
-                List<List<String>> rhsList = productions.get(nt);
-                for (List<String> rhs : rhsList) {
-                    Set<String> rhsFirst = computeFirstOfSequence(rhs);
-                    ntFirst.addAll(rhsFirst);
-                }
-
-                if (ntFirst.size() > beforeSize) {
+                int beforeSize = firstSets.get(nt).size();
+                computeFirst(nt);
+                if (firstSets.get(nt).size() > beforeSize) {
                     changed = true;
                 }
             }
         }
     }
 
+    /**
+     * Public helper to recursively compute the FIRST set of a grammar symbol.
+     * 
+     * @param symbol Terminal, epsilon, or non-terminal symbol.
+     * @return Set of terminals and/or epsilon belonging to FIRST(symbol).
+     */
+    public Set<String> computeFirst(String symbol) {
+        return computeFirst(symbol, new HashSet<>());
+    }
+
+    /**
+     * Recursive implementation of FIRST(symbol).
+     * 
+     * Rules & Base Cases:
+     * 1. Base Case (Epsilon): FIRST(#) = { # }.
+     * 2. Base Case (Terminal): If symbol is a terminal, FIRST(symbol) = { symbol }.
+     * 3. Base Case (Recursion Cycle): If the non-terminal is already in 'visiting' call stack,
+     *    return current known elements to prevent infinite loops (e.g. left recursion).
+     * 4. Recursive Step (Non-Terminal): If symbol is a non-terminal, look at every production
+     *    alternative: symbol -> Y1 Y2 ... Yk.
+     *    Recursively compute FIRST(Y1 Y2 ... Yk) and add all symbols to FIRST(symbol).
+     */
+    private Set<String> computeFirst(String symbol, Set<String> visiting) {
+        // Base Case 1: Epsilon
+        if (symbol.equals(EPSILON)) {
+            Set<String> res = new LinkedHashSet<>();
+            res.add(EPSILON);
+            return res;
+        }
+
+        // Base Case 2: Terminal
+        if (!nonTerminalSet.contains(symbol)) {
+            Set<String> res = new LinkedHashSet<>();
+            res.add(symbol);
+            return res;
+        }
+
+        // Base Case 3: Cycle prevention (avoids infinite recursion on left-recursive grammars)
+        if (visiting.contains(symbol)) {
+            return firstSets.getOrDefault(symbol, Collections.emptySet());
+        }
+
+        visiting.add(symbol);
+        Set<String> result = firstSets.get(symbol);
+
+        // Recursive Step: evaluate all RHS alternatives for this non-terminal
+        List<List<String>> rhsList = productions.get(symbol);
+        if (rhsList != null) {
+            for (List<String> rhs : rhsList) {
+                // Recursively compute FIRST of the sequence: rhs
+                Set<String> rhsFirst = computeFirstOfSequence(rhs, visiting);
+                result.addAll(rhsFirst);
+            }
+        }
+
+        visiting.remove(symbol);
+        return result;
+    }
+
+    /**
+     * Public helper to recursively compute FIRST for a sequence of symbols Y1 Y2 ... Yk.
+     * 
+     * @param symbols Sequence of grammar symbols (tokens).
+     * @return Set of terminals and/or epsilon belonging to FIRST(Y1 Y2 ... Yk).
+     */
     public Set<String> computeFirstOfSequence(List<String> symbols) {
+        return computeFirstOfSequence(symbols, new HashSet<>());
+    }
+
+    /**
+     * Recursive implementation of FIRST for a sequence of symbols: [Y1, Y2, ..., Yk].
+     * 
+     * Base cases:
+     * 1. Empty sequence: returns { EPSILON }.
+     * 
+     * Recursive step:
+     * 2. Compute FIRST(Y1) recursively.
+     * 3. Add all non-epsilon symbols from FIRST(Y1) to the sequence's FIRST set.
+     * 4. If FIRST(Y1) derives EPSILON:
+     *    Recursively compute FIRST of the rest of the sequence [Y2, ..., Yk] and add to result.
+     * 5. If FIRST(Y1) does NOT derive EPSILON:
+     *    Stop (do not explore remaining symbols since Y1 does not vanish).
+     */
+    private Set<String> computeFirstOfSequence(List<String> symbols, Set<String> visiting) {
         Set<String> result = new LinkedHashSet<>();
+
+        // Base case: empty sequence derives epsilon
         if (symbols == null || symbols.isEmpty()) {
             result.add(EPSILON);
             return result;
         }
 
-        boolean allDeriveEpsilon = true;
-        for (String sym : symbols) {
-            if (sym.equals(EPSILON)) {
-                result.add(EPSILON);
-                break;
-            } else if (!nonTerminalSet.contains(sym)) {
-                // Terminal symbol
+        // Head symbol Y1
+        String firstSymbol = symbols.get(0);
+
+        // Recursively compute FIRST of the head symbol
+        Set<String> firstOfFirstSymbol = computeFirst(firstSymbol, visiting);
+
+        // Add all non-epsilon symbols from FIRST(Y1)
+        for (String sym : firstOfFirstSymbol) {
+            if (!sym.equals(EPSILON)) {
                 result.add(sym);
-                allDeriveEpsilon = false;
-                break;
-            } else {
-                // Non-terminal symbol
-                Set<String> symFirst = firstSets.get(sym);
-                for (String f : symFirst) {
-                    if (!f.equals(EPSILON)) {
-                        result.add(f);
-                    }
-                }
-                if (!symFirst.contains(EPSILON)) {
-                    allDeriveEpsilon = false;
-                    break;
-                }
             }
         }
 
-        if (allDeriveEpsilon) {
-            result.add(EPSILON);
+        // If Y1 can derive epsilon, recursively compute FIRST of remainder [Y2 ... Yk]
+        if (firstOfFirstSymbol.contains(EPSILON)) {
+            List<String> rest = symbols.subList(1, symbols.size());
+            Set<String> firstOfRest = computeFirstOfSequence(rest, visiting);
+            result.addAll(firstOfRest);
         }
 
         return result;
     }
 
+    /**
+     * Driver method that computes the FOLLOW sets for all non-terminals in the grammar.
+     * Uses recursive computation and iterates until all sets stabilize (fixed-point convergence),
+     * ensuring full propagation through mutual circular dependencies.
+     */
     private void computeFollow() {
+        // Base initialization: Add '$' to the start symbol's FOLLOW set
         if (startSymbol != null) {
             followSets.get(startSymbol).add(DOLLAR);
         }
 
+        // Multi-pass recursive convergence:
+        // Repeatedly invoke recursive computeFollow until all FOLLOW sets stabilize
         boolean changed = true;
         while (changed) {
             changed = false;
-            for (String lhs : nonTerminals) {
-                List<List<String>> rhsList = productions.get(lhs);
+            for (String nt : nonTerminals) {
+                int beforeSize = followSets.get(nt).size();
+                computeFollow(nt);
+                if (followSets.get(nt).size() > beforeSize) {
+                    changed = true;
+                }
+            }
+        }
+    }
 
-                for (List<String> rhs : rhsList) {
-                    for (int i = 0; i < rhs.size(); i++) {
-                        String B = rhs.get(i);
+    /**
+     * Public helper to recursively compute the FOLLOW set of a non-terminal.
+     * 
+     * @param symbol Non-terminal symbol.
+     * @return Set of terminals and/or '$' belonging to FOLLOW(symbol).
+     */
+    public Set<String> computeFollow(String symbol) {
+        return computeFollow(symbol, new HashSet<>());
+    }
 
-                        if (nonTerminalSet.contains(B)) {
-                            Set<String> bFollow = followSets.get(B);
-                            int beforeSize = bFollow.size();
+    /**
+     * Recursive implementation of FOLLOW(symbol).
+     * 
+     * Rules & Base Cases:
+     * 1. Base Case (Start Symbol): If symbol == startSymbol, '$' is in FOLLOW(symbol).
+     * 2. Base Case (Recursion Cycle): If symbol is already in 'visiting', return the currently
+     *    accumulated FOLLOW set to break mutual dependency recursion (e.g. A -> B and B -> A).
+     * 3. Recursive Step (Production LHS -> alpha symbol beta):
+     *    Search every production in the grammar where 'symbol' appears in the RHS:
+     *    a. Subsequence beta follows 'symbol'.
+     *       Recursively compute FIRST(beta) using computeFirstOfSequence(beta).
+     *       Add all non-epsilon terminals from FIRST(beta) into FOLLOW(symbol).
+     *    b. If beta derives epsilon (or beta is empty, meaning 'symbol' is the last symbol of RHS):
+     *       Everything in FOLLOW(LHS) must be in FOLLOW(symbol).
+     *       If LHS != symbol, recursively compute FOLLOW(LHS) and add its symbols into FOLLOW(symbol).
+     */
+    private Set<String> computeFollow(String symbol, Set<String> visiting) {
+        Set<String> follow = followSets.get(symbol);
+        if (follow == null) {
+            return Collections.emptySet();
+        }
 
-                            // Subsequence beta after B
-                            List<String> beta = rhs.subList(i + 1, rhs.size());
-                            Set<String> firstBeta = computeFirstOfSequence(beta);
+        // Rule 1: Start symbol includes the end-marker '$'
+        if (symbol.equals(startSymbol)) {
+            follow.add(DOLLAR);
+        }
 
-                            for (String sym : firstBeta) {
-                                if (!sym.equals(EPSILON)) {
-                                    bFollow.add(sym);
-                                }
+        // Rule 2: Recursion cycle detection to guard against infinite loops
+        if (visiting.contains(symbol)) {
+            return follow;
+        }
+
+        visiting.add(symbol);
+
+        // Rule 3: Search all productions where 'symbol' appears on the RHS
+        for (Map.Entry<String, List<List<String>>> entry : productions.entrySet()) {
+            String lhs = entry.getKey();
+            List<List<String>> rhsList = entry.getValue();
+
+            for (List<String> rhs : rhsList) {
+                for (int i = 0; i < rhs.size(); i++) {
+                    if (rhs.get(i).equals(symbol)) {
+                        // 'symbol' is at position i in the RHS
+                        // beta is the subsequence after 'symbol'
+                        List<String> beta = rhs.subList(i + 1, rhs.size());
+
+                        // Recursively compute FIRST of beta
+                        Set<String> firstBeta = computeFirstOfSequence(beta);
+
+                        // Rule 3a: Add FIRST(beta) \ { EPSILON } to FOLLOW(symbol)
+                        for (String bSym : firstBeta) {
+                            if (!bSym.equals(EPSILON)) {
+                                follow.add(bSym);
                             }
+                        }
 
-                            if (firstBeta.contains(EPSILON)) {
-                                bFollow.addAll(followSets.get(lhs));
-                            }
-
-                            if (bFollow.size() > beforeSize) {
-                                changed = true;
+                        // Rule 3b: If beta =>* epsilon (or beta is empty),
+                        // everything in FOLLOW(lhs) is in FOLLOW(symbol)
+                        if (firstBeta.contains(EPSILON)) {
+                            if (!lhs.equals(symbol)) {
+                                // Recursively compute FOLLOW(lhs) and add to FOLLOW(symbol)
+                                Set<String> lhsFollow = computeFollow(lhs, visiting);
+                                follow.addAll(lhsFollow);
                             }
                         }
                     }
                 }
             }
         }
+
+        visiting.remove(symbol);
+        return follow;
     }
 
     private String formatSet(Set<String> set) {
