@@ -117,7 +117,7 @@ public class FirstAndFollow {
             String[] alternatives = rhsStr.split("\\|");
             for (String alt : alternatives) {
                 List<String> altTokens = tokenize(alt.trim());
-                if (altTokens.isEmpty()) {
+                if (altTokens.isEmpty()) { // in case " A -> " but, emon amra usually kori na
                     altTokens.add(EPSILON);
                 }
                 productions.get(lhs).add(altTokens);
