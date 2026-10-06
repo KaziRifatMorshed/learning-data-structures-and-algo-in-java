@@ -35,8 +35,8 @@ public class FirstAndFollow {
 
     private String inputGrammarText;
     private String startSymbol;
-    private final List<String> nonTerminals = new ArrayList<>();
-    private final Set<String> nonTerminalSet = new LinkedHashSet<>();
+    // Non-terminals in order of appearance (LinkedHashSet preserves insertion order & provides O(1) lookups)
+    private final Set<String> nonTerminals = new LinkedHashSet<>();
     private final Set<String> terminals = new LinkedHashSet<>();
     // Non-terminal -> list of production RHS alternatives (each alternative is a list of token symbols)
     private final Map<String, List<List<String>>> productions = new LinkedHashMap<>();
@@ -67,7 +67,7 @@ public class FirstAndFollow {
         return followSets;
     }
 
-    public List<String> getNonTerminals() {
+    public Set<String> getNonTerminals() {
         return nonTerminals;
     }
 
@@ -87,9 +87,7 @@ public class FirstAndFollow {
             }
 
             String lhs = sides[0].trim();
-            if (!nonTerminalSet.contains(lhs)) {
-                nonTerminalSet.add(lhs);
-                nonTerminals.add(lhs);
+            if (nonTerminals.add(lhs)) {
                 productions.put(lhs, new ArrayList<>());
                 firstSets.put(lhs, new LinkedHashSet<>());
                 followSets.put(lhs, new LinkedHashSet<>());
@@ -128,7 +126,7 @@ public class FirstAndFollow {
         for (Map.Entry<String, List<List<String>>> entry : productions.entrySet()) {
             for (List<String> alt : entry.getValue()) {
                 for (String sym : alt) {
-                    if (!sym.equals(EPSILON) && !nonTerminalSet.contains(sym)) {
+                    if (!sym.equals(EPSILON) && !nonTerminals.contains(sym)) {
                         terminals.add(sym);
                     }
                 }
@@ -246,7 +244,7 @@ public class FirstAndFollow {
         }
 
         // Base Case 2: Terminal
-        if (!nonTerminalSet.contains(symbol)) {
+        if (!nonTerminals.contains(symbol)) {
             Set<String> res = new LinkedHashSet<>();
             res.add(symbol);
             return res;
