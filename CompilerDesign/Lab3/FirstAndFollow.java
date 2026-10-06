@@ -404,32 +404,36 @@ public class FirstAndFollow {
             List<List<String>> rhsList = entry.getValue();
 
             for (List<String> rhs : rhsList) {
-                for (int i = 0; i < rhs.size(); i++) {
-                    if (rhs.get(i).equals(symbol)) {
-                        // 'symbol' is at position i in the RHS
-                        // beta is the subsequence after 'symbol'
-                        List<String> beta = rhs.subList(i + 1, rhs.size());
+                // Use indexOf() to find the index of 'symbol' in the production RHS
+                int i = rhs.indexOf(symbol);
+                while (i != -1) {
+                    // 'symbol' is at index i in the RHS
+                    // beta is the subsequence after 'symbol'
+                    List<String> beta = rhs.subList(i + 1, rhs.size());
 
-                        // Recursively compute FIRST of beta
-                        Set<String> firstBeta = computeFirstOfSequence(beta);
+                    // Recursively compute FIRST of beta
+                    Set<String> firstBeta = computeFirstOfSequence(beta);
 
-                        // Rule 3a: Add FIRST(beta) \ { EPSILON } to FOLLOW(symbol)
-                        for (String bSym : firstBeta) {
-                            if (!bSym.equals(EPSILON)) {
-                                follow.add(bSym);
-                            }
-                        }
-
-                        // Rule 3b: If beta =>* epsilon (or beta is empty),
-                        // everything in FOLLOW(lhs) is in FOLLOW(symbol)
-                        if (firstBeta.contains(EPSILON)) {
-                            if (!lhs.equals(symbol)) {
-                                // Recursively compute FOLLOW(lhs) and add to FOLLOW(symbol)
-                                Set<String> lhsFollow = computeFollow(lhs, visiting);
-                                follow.addAll(lhsFollow);
-                            }
+                    // Rule 3a: Add FIRST(beta) \ { EPSILON } to FOLLOW(symbol)
+                    for (String bSym : firstBeta) {
+                        if (!bSym.equals(EPSILON)) {
+                            follow.add(bSym);
                         }
                     }
+
+                    // Rule 3b: If beta =>* epsilon (or beta is empty),
+                    // everything in FOLLOW(lhs) is in FOLLOW(symbol)
+                    if (firstBeta.contains(EPSILON)) {
+                        if (!lhs.equals(symbol)) {
+                            // Recursively compute FOLLOW(lhs) and add to FOLLOW(symbol)
+                            Set<String> lhsFollow = computeFollow(lhs, visiting);
+                            follow.addAll(lhsFollow);
+                        }
+                    }
+
+                    // Find next occurrence of 'symbol' in the rest of rhs (if it appears more than once)
+                    int next = rhs.subList(i + 1, rhs.size()).indexOf(symbol);
+                    i = (next != -1) ? (i + 1 + next) : -1;
                 }
             }
         }
