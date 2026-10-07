@@ -8,6 +8,9 @@ package CompilerDesign.Lab3;
 
 import java.io.*;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class FirstAndFollow {
 
@@ -135,6 +138,26 @@ public class FirstAndFollow {
     }
 
     private List<String> tokenize(String str) {
+        List<String> tokens = new ArrayList<>();
+        if (str == null || str.trim().isEmpty()) return tokens;
+
+        // 1. Sort nonTerminals by descending length so longer names match first (e.g., E' before E)
+        String ntPattern = nonTerminals.stream()
+                .sorted((a, b) -> Integer.compare(b.length(), a.length()))
+                .map(Pattern::quote)
+                .collect(Collectors.joining("|"));
+
+        // 2. Build regex: (non-terminals) | (identifiers like 'id', 'num') | (any non-whitespace single char)
+        String regex = (ntPattern.isEmpty() ? "" : ntPattern + "|") + "[a-zA-Z][a-zA-Z0-9']*|\\S";
+        Matcher matcher = Pattern.compile(regex).matcher(str);
+
+        while (matcher.find()) {
+            tokens.add(normalizeSymbol(matcher.group()));
+        }
+        return tokens;
+    }
+
+    private List<String> tokenizeManual(String str) {
         List<String> tokens = new ArrayList<>();
         if (str.isEmpty()) {
             return tokens;
