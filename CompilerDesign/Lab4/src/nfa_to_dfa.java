@@ -69,7 +69,7 @@ public class nfa_to_dfa {
 
         // jodi age theke kono state thake tahole oi state er nam return korbe
         for (char ch = 'A'; ch < DFA_state_tracker; ch++) {
-            if (DFA_table.get(Character.toString(ch)).NFA_state.containsAll(t)) {
+            if (DFA_table.get(Character.toString(ch)).NFA_state.equals(t)) {
                 return ch + "";
             }
         }
@@ -161,7 +161,7 @@ public class nfa_to_dfa {
 
     }
 
-    static void main() throws FileNotFoundException {
+    public static void main() throws FileNotFoundException {
         nfa_to_dfa nfaToDfa = new nfa_to_dfa();
         nfaToDfa.readFile();
         nfaToDfa.startingNfaState = 6;
