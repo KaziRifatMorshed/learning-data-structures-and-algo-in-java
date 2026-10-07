@@ -231,6 +231,7 @@ public class FirstAndFollow {
      * Uses recursive computation and iterates until all sets stabilize (fixed-point convergence),
      * ensuring that recursive calls across mutual cycles are fully resolved.
      */
+
     private void computeFirst() {
         boolean changed = true;
         while (changed) {
@@ -238,7 +239,7 @@ public class FirstAndFollow {
             for (String nt : nonTerminals) {
                 int beforeSize = firstSets.get(nt).size();
                 computeFirst(nt);
-                if (firstSets.get(nt).size() > beforeSize) {
+                if (beforeSize < firstSets.get(nt).size()) {
                     changed = true;
                 }
             }
@@ -267,6 +268,8 @@ public class FirstAndFollow {
      * alternative: symbol -> Y1 Y2 ... Yk.
      * Recursively compute FIRST(Y1 Y2 ... Yk) and add all symbols to FIRST(symbol).
      */
+
+
     private Set<String> computeFirst(String symbol, Set<String> visiting) {
         // Base Case 1: Epsilon
         if (symbol.equals(EPSILON)) {
@@ -303,6 +306,7 @@ public class FirstAndFollow {
         visiting.remove(symbol);
         return result;
     }
+
 
     /**
      * Public helper to recursively compute FIRST for a sequence of symbols Y1 Y2 ... Yk.
