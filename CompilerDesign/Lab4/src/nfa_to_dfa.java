@@ -1,3 +1,5 @@
+package CompilerDesign.Lab4.src;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
@@ -144,7 +146,7 @@ public class nfa_to_dfa {
 
     private void readFile() throws FileNotFoundException {
         String inputString = "";
-        Scanner scanner = new Scanner(new File("/home/kazirifat-ugreen/IdeaProjects/CompilerLab/src/nfaInput.txt"));
+        Scanner scanner = new Scanner(new File("CompilerDesign/Lab4/src/nfaInput.txt"));
         System.out.println("NFA Edge list:");
         while (scanner.hasNext()) {
             inputString = scanner.nextLine();
