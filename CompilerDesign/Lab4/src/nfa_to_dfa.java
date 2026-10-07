@@ -147,7 +147,7 @@ public class nfa_to_dfa {
     private void readFile() throws FileNotFoundException {
         String inputString = "";
         Scanner scanner = new Scanner(new File("CompilerDesign/Lab4/src/nfaInput.txt"));
-        System.out.println("NFA Edge list:");
+//        System.out.println("NFA Edge list:");
         while (scanner.hasNext()) {
             inputString = scanner.nextLine();
             Scanner scanner1 = new Scanner(inputString);
@@ -155,9 +155,9 @@ public class nfa_to_dfa {
             int b = scanner1.nextInt();
             String ch = scanner1.next();
             this.NFA_edges.add(new NFA_edge(a, b, ch));
-            System.out.println(a + " " + b + " " + ch);
+//            System.out.println(a + " " + b + " " + ch);
         }
-        System.out.println("----------------");
+//        System.out.println("----------------");
 
     }
 
@@ -165,7 +165,7 @@ public class nfa_to_dfa {
         nfa_to_dfa nfaToDfa = new nfa_to_dfa();
         nfaToDfa.readFile();
         nfaToDfa.startingNfaState = 6;
-        nfaToDfa.tester();
+//        nfaToDfa.tester();
         nfaToDfa.constructDFA();
         nfaToDfa.printDfaTable();
     }
