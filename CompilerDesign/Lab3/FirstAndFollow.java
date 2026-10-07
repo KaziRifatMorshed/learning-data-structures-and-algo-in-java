@@ -137,24 +137,33 @@ public class FirstAndFollow {
         }
     }
 
+//    private List<String> tokenize(String str) {
+//        List<String> tokens = new ArrayList<>();
+//        if (str == null || str.trim().isEmpty()) return tokens;
+//
+//        // 1. Sort nonTerminals by descending length so longer names match first (e.g., E' before E)
+//        String ntPattern = nonTerminals.stream()
+//                .sorted((a, b) -> Integer.compare(b.length(), a.length()))
+//                .map(Pattern::quote)
+//                .collect(Collectors.joining("|"));
+//
+//        // 2. Build regex: (non-terminals) | (identifiers like 'id', 'num') | (any non-whitespace single char)
+//        String regex = (ntPattern.isEmpty() ? "" : ntPattern + "|") + "[a-zA-Z][a-zA-Z0-9']*|\\S";
+//        Matcher matcher = Pattern.compile(regex).matcher(str);
+//
+//        while (matcher.find()) {
+//            tokens.add(normalizeSymbol(matcher.group()));
+//        }
+//        return tokens;
+//    }
+
     private List<String> tokenize(String str) {
-        List<String> tokens = new ArrayList<>();
-        if (str == null || str.trim().isEmpty()) return tokens;
+        if (str.trim().isEmpty()) return Collections.emptyList();
 
-        // 1. Sort nonTerminals by descending length so longer names match first (e.g., E' before E)
-        String ntPattern = nonTerminals.stream()
-                .sorted((a, b) -> Integer.compare(b.length(), a.length()))
-                .map(Pattern::quote)
-                .collect(Collectors.joining("|"));
-
-        // 2. Build regex: (non-terminals) | (identifiers like 'id', 'num') | (any non-whitespace single char)
-        String regex = (ntPattern.isEmpty() ? "" : ntPattern + "|") + "[a-zA-Z][a-zA-Z0-9']*|\\S";
-        Matcher matcher = Pattern.compile(regex).matcher(str);
-
-        while (matcher.find()) {
-            tokens.add(normalizeSymbol(matcher.group()));
-        }
-        return tokens;
+        // Split by any whitespace and normalize
+        return Arrays.stream(str.trim().split("\\s+"))
+                .map(this::normalizeSymbol)
+                .collect(Collectors.toList());
     }
 
     private List<String> tokenizeManual(String str) {
@@ -238,7 +247,7 @@ public class FirstAndFollow {
 
     /**
      * Public helper to recursively compute the FIRST set of a grammar symbol.
-     * 
+     *
      * @param symbol Terminal, epsilon, or non-terminal symbol.
      * @return Set of terminals and/or epsilon belonging to FIRST(symbol).
      */
@@ -248,15 +257,15 @@ public class FirstAndFollow {
 
     /**
      * Recursive implementation of FIRST(symbol).
-     * 
+     * <p>
      * Rules & Base Cases:
      * 1. Base Case (Epsilon): FIRST(#) = { # }.
      * 2. Base Case (Terminal): If symbol is a terminal, FIRST(symbol) = { symbol }.
      * 3. Base Case (Recursion Cycle): If the non-terminal is already in 'visiting' call stack,
-     *    return current known elements to prevent infinite loops (e.g. left recursion).
+     * return current known elements to prevent infinite loops (e.g. left recursion).
      * 4. Recursive Step (Non-Terminal): If symbol is a non-terminal, look at every production
-     *    alternative: symbol -> Y1 Y2 ... Yk.
-     *    Recursively compute FIRST(Y1 Y2 ... Yk) and add all symbols to FIRST(symbol).
+     * alternative: symbol -> Y1 Y2 ... Yk.
+     * Recursively compute FIRST(Y1 Y2 ... Yk) and add all symbols to FIRST(symbol).
      */
     private Set<String> computeFirst(String symbol, Set<String> visiting) {
         // Base Case 1: Epsilon
@@ -297,7 +306,7 @@ public class FirstAndFollow {
 
     /**
      * Public helper to recursively compute FIRST for a sequence of symbols Y1 Y2 ... Yk.
-     * 
+     *
      * @param symbols Sequence of grammar symbols (tokens).
      * @return Set of terminals and/or epsilon belonging to FIRST(Y1 Y2 ... Yk).
      */
@@ -307,17 +316,17 @@ public class FirstAndFollow {
 
     /**
      * Recursive implementation of FIRST for a sequence of symbols: [Y1, Y2, ..., Yk].
-     * 
+     * <p>
      * Base cases:
      * 1. Empty sequence: returns { EPSILON }.
-     * 
+     * <p>
      * Recursive step:
      * 2. Compute FIRST(Y1) recursively.
      * 3. Add all non-epsilon symbols from FIRST(Y1) to the sequence's FIRST set.
      * 4. If FIRST(Y1) derives EPSILON:
-     *    Recursively compute FIRST of the rest of the sequence [Y2, ..., Yk] and add to result.
+     * Recursively compute FIRST of the rest of the sequence [Y2, ..., Yk] and add to result.
      * 5. If FIRST(Y1) does NOT derive EPSILON:
-     *    Stop (do not explore remaining symbols since Y1 does not vanish).
+     * Stop (do not explore remaining symbols since Y1 does not vanish).
      */
     private Set<String> computeFirstOfSequence(List<String> symbols, Set<String> visiting) {
         Set<String> result = new LinkedHashSet<>();
@@ -379,7 +388,7 @@ public class FirstAndFollow {
 
     /**
      * Public helper to recursively compute the FOLLOW set of a non-terminal.
-     * 
+     *
      * @param symbol Non-terminal symbol.
      * @return Set of terminals and/or '$' belonging to FOLLOW(symbol).
      */
@@ -389,19 +398,19 @@ public class FirstAndFollow {
 
     /**
      * Recursive implementation of FOLLOW(symbol).
-     * 
+     * <p>
      * Rules & Base Cases:
      * 1. Base Case (Start Symbol): If symbol == startSymbol, '$' is in FOLLOW(symbol).
      * 2. Base Case (Recursion Cycle): If symbol is already in 'visiting', return the currently
-     *    accumulated FOLLOW set to break mutual dependency recursion (e.g. A -> B and B -> A).
+     * accumulated FOLLOW set to break mutual dependency recursion (e.g. A -> B and B -> A).
      * 3. Recursive Step (Production LHS -> alpha symbol beta):
-     *    Search every production in the grammar where 'symbol' appears in the RHS:
-     *    a. Subsequence beta follows 'symbol'.
-     *       Recursively compute FIRST(beta) using computeFirstOfSequence(beta).
-     *       Add all non-epsilon terminals from FIRST(beta) into FOLLOW(symbol).
-     *    b. If beta derives epsilon (or beta is empty, meaning 'symbol' is the last symbol of RHS):
-     *       Everything in FOLLOW(LHS) must be in FOLLOW(symbol).
-     *       If LHS != symbol, recursively compute FOLLOW(LHS) and add its symbols into FOLLOW(symbol).
+     * Search every production in the grammar where 'symbol' appears in the RHS:
+     * a. Subsequence beta follows 'symbol'.
+     * Recursively compute FIRST(beta) using computeFirstOfSequence(beta).
+     * Add all non-epsilon terminals from FIRST(beta) into FOLLOW(symbol).
+     * b. If beta derives epsilon (or beta is empty, meaning 'symbol' is the last symbol of RHS):
+     * Everything in FOLLOW(LHS) must be in FOLLOW(symbol).
+     * If LHS != symbol, recursively compute FOLLOW(LHS) and add its symbols into FOLLOW(symbol).
      */
     private Set<String> computeFollow(String symbol, Set<String> visiting) {
         Set<String> follow = followSets.get(symbol);
